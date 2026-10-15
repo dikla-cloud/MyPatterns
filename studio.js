@@ -203,8 +203,46 @@
     workNotes: ['📝 הערות עבודה', '📝 Work notes', '📝 Рабочие заметки', '📝 ملاحظات العمل', '📝 Arbeitsnotizen', '📝 Notas de trabajo', '📝 Note di lavoro', '📝 Notes de travail'],
     workNotesPh: ['הערות תוך כדי עבודה על התרשים…', 'Notes while working on the chart…', 'Заметки по ходу работы…', 'ملاحظات أثناء العمل على المخطط…', 'Notizen während der Arbeit…', 'Notas mientras trabajas…', 'Note mentre lavori…', 'Notes pendant le travail…'],
     editDefaults: ['⚙️ שם המעצבת, זכויות יוצרים והוראות קבועות', '⚙️ Designer name, copyright and fixed texts', '⚙️ Автор, авторские права и постоянные тексты', '⚙️ اسم المصمم وحقوق النشر والنصوص الثابتة', '⚙️ Designname, Urheberrecht und feste Texte', '⚙️ Diseñador, derechos de autor y textos fijos', '⚙️ Designer, copyright e testi fissi', '⚙️ Créateur, droits d\'auteur et textes fixes'],
+    wDescription: ['תיאור', 'Description', 'Описание', 'الوصف', 'Beschreibung', 'Descripción', 'Descrizione', 'Description'],
+    dDesigner: ['שם המעצבת / המעצב', 'Designer name', 'Имя автора', 'اسم المصمم', 'Name der Designerin / des Designers', 'Nombre del diseñador', 'Nome del designer', 'Nom du créateur'],
+    wNeedles: ['מסרגות', 'Needles / hook', 'Спицы / крючок', 'الإبر', 'Nadeln / Häkelnadel', 'Agujas / ganchillo', 'Ferri / uncinetto', 'Aiguilles / crochet'],
+    ndPair: ['2 מסרגות', '2 straight needles', '2 прямые спицы', 'إبرتان', '2 Stricknadeln', '2 agujas rectas', '2 ferri dritti', '2 aiguilles droites'],
+    ndCirc: ['מסרגה עגולה', 'Circular needle', 'Круговые спицы', 'إبرة دائرية', 'Rundstricknadel', 'Aguja circular', 'Ferro circolare', 'Aiguille circulaire'],
+    ndDpn: ['מסרגות כפולות (4–5)', 'Double-pointed (4–5)', 'Чулочные (4–5)', 'إبر مزدوجة (4–5)', 'Nadelspiel (4–5)', 'Agujas de doble punta (4–5)', 'Ferri a doppia punta (4–5)', 'Aiguilles double pointe (4–5)'],
+    ndHook: ['מסרגת קרושה (1)', 'Crochet hook (1)', 'Крючок (1)', 'إبرة كروشيه (1)', 'Häkelnadel (1)', 'Ganchillo (1)', 'Uncinetto (1)', 'Crochet (1)'],
+    ndSize: ['מספר המסרגה (מ"מ)', 'Size (mm)', 'Номер (мм)', 'المقاس (مم)', 'Stärke (mm)', 'Número (mm)', 'Misura (mm)', 'Taille (mm)'],
+    ndAdd: ['＋ מסרגה נוספת', '＋ Another needle', '＋ Ещё спицы', '＋ إبرة أخرى', '＋ Weitere Nadel', '＋ Otra aguja', '＋ Altro ferro', '＋ Autre aiguille'],
+    gTitleCm: ['דוגמית 10×10 ס"מ', 'Gauge 10×10 cm', 'Плотность 10×10 см', 'العيّنة 10×10 سم', 'Maschenprobe 10×10 cm', 'Muestra 10×10 cm', 'Campione 10×10 cm', 'Échantillon 10×10 cm'],
+    gTitleIn: ['דוגמית 4×4 אינץ\'', 'Gauge 4×4 in', 'Плотность 4×4 дюйма', 'العيّنة 4×4 إنش', 'Maschenprobe 4×4 Zoll', 'Muestra 4×4 pulg.', 'Campione 4×4 pollici', 'Échantillon 4×4 po'],
+    gSts: ['עיניים', 'stitches', 'петель', 'غرزة', 'Maschen', 'puntos', 'maglie', 'mailles'],
+    gRows: ['שורות', 'rows', 'рядов', 'صف', 'Reihen', 'vueltas', 'ferri', 'rangs'],
+    gToIn: ['⇄ לאינצ\'ים', '⇄ To inches', '⇄ В дюймы', '⇄ إلى إنش', '⇄ In Zoll', '⇄ A pulgadas', '⇄ In pollici', '⇄ En pouces'],
+    gToCm: ['⇄ לס"מ', '⇄ To cm', '⇄ В см', '⇄ إلى سم', '⇄ In cm', '⇄ A cm', '⇄ In cm', '⇄ En cm'],
+    gLine: ['{s} עיניים × {r} שורות = 10×10 ס"מ (4×4 אינץ\')', '{s} sts × {r} rows = 10×10 cm (4×4 in)', '{s} п. × {r} р. = 10×10 см (4×4 дюйма)', '{s} غرزة × {r} صف = 10×10 سم (4×4 إنش)', '{s} M × {r} R = 10×10 cm (4×4 Zoll)', '{s} p × {r} v = 10×10 cm (4×4 pulg.)', '{s} m × {r} f = 10×10 cm (4×4 pollici)', '{s} m × {r} rgs = 10×10 cm (4×4 po)'],
+    wFinished: ['מידות מוצר מוגמר', 'Finished measurements', 'Размеры готового изделия', 'مقاسات المنتج النهائي', 'Fertigmaße', 'Medidas del producto terminado', 'Misure del capo finito', 'Dimensions de l\'ouvrage fini'],
+    wChartFiles: ['קובץ תרשים (PDF או תמונה)', 'Chart file (PDF or image)', 'Файл схемы (PDF или изображение)', 'ملف المخطط (PDF أو صورة)', 'Diagramm-Datei (PDF oder Bild)', 'Archivo del gráfico (PDF o imagen)', 'File dello schema (PDF o immagine)', 'Fichier de grille (PDF ou image)'],
+    wLinked: ['תרשימים לדוגמה הזו', 'Charts for this pattern', 'Схемы к этому описанию', 'مخططات لهذا النموذج', 'Diagramme zu dieser Anleitung', 'Gráficos de este patrón', 'Schemi di questo modello', 'Grilles de ce modèle'],
+    wMakeChart: ['🎨 יצירת תרשים לדוגמה הזו', '🎨 Create a chart for this pattern', '🎨 Создать схему', '🎨 إنشاء مخطط لهذا النموذج', '🎨 Diagramm erstellen', '🎨 Crear un gráfico', '🎨 Crea uno schema', '🎨 Créer une grille'],
+    wMakeMosaic: ['🟪 יצירת תרשים מוזאיק', '🟪 Create a mosaic chart', '🟪 Создать мозаику', '🟪 إنشاء مخطط موزاييك', '🟪 Mosaikdiagramm erstellen', '🟪 Crear mosaico', '🟪 Crea un mosaico', '🟪 Créer une mosaïque'],
+    wLinkedHint: ['התרשים נשמר בנפרד ומצורף אוטומטית ל-PDF של הדוגמה הזו.', 'The chart is saved separately and added automatically to this pattern\'s PDF.', 'Схема сохраняется отдельно и автоматически добавляется в PDF.', 'يُحفظ المخطط منفصلًا ويُضاف تلقائيًا إلى PDF هذا النموذج.', 'Das Diagramm wird separat gespeichert und automatisch ins PDF übernommen.', 'El gráfico se guarda aparte y se añade al PDF automáticamente.', 'Lo schema viene salvato a parte e aggiunto al PDF automaticamente.', 'La grille est enregistrée à part et ajoutée automatiquement au PDF.'],
+    pdfOpts: ['📄 קובץ PDF', '📄 PDF file', '📄 PDF-файл', '📄 ملف PDF', '📄 PDF-Datei', '📄 Archivo PDF', '📄 File PDF', '📄 Fichier PDF'],
+    pdfRows: ['הוראות כתובות שנוצרות אוטומטית', 'Automatically written instructions', 'Автоматическое описание', 'تعليمات مكتوبة تلقائيًا', 'Automatisch erstellte Anleitung', 'Instrucciones escritas automáticas', 'Istruzioni scritte automatiche', 'Explications écrites automatiques'],
+    pdfFixed: ['מסמכים קבועים וזכויות יוצרים', 'Fixed documents & copyright', 'Постоянные документы и права', 'المستندات الثابتة وحقوق النشر', 'Feste Dokumente & Urheberrecht', 'Documentos fijos y derechos', 'Documenti fissi e copyright', 'Documents fixes et droits'],
+    pdfImgs: ['תמונות וקישורים', 'Photos & links', 'Фото и ссылки', 'الصور والروابط', 'Fotos & Links', 'Fotos y enlaces', 'Foto e link', 'Photos et liens'],
+    pdfDownload: ['⬇️ הורדת PDF', '⬇️ Download PDF', '⬇️ Скачать PDF', '⬇️ تنزيل PDF', '⬇️ PDF herunterladen', '⬇️ Descargar PDF', '⬇️ Scarica PDF', '⬇️ Télécharger le PDF'],
+    modePaint: ['✏️ צביעה', '✏️ Paint', '✏️ Рисовать', '✏️ تلوين', '✏️ Malen', '✏️ Pintar', '✏️ Dipingi', '✏️ Peindre'],
+    modeScroll: ['✋ גלילה', '✋ Scroll', '✋ Прокрутка', '✋ تمرير', '✋ Scrollen', '✋ Desplazar', '✋ Scorri', '✋ Défiler'],
+    edgeSt: ['עין שוליים', 'edge st', 'кромочная', 'غرزة حافة', 'Randmasche', 'punto de orillo', 'maglia di vivagno', 'maille lisière'],
+    edgeLegend: ['◯ = עין שוליים (עמודה אחת מכל צד)', '◯ = edge stitch (one column on each side)', '◯ = кромочная петля (по столбцу с каждой стороны)', '◯ = غرزة حافة (عمود من كل جانب)', '◯ = Randmasche (je eine Spalte pro Seite)', '◯ = punto de orillo (una columna a cada lado)', '◯ = maglia di vivagno (una colonna per lato)', '◯ = maille lisière (une colonne de chaque côté)'],
+    colorCode: ['קוד / מספר צבע', 'Colour code / number', 'Код / номер цвета', 'رمز / رقم اللون', 'Farbcode / -nummer', 'Código / número de color', 'Codice / numero colore', 'Code / numéro de couleur'],
+    colorCodeHint: ['אפשר להקליד קוד צבע (למשל ‎#A0522D) או מספר צבע של החוט (למשל 1234) – המספר יופיע במקרא.', 'Type a colour code (e.g. #A0522D) or the yarn\'s colour number (e.g. 1234) – the number appears in the key.', 'Введите код (#A0522D) или номер цвета пряжи (1234) – номер появится в легенде.', 'اكتب رمز لون (#A0522D) أو رقم لون الخيط (1234) – يظهر الرقم في الدليل.', 'Farbcode (#A0522D) oder Farbnummer des Garns (1234) eingeben – die Nummer erscheint in der Legende.', 'Escribe un código (#A0522D) o el número de color del hilo (1234); aparece en la leyenda.', 'Scrivi un codice (#A0522D) o il numero colore del filato (1234): compare nella legenda.', 'Saisissez un code (#A0522D) ou le numéro de couleur du fil (1234) – il apparaît dans la légende.'],
+    symLegend: ['מקרא הסמלים', 'Symbol key', 'Обозначения', 'دليل الرموز', 'Symbollegende', 'Leyenda de símbolos', 'Legenda dei simboli', 'Légende des symboles'],
+    hintWrittenOnly: ['דוגמה עם הוראות כתובות בלבד', 'A pattern with written instructions only', 'Только текстовое описание', 'نموذج بتعليمات مكتوبة فقط', 'Anleitung nur mit Text', 'Patrón solo con instrucciones escritas', 'Schema con sole istruzioni scritte', 'Modèle avec explications écrites uniquement'],
+    hintChartOnly: ['דוגמת תרשים עם סמלי תכים בלבד', 'A chart pattern with stitch symbols only', 'Схема только с символами петель', 'نموذج مخطط برموز الغرز فقط', 'Diagramm nur mit Maschensymbolen', 'Gráfico solo con símbolos de puntos', 'Schema solo con simboli dei punti', 'Grille avec symboles de mailles uniquement'],
   };
   ORDER.forEach((l, i) => { for (const [k, arr] of Object.entries(TR)) I18N[l][k] = arr[i]; });
+  // "מלאכה" ← "סוג"
+  ORDER.forEach((l, i) => { I18N[l].stCraft = ['סוג', 'Type', 'Тип', 'النوع', 'Art', 'Tipo', 'Tipo', 'Type'][i]; });
 
   /* ---------------- כלים משותפים ---------------- */
   const PNG = 'image/png';
@@ -292,7 +330,8 @@
     const nameIn = el('input', { class: 'studio-name', type: 'text', placeholder: t('stTitlePh'), value: initialName || '' });
     nameIn.addEventListener('input', () => { dirty = true; });
     const close = () => {
-      wrap.remove(); document.body.classList.remove('studio-open');
+      wrap.remove(); if (!document.querySelector('.studio-editor')) document.body.classList.remove('studio-open');
+      setTimeout(consumeBackEntry, 0);
       if (ed.didSave) { dash.load(true); if (!$('#studioPane').classList.contains('hidden')) home($('#studioPane')); }
     };
     const back = el('button', { class: 'icon-btn back-arrow', title: t('back'), onclick: () => { if (!dirty || confirm(t('stLeave'))) close(); } }, isRtl() ? '→' : '←');
@@ -317,6 +356,7 @@
     wrap.append(head, body);
     document.body.append(wrap);
     document.body.classList.add('studio-open');
+    ensureBackEntry();
     ed.body = body; ed.nameIn = nameIn;
     return ed;
   }
@@ -504,12 +544,40 @@
   // ציור בגרירה על קנבס
   // מצב ציור / גלילה – כדי שגלילה בתרשים לא תסמן תאים בטעות
   function paintToggle(canvas) {
-    let on = !matchMedia('(pointer: coarse)').matches;
-    const btn = el('button', { class: 'btn small paint-toggle' });
-    const upd = () => { btn.textContent = on ? t('paintOn') : t('paintOff'); btn.classList.toggle('primary', on); canvas.style.touchAction = on ? 'none' : 'pan-x pan-y'; canvas.style.cursor = on ? 'crosshair' : 'grab'; };
-    btn.onclick = () => { on = !on; upd(); };
+    let on = true;
+    const bP = el('button', { class: 'seg-btn', onclick: () => { on = true; upd(); } }, t('modePaint'));
+    const bS = el('button', { class: 'seg-btn', onclick: () => { on = false; upd(); } }, t('modeScroll'));
+    const btn = el('div', { class: 'seg paint-toggle', role: 'group' }, bP, bS);
+    const upd = () => { bP.classList.toggle('on', on); bS.classList.toggle('on', !on); canvas.style.touchAction = on ? 'none' : 'pan-x pan-y'; canvas.style.cursor = on ? 'crosshair' : 'grab'; };
     upd();
     return { btn, isOn: () => on };
+  }
+  // עיגול ריק בעין שוליים
+  function edgeCircle(ctx, x, y, cs, col) {
+    ctx.strokeStyle = col; ctx.lineWidth = Math.max(1, cs * .08);
+    ctx.beginPath(); ctx.arc(x + cs / 2, y + cs / 2, cs * .3, 0, 7); ctx.stroke();
+  }
+  // הגדרות PDF: מה לצרף + הורדה מיידית
+  const PDF_OPT0 = () => ({ rows: true, fixed: true, imgs: true });
+  function pdfPanel(ed, state, makeHtml, withRows) {
+    const chk = (label, get, set) => { const c = el('input', { type: 'checkbox' }); c.checked = get(); c.onchange = () => { set(c.checked); ed.setDirty(); }; return el('label', { class: 'chk' }, c, label); };
+    const dl = el('button', { class: 'btn small primary', onclick: async () => {
+      try {
+        const name = ed.nameIn.value.trim() || t('stUntitled');
+        const blob = await busy(t('pdfMaking'), async () => {
+          if (!ed.folder.id) ed.folder = await designsFolder();
+          return htmlToPdf(await makeHtml(name), ed.folder.id);
+        });
+        const a = el('a', { href: URL.createObjectURL(blob), download: name + '.pdf' });
+        document.body.append(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000);
+      } catch (e) { err(e); }
+    } }, t('pdfDownload'));
+    return el('details', { class: 'studio-help', open: '' }, el('summary', {}, t('pdfOpts')),
+      chk(t('exportPdf'), () => state.on, (v) => { state.on = v; }),
+      withRows ? chk(t('pdfRows'), () => state.opt.rows, (v) => { state.opt.rows = v; }) : null,
+      chk(t('pdfFixed'), () => state.opt.fixed, (v) => { state.opt.fixed = v; }),
+      chk(t('pdfImgs'), () => state.opt.imgs, (v) => { state.opt.imgs = v; }),
+      el('div', { class: 'studio-row' }, dl));
   }
   function paintable(canvas, getO, onCell, onEnd, isOn) {
     let down = false, last = '';
@@ -655,6 +723,7 @@
         ctx.moveTo(x + cs - p, y + p); ctx.lineTo(x + p, y + cs - p); ctx.stroke();
       }
       const edge = m.edges && (c === 0 || c === W - 1);
+      if (edge && !res.X[i]) edgeCircle(ctx, x, y, cs, ink(col));
       if (opts.showErr && !edge && r >= 2 && res.D[i] !== m.T[i]) {
         ctx.fillStyle = '#e53935'; ctx.beginPath(); ctx.arc(x + cs * .78, y + cs * .22, Math.max(1.8, cs * .14), 0, 7); ctx.fill();
       }
@@ -694,7 +763,7 @@
     renderMosaic(chart, m, res, cs, { dpr: 1 });
     const pad = 24, head = 70, foot = 70;
     const out = document.createElement('canvas');
-    out.width = chart.width + pad * 2; out.height = chart.height + head + foot;
+    out.width = Math.max(chart.width + pad * 2, m.edges ? 760 : 0); out.height = chart.height + head + foot;
     const ctx = out.getContext('2d');
     ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, out.width, out.height);
     ctx.direction = isRtl() ? 'rtl' : 'ltr';
@@ -712,6 +781,7 @@
     const sw = (x, col, label) => { ctx.fillStyle = col; ctx.fillRect(x, ly + 26, 18, 18); ctx.strokeStyle = '#999'; ctx.strokeRect(x + .5, ly + 26.5, 17, 17); ctx.fillStyle = '#222'; ctx.textAlign = 'left'; ctx.direction = 'ltr'; ctx.fillText(label, x + 24, ly + 40); };
     sw(pad, m.colors[0], `${t('mColorA')} ${m.colors[0]}`);
     sw(pad + 200, m.colors[1], `${t('mColorB')} ${m.colors[1]}`);
+    if (m.edges) { ctx.fillStyle = '#222'; ctx.textAlign = 'left'; ctx.direction = 'ltr'; ctx.fillText(t('edgeLegend'), pad + 400, ly + 40); }
     return canvasBlob(out);
   }
 
@@ -728,9 +798,10 @@
 </body></html>`;
   }
 
-  async function mosaicEditor(data, existing) {
+  async function mosaicEditor(data, existing, link) {
     const { d: defaults0 } = await busy(t('loading'), loadDefaults);
-    const info = data && data.info ? { ...emptyInfo('crochet'), ...data.info } : { ...emptyInfo('crochet'), designer: defaults0.designer || '' };
+    const seedInfo = link && link.seed ? link.seed.info : null;
+    const info = data && data.info ? { ...emptyInfo('crochet'), ...data.info } : { ...emptyInfo('crochet'), ...(seedInfo || {}), designer: defaults0.designer || '' };
     info.craft = 'crochet';
     const m = data ? {
       W: data.W, H: data.H, start: data.start || 0, edges: !!data.edges, colors: data.colors, userColors: true,
@@ -750,8 +821,9 @@
     };
     planFit();
     let res = mosaicSolve(m);
-    let cs = 16, brush = 1, showErr = true, withPdf = !existing || !!(existing.ids && existing.ids.pdf);
-    const ed = editorShell('🟪 ' + t('stMosaic'), (data && data.title) || '', existing, save);
+    let cs = 16, brush = 1, showErr = true;
+    const pdf = { on: !existing || !!(existing.ids && existing.ids.pdf), opt: { ...PDF_OPT0(), ...((data && data.pdfOpt) || {}) } };
+    const ed = editorShell('🟪 ' + t('stMosaic'), (data && data.title) || (link && link.seed && link.seed.title) || '', existing, save);
 
     const canvas = el('canvas', { class: 'studio-canvas' });
     const stats = el('div', { class: 'studio-stats' });
@@ -839,8 +911,6 @@
     };
     const errChk = el('input', { type: 'checkbox' }); errChk.checked = showErr;
     errChk.onchange = () => { showErr = errChk.checked; redraw(); };
-    const docChk = el('input', { type: 'checkbox' }); docChk.checked = withPdf;
-    docChk.onchange = () => { withPdf = docChk.checked; };
     const zoom = el('input', { type: 'range', min: '6', max: '34', value: String(cs) });
     zoom.oninput = () => { cs = Number(zoom.value); redraw(); };
     const sizeLbl = el('span', { class: 'muted' });
@@ -890,30 +960,34 @@
         el('div', { class: 'studio-row' }, el('label', {}, t('mColorA'), colorA), el('label', {}, t('mColorB'), colorB),
           el('span', {}, t('mPaint')), bA, bB),
         el('div', { class: 'studio-row' }, el('label', { class: 'chk' }, edges, t('mEdges')), el('label', { class: 'chk' }, errChk, t('mShowErr'))),
-        el('div', { class: 'studio-row' }, el('label', {}, t('stCellSize'), zoom), el('label', { class: 'chk' }, docChk, t('exportPdf'))),
         el('details', { class: 'studio-help' }, el('summary', {}, 'ℹ️ ' + t('stMosaic')), el('p', {}, t('mRules'))),
-        repBox, planWrap, workNotesBox(m, 'workNotes', ed)),
+        repBox, planWrap, workNotesBox(m, 'workNotes', ed), pdfPanel(ed, pdf, mosaicHtml, true)),
       stats,
-      el('div', { class: 'studio-row canvas-tools' }, pt.btn, undoBtn, el('span', { class: 'muted small-note' }, t('paintHint'))),
+      el('div', { class: 'studio-row canvas-tools' }, pt.btn, undoBtn, el('label', { class: 'zoom-lbl' }, '🔍', zoom)),
+      el('p', { class: 'muted small-note canvas-hint' }, t('paintHint')),
       wrapEl);
     updBrush(); redraw();
     requestAnimationFrame(() => { cs = fitCellSize(wrapEl, m.W, 6, 34); zoom.value = String(cs); redraw(); });
 
+    async function mosaicHtml(name, png) {
+      png = png || await exportMosaicPng(m, res, name);
+      const defaults = (await loadDefaults()).d;
+      const rows = [t('mAbbrLine'), t('mMethod'), ...(m.edges ? [t('edgeLegend')] : []), ...repeatText(m.rep, m.W, m.H), ...mosaicInstructions(m, res)];
+      return patternHtml({ title: name, w: info, chartUrl: await blobDataUrl(png), rows, defaults, kind: t('stMosaic'), workNotes: m.workNotes, opt: pdf.opt });
+    }
     async function save(name) {
       const png = await exportMosaicPng(m, res, name);
-      const data2 = { type: 'mosaic', v: 3, title: name, W: m.W, H: m.H, start: m.start, edges: m.edges, colors: m.colors, T: toB64(m.T), info, plan: m.plan, rep: m.rep, workNotes: m.workNotes };
-      const defaults = (await loadDefaults()).d;
+      const data2 = { type: 'mosaic', v: 3, title: name, W: m.W, H: m.H, start: m.start, edges: m.edges, colors: m.colors, T: toB64(m.T), info, plan: m.plan, rep: m.rep, workNotes: m.workNotes, pdfOpt: pdf.opt };
       const r = await busy(t('stSaving'), async () => {
         const outputs = [{ key: 'main', blob: png, name: name + '.png' }];
-        if (withPdf) {
+        if (pdf.on) {
           $('#busyText').textContent = t('pdfMaking');
-          const rows = [t('mAbbrLine'), t('mMethod'), ...repeatText(m.rep, m.W, m.H), ...mosaicInstructions(m, res)];
-          const html = patternHtml({ title: name, w: info, chartUrl: await blobDataUrl(png), rows, defaults, kind: t('stMosaic'), workNotes: m.workNotes });
-          outputs.push({ key: 'pdf', blob: await htmlToPdf(html, ed.folder.id), name: name + '.pdf' });
+          outputs.push({ key: 'pdf', blob: await htmlToPdf(await mosaicHtml(name, png), ed.folder.id), name: name + '.pdf' });
         }
         return saveDesign({ type: 'mosaic', name, data: data2, outputs, existing, folderId: ed.folder.id });
       });
       existing = { jsonId: r.jsonId, ids: r.ids, folderId: ed.folder.id, folderName: ed.folder.name };
+      if (link && link.onSaved) link.onSaved(r, name);
     }
   }
 
@@ -972,6 +1046,7 @@
     ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, width, height);
     const o = { W, H, cs, x0, y0, dpr };
     drawGrid(ctx, { ...o, cell: (r, c, x, y) => {
+      if (ch.edges && (c === 0 || c === W - 1)) { ctx.fillStyle = '#f3f0ea'; ctx.fillRect(x, y, cs, cs); edgeCircle(ctx, x, y, cs, '#555'); return; }
       const i = r * W + c, col = ch.Cc[i] || '#ffffff';
       ctx.fillStyle = col; ctx.fillRect(x, y, cs, cs);
       if (ch.S[i]) drawSymbol(ctx, ch.S[i], x, y, cs, ink(col));
@@ -987,7 +1062,7 @@
     const used = [...new Set(ch.S.filter(Boolean))];
     const colors = [...new Set(ch.Cc.filter(Boolean))];
     const pad = 24, head = 70, lineH = 30;
-    const legendRows = used.length + colors.length;
+    const legendRows = used.length + colors.length + (ch.edges ? 1 : 0);
     const out = document.createElement('canvas');
     out.width = Math.max(chart.width + pad * 2, 520); out.height = head + chart.height + 40 + legendRows * lineH + 20;
     const ctx = out.getContext('2d');
@@ -1016,6 +1091,11 @@
       ctx.fillStyle = '#222'; ctx.fillText(names[c], rtl ? bx - 10 : bx + 32, y + 16);
       y += lineH;
     }
+    if (ch.edges) {
+      const bx = rtl ? out.width - pad - 22 : pad;
+      ctx.fillStyle = '#f3f0ea'; ctx.fillRect(bx, y, 22, 22); ctx.strokeStyle = '#999'; ctx.strokeRect(bx + .5, y + .5, 21, 21); edgeCircle(ctx, bx, y, 22, '#555');
+      ctx.fillStyle = '#222'; ctx.fillText(t('edgeLegend').replace(/^◯ = /, ''), rtl ? bx - 10 : bx + 32, y + 16);
+    }
     return canvasBlob(out);
   }
 
@@ -1040,6 +1120,11 @@
       const runs = [];
       for (const c of cols) {
         const i = r * ch.W + c;
+        if (ch.edges && (c === 0 || c === ch.W - 1)) {
+          const tok = t('edgeSt');
+          if (runs.length && runs[runs.length - 1][0] === tok) runs[runs.length - 1][1]++; else runs.push([tok, 1]);
+          continue;
+        }
         let sym = ch.S[i] || (hasSym || !ch.Cc[i] ? (ch.craft === 'crochet' ? 'sc' : 'k') : '');
         if (sym === 'no') continue;
         if (ws && ch.craft === 'knit' && WS_SWAP[sym]) sym = WS_SWAP[sym];
@@ -1056,17 +1141,20 @@
     return legend.length ? [legend.join(' · '), ...lines] : lines;
   }
 
-  async function chartEditor(data, existing) {
+  async function chartEditor(data, existing, link) {
     const { d: defaults0 } = await busy(t('loading'), loadDefaults);
-    const ch = data ? { W: data.W, H: data.H, craft: data.craft || 'knit', S: data.S, Cc: data.Cc, palette: data.palette || [], colorNames: data.colorNames || {}, work: data.work || 'flat' }
-      : { W: 20, H: 16, craft: 'knit', S: new Array(320).fill(''), Cc: new Array(320).fill(''), palette: [], colorNames: {}, work: 'flat' };
-    const info = data && data.info ? { ...emptyInfo(ch.craft), ...data.info } : { ...emptyInfo(ch.craft), designer: defaults0.designer || '' };
+    const seedInfo = link && link.seed ? link.seed.info : null;
+    const craft0 = (seedInfo && seedInfo.craft) || 'knit';
+    // תרשים חדש: 20 עיניים + עין שוליים מכל צד
+    const ch = data ? { W: data.W, H: data.H, craft: data.craft || 'knit', S: data.S, Cc: data.Cc, palette: data.palette || [], colorNames: data.colorNames || {}, work: data.work || 'flat', edges: !!data.edges }
+      : { W: 22, H: 16, craft: craft0, S: new Array(22 * 16).fill(''), Cc: new Array(22 * 16).fill(''), palette: [], colorNames: {}, work: 'flat', edges: true };
+    const info = data && data.info ? { ...emptyInfo(ch.craft), ...data.info } : { ...emptyInfo(ch.craft), ...(seedInfo || {}), designer: defaults0.designer || '' };
     ch.rep = data && data.rep ? data.rep : emptyRep();
     ch.workNotes = (data && data.workNotes) || '';
     let cs = 24, tool = { kind: 'color', c: '#0f5e63' };
-    let withPdf = !existing || !!(existing.ids && existing.ids.pdf);
+    const pdf = { on: !existing || !!(existing.ids && existing.ids.pdf), opt: { ...PDF_OPT0(), ...((data && data.pdfOpt) || {}) } };
     const undo = [];
-    const ed = editorShell('🎨 ' + t('stChart'), (data && data.title) || '', existing, save);
+    const ed = editorShell('🎨 ' + t('stChart'), (data && data.title) || (link && link.seed && link.seed.title) || '', existing, save);
     const canvas = el('canvas', { class: 'studio-canvas' });
     let o = null;
     const redraw = () => { o = renderChart(canvas, ch, cs); };
@@ -1088,12 +1176,35 @@
       }
       ch.W = w; ch.H = h; ch.S = S; ch.Cc = Cc; ed.setDirty(); redraw();
     } }, t('stApplySize'));
+    // עמודת שוליים מכל צד: מוסיפים / מסירים עמודה כדי שהעיצוב עצמו לא ייפגע
+    const edgesChk = el('input', { type: 'checkbox' }); edgesChk.checked = ch.edges;
+    edgesChk.onchange = () => {
+      const on = edgesChk.checked, w = ch.W + (on ? 2 : -2);
+      if (w < 2) { edgesChk.checked = !on; return; }
+      const S = new Array(w * ch.H).fill(''), Cc = new Array(w * ch.H).fill('');
+      for (let r = 0; r < ch.H; r++) for (let c = 0; c < w; c++) {
+        const oc = on ? c - 1 : c + 1;
+        if (oc < 0 || oc >= ch.W) continue;
+        S[r * w + c] = ch.S[r * ch.W + oc]; Cc[r * w + c] = ch.Cc[r * ch.W + oc];
+      }
+      ch.W = w; ch.S = S; ch.Cc = Cc; ch.edges = on; widthIn.value = w; ed.setDirty(); redraw();
+    };
 
     const palBox = el('div', { class: 'sym-palette' });
     const colBox = el('div', { class: 'sym-palette' });
     const customColor = el('input', { type: 'color', value: '#f6c453' });
-    const nameIn = el('input', { type: 'text', class: 'color-name', placeholder: t('colorName') });
-    nameIn.oninput = () => { if (tool.kind === 'color') { ch.colorNames[tool.c] = nameIn.value; ed.setDirty(); } };
+    // קוד צבע (#hex) בוחר צבע; מספר / שם צבע של החוט נשמר כתווית ומופיע במקרא
+    const nameIn = el('input', { type: 'text', class: 'color-name', placeholder: t('colorCode') + ' / ' + t('colorName') });
+    const isHex = (v) => /^#?([0-9a-f]{6}|[0-9a-f]{3})$/i.test(v.trim());
+    const normHex = (v) => { v = v.trim().replace(/^#/, '').toLowerCase(); if (v.length === 3) v = v.split('').map((x) => x + x).join(''); return '#' + v; };
+    nameIn.oninput = () => { if (tool.kind === 'color' && !isHex(nameIn.value)) { ch.colorNames[tool.c] = nameIn.value; ed.setDirty(); } };
+    nameIn.onchange = () => {
+      if (!isHex(nameIn.value)) return;
+      const c = normHex(nameIn.value);
+      if (!ch.palette.includes(c)) ch.palette.unshift(c);
+      setTool({ kind: 'color', c });
+    };
+    const legendBox = el('div', { class: 'sym-legend' });
     const symName = el('div', { class: 'sym-name' });
     const setTool = (t2) => { tool = t2; buildPalette(); };
     function buildPalette() {
@@ -1111,15 +1222,24 @@
       symName.textContent = tool.kind === 'sym' ? t(SYM_NAME[tool.id]) : tool.kind === 'erase' ? t('stEraser') : '';
       nameIn.classList.toggle('hidden', !(tool.kind === 'color' && tool.c !== '#ffffff'));
       if (tool.kind === 'color') nameIn.value = ch.colorNames[tool.c] || '';
+      // מקרא הסמלים – כל הסמלים של סוג המלאכה עם השם שלהם
+      legendBox.innerHTML = '';
+      for (const id of SYMBOLS[ch.craft]) {
+        const cv = el('canvas', { width: '24', height: '24' });
+        const c2 = cv.getContext('2d'); c2.fillStyle = '#fff'; c2.fillRect(0, 0, 24, 24); drawSymbol(c2, id, 2, 2, 20, '#222');
+        legendBox.append(el('div', { class: 'sym-legend-item' }, cv, el('span', {}, `${t(SYM_NAME[id])} (${SYM_ABBR[id]})`)));
+      }
+      const cv = el('canvas', { width: '24', height: '24' }); const c3 = cv.getContext('2d'); c3.fillStyle = '#f3f0ea'; c3.fillRect(0, 0, 24, 24); edgeCircle(c3, 2, 2, 20, '#555');
+      legendBox.append(el('div', { class: 'sym-legend-item' }, cv, el('span', {}, t('edgeSt'))));
     }
     customColor.oninput = () => { if (!ch.palette.includes(customColor.value)) ch.palette.unshift(customColor.value); setTool({ kind: 'color', c: customColor.value }); };
     const undoBtn = el('button', { class: 'btn small', onclick: () => { const u = undo.pop(); if (u) { ch.S = u.S; ch.Cc = u.Cc; redraw(); } } }, t('stUndo'));
     const zoom = el('input', { type: 'range', min: '10', max: '44', value: String(cs) });
     zoom.oninput = () => { cs = Number(zoom.value); redraw(); };
-    const pdfChk = el('input', { type: 'checkbox' }); pdfChk.checked = withPdf; pdfChk.onchange = () => { withPdf = pdfChk.checked; };
 
     const pt = paintToggle(canvas);
     paintable(canvas, () => o, (p, first) => {
+      if (ch.edges && (p.c === 0 || p.c === ch.W - 1)) return;
       if (first) { undo.push({ S: ch.S.slice(), Cc: ch.Cc.slice() }); if (undo.length > 40) undo.shift(); }
       const i = p.r * ch.W + p.c;
       if (tool.kind === 'sym') ch.S[i] = tool.id;
@@ -1128,42 +1248,51 @@
       ed.setDirty(); redraw();
     }, null, pt.isOn);
     const key = (r, c) => (ch.S[r * ch.W + c] || '') + '|' + (ch.Cc[r * ch.W + c] || '');
-    const repBox = repeatPanel(ch.rep, () => ({ W: ch.W, H: ch.H }), () => ({
-      p: findPeriod((i, j) => key(j, ch.W - 1 - i), ch.W, ch.H), hStart: 1,
-      q: findPeriod((i, j) => key(i, j), ch.H, ch.W), vStart: 1,
-    }), () => { ed.setDirty(); redraw(); });
+    const repBox = repeatPanel(ch.rep, () => ({ W: ch.W, H: ch.H }), () => {
+      const e = ch.edges ? 1 : 0, inner = ch.W - 2 * e;
+      return {
+        p: findPeriod((i, j) => key(j, ch.W - 1 - e - i), inner, ch.H), hStart: 1 + e,
+        q: findPeriod((i, j) => key(i, j + e), ch.H, inner), vStart: 1,
+      };
+    }, () => { ed.setDirty(); redraw(); });
     const wrapEl = el('div', { class: 'studio-canvas-wrap' }, canvas);
 
     const chartPane = el('div', {},
       el('div', { class: 'studio-panel' },
         el('div', { class: 'studio-row' }, el('label', {}, t('stCraft'), craftSel), el('label', {}, workSel)),
         el('div', { class: 'studio-row' }, el('label', {}, t('stWidth'), widthIn), el('label', {}, t('stHeight'), heightIn), applySize),
-        el('div', { class: 'studio-sub' }, t('stColors')), colBox, nameIn,
+        el('label', { class: 'chk' }, edgesChk, t('mEdges')),
+        el('div', { class: 'studio-sub' }, t('stColors')), colBox, nameIn, el('p', { class: 'muted small-note' }, t('colorCodeHint')),
         el('div', { class: 'studio-sub' }, t('stSymbols')), palBox,
-        el('div', { class: 'studio-row' }, symName, undoBtn, el('label', {}, t('stCellSize'), zoom)),
-        el('label', { class: 'chk' }, pdfChk, t('exportPdf')),
+        el('details', { class: 'studio-help' }, el('summary', {}, t('symLegend')), legendBox),
         el('p', { class: 'muted small-note' }, t('stChartTip')),
-        repBox, workNotesBox(ch, 'workNotes', ed)),
-      el('div', { class: 'studio-row canvas-tools' }, pt.btn, el('span', { class: 'muted small-note' }, t('paintHint'))),
+        repBox, workNotesBox(ch, 'workNotes', ed), pdfPanel(ed, pdf, chartHtml, true)),
+      el('div', { class: 'studio-row canvas-tools' }, pt.btn, undoBtn, symName, el('label', { class: 'zoom-lbl' }, '🔍', zoom)),
+      el('p', { class: 'muted small-note canvas-hint' }, t('paintHint')),
       wrapEl);
     editorTabs(ed, [[t('tabChart'), chartPane], [t('tabInfo'), infoForm(info, ed, { onCraft: (c) => setCraft(c) })]]);
     buildPalette(); redraw();
     requestAnimationFrame(() => { cs = fitCellSize(wrapEl, ch.W, 10, 44); zoom.value = String(cs); redraw(); });
 
+    async function chartHtml(name, png) {
+      png = png || await exportChartPng(ch, name);
+      const defaults = (await loadDefaults()).d;
+      const rows = [...(ch.edges ? [t('edgeLegend')] : []), ...repeatText(ch.rep, ch.W, ch.H), ...chartInstructions(ch)];
+      return patternHtml({ title: name, w: info, chartUrl: await blobDataUrl(png), rows, defaults, kind: t('stChart'), workNotes: ch.workNotes, opt: pdf.opt });
+    }
     async function save(name) {
       const png = await exportChartPng(ch, name);
-      const data2 = { type: 'chart', v: 3, title: name, W: ch.W, H: ch.H, craft: ch.craft, S: ch.S, Cc: ch.Cc, palette: ch.palette, colorNames: ch.colorNames, work: ch.work, info, rep: ch.rep, workNotes: ch.workNotes };
-      const defaults = (await loadDefaults()).d;
+      const data2 = { type: 'chart', v: 3, title: name, W: ch.W, H: ch.H, craft: ch.craft, S: ch.S, Cc: ch.Cc, palette: ch.palette, colorNames: ch.colorNames, work: ch.work, edges: ch.edges, info, rep: ch.rep, workNotes: ch.workNotes, pdfOpt: pdf.opt };
       const r = await busy(t('stSaving'), async () => {
         const outputs = [{ key: 'main', blob: png, name: name + '.png' }];
-        if (withPdf) {
+        if (pdf.on) {
           $('#busyText').textContent = t('pdfMaking');
-          const html = patternHtml({ title: name, w: info, chartUrl: await blobDataUrl(png), rows: [...repeatText(ch.rep, ch.W, ch.H), ...chartInstructions(ch)], defaults, kind: t('stChart'), workNotes: ch.workNotes });
-          outputs.push({ key: 'pdf', blob: await htmlToPdf(html, ed.folder.id), name: name + '.pdf' });
+          outputs.push({ key: 'pdf', blob: await htmlToPdf(await chartHtml(name, png), ed.folder.id), name: name + '.pdf' });
         }
         return saveDesign({ type: 'chart', name, data: data2, outputs, existing, folderId: ed.folder.id });
       });
       existing = { jsonId: r.jsonId, ids: r.ids, folderId: ed.folder.id, folderName: ed.folder.name };
+      if (link && link.onSaved) link.onSaved(r, name);
     }
   }
 
@@ -1300,8 +1429,8 @@
   }
 
   // ריבוע סבתא: בכל סיבוב k יש 4k קבוצות של 3 עמודים, מפוזרות באופן שווה לאורך הסיבוב (עם כיוון השעון)
-  function renderGranny(canvas, plan, N) {
-    const size = 520, dpr = Math.min(2, window.devicePixelRatio || 1);
+  function renderGranny(canvas, plan, N, sizeIn) {
+    const size = sizeIn || 520, dpr = Math.min(2, window.devicePixelRatio || 1);
     canvas.width = size * dpr; canvas.height = size * dpr; canvas.style.width = size + 'px'; canvas.style.height = size + 'px';
     const ctx = canvas.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.fillStyle = '#f7f3ec'; ctx.fillRect(0, 0, size, size);
@@ -1350,8 +1479,7 @@
       yarns: [newYarn('#0f5e63'), newYarn('#f6c453'), { name: '', kind: 'vari', colors: ['#ff7a59', '#8a4f7d', '#f4ede1'], len: 5 }],
       seq: [],
     };
-    const info = data && data.info ? { ...emptyInfo('crochet'), ...data.info } : { ...emptyInfo('crochet'), designer: defaults0.designer || '' };
-    let withPdf = !existing || !!(existing.ids && existing.ids.pdf);
+    void defaults0;
     const fitSeq = () => {
       const n = plan.mode === 'granny' ? plan.N : plan.H;
       while (plan.seq.length < n) plan.seq.push(plan.seq.length % plan.yarns.length);
@@ -1361,8 +1489,14 @@
     const ed = editorShell('🌈 ' + t('cpTitle'), (data && data.title) || '', existing, save);
     const canvas = el('canvas', { class: 'studio-canvas' });
     const palBox = el('div', { class: 'pal' });
+    const cvWrap = el('div', { class: 'studio-canvas-wrap' }, canvas);
+    // ריבוע הסבתא מתאים את עצמו לרוחב המסך
+    const grannySize = () => {
+      const cs2 = getComputedStyle(cvWrap), padX = (parseFloat(cs2.paddingLeft) || 0) + (parseFloat(cs2.paddingRight) || 0);
+      return Math.max(200, Math.min(520, Math.floor((cvWrap.clientWidth || 540) - padX - 4)));
+    };
     const redraw = () => {
-      const used = plan.mode === 'granny' ? renderGranny(canvas, plan, plan.N) : renderStripes(canvas, plan, plan.W, plan.H, plan.work);
+      const used = plan.mode === 'granny' ? renderGranny(canvas, plan, plan.N, grannySize()) : renderStripes(canvas, plan, plan.W, plan.H, plan.work);
       paletteBars(palBox, paletteOf(used));
     };
     const label = (r) => (plan.mode === 'granny' ? t('cpRound', { n: r + 1 }) : t('cpRowN', { n: r + 1 }));
@@ -1381,21 +1515,24 @@
       fitSeq(); pe.refresh(); redraw();
     };
     mode.onchange = () => { plan.mode = mode.value; ed.setDirty(); sync(); };
-    nIn.onchange = () => { plan.N = Math.max(1, Math.min(30, Number(nIn.value) | 0)); ed.setDirty(); sync(); };
-    wIn.onchange = () => { plan.W = Math.max(4, Math.min(200, Number(wIn.value) | 0)); ed.setDirty(); sync(); };
-    hIn.onchange = () => { plan.H = Math.max(2, Math.min(200, Number(hIn.value) | 0)); ed.setDirty(); sync(); };
+    // מתעדכן תוך כדי הקלדה (ולא רק ביציאה מהשדה)
+    const numIn = (inp, fn) => inp.addEventListener('input', () => { if (inp.value === '') return; fn(Number(inp.value) | 0); ed.setDirty(); sync(); });
+    numIn(nIn, (v) => { plan.N = Math.max(1, Math.min(30, v)); });
+    numIn(wIn, (v) => { plan.W = Math.max(4, Math.min(200, v)); });
+    numIn(hIn, (v) => { plan.H = Math.max(2, Math.min(200, v)); });
     work.onchange = () => { plan.work = work.value; ed.setDirty(); redraw(); };
-    const pdfChk = el('input', { type: 'checkbox' }); pdfChk.checked = withPdf; pdfChk.onchange = () => { withPdf = pdfChk.checked; };
-    const planPane = el('div', {},
+    ed.body.append(
       el('div', { class: 'studio-panel' },
         el('div', { class: 'studio-row' }, el('label', {}, t('cpMode'), mode), el('span', { class: 'pro-badge' }, t('cpPro'))),
-        grannyRow, stripeRow,
-        el('label', { class: 'chk' }, pdfChk, t('exportPdf'))),
+        grannyRow, stripeRow),
       el('div', { class: 'studio-panel' }, el('div', { class: 'studio-sub' }, t('cpPalette')), palBox),
-      el('div', { class: 'studio-canvas-wrap' }, canvas),
+      cvWrap,
       el('div', { class: 'studio-panel' }, pe));
-    editorTabs(ed, [[t('tabChart'), planPane], [t('tabInfo'), infoForm(info, ed)]]);
+    let rzT = 0;
+    const onRz = () => { if (!document.body.contains(cvWrap)) { removeEventListener('resize', onRz); return; } clearTimeout(rzT); rzT = setTimeout(redraw, 150); };
+    addEventListener('resize', onRz);
     sync();
+    requestAnimationFrame(redraw);
 
     async function save(name) {
       // תמונה: התצוגה + הפלטה + מקרא החוטים
@@ -1410,7 +1547,8 @@
       ctx.font = '16px system-ui'; ctx.fillStyle = '#555'; ctx.fillText(`${t('cpTitle')} · ${plan.mode === 'granny' ? t('cpGranny') : t('cpStripes')}`, tx, 62);
       ctx.drawImage(canvas, pad, 80);
       let y = 80 + canvas.height + 30;
-      const pal = paletteOf(plan.mode === 'granny' ? renderGranny(document.createElement('canvas'), plan, plan.N) : renderStripes(document.createElement('canvas'), plan, plan.W, plan.H, plan.work));
+      if (plan.mode === 'granny') renderGranny(canvas, plan, plan.N, 520);
+      const pal = paletteOf(plan.mode === 'granny' ? renderGranny(document.createElement('canvas'), plan, plan.N, 520) : renderStripes(document.createElement('canvas'), plan, plan.W, plan.H, plan.work));
       let x = pad; const bw = out.width - pad * 2;
       for (const p2 of pal.slice(0, 14)) { ctx.fillStyle = p2.c; ctx.fillRect(x, y, bw * p2.p, 18); x += bw * p2.p; }
       y += 40; ctx.font = '15px system-ui';
@@ -1420,17 +1558,11 @@
         ctx.fillStyle = '#222'; ctx.fillText(yarnLabel(yn, i) + (yn.kind !== 'solid' ? ` (${t(yn.kind === 'grad' ? 'cpGrad' : 'cpVari')})` : ''), rtl ? bx - 10 : bx + 70, y + 14);
         y += 28;
       });
+      redraw();
       const png = await canvasBlob(out);
-      const rows = plan.seq.map((yi, r) => `${label(r)}: ${yarnLabel(plan.yarns[yi], yi)}`);
-      const data2 = { type: 'colors', v: 1, title: name, plan, info };
-      const defaults = (await loadDefaults()).d;
+      const data2 = { type: 'colors', v: 1, title: name, plan, ...(data && data.info ? { info: data.info } : {}) };
       const r = await busy(t('stSaving'), async () => {
         const outputs = [{ key: 'main', blob: png, name: name + '.png' }];
-        if (withPdf) {
-          $('#busyText').textContent = t('pdfMaking');
-          const html = patternHtml({ title: name, w: info, chartUrl: await blobDataUrl(png), rowsTitle: t('cpSeq'), rows, defaults, kind: t('cpTitle') });
-          outputs.push({ key: 'pdf', blob: await htmlToPdf(html, ed.folder.id), name: name + '.pdf' });
-        }
         return saveDesign({ type: 'colors', name, data: data2, outputs, existing, folderId: ed.folder.id });
       });
       existing = { jsonId: r.jsonId, ids: r.ids, folderId: ed.folder.id, folderName: ed.folder.name };
@@ -1506,7 +1638,7 @@
     renderFiles();
     openModal(t('dBtn'), el('div', { class: 'studio-panel written' },
       el('p', { class: 'muted small-note' }, t('dHint')),
-      el('label', { class: 'w-field' }, el('span', {}, t('wDesigner')), designer),
+      el('label', { class: 'w-field' }, el('span', {}, t('dDesigner')), designer),
       el('label', { class: 'w-field' }, el('span', {}, t('dCopyright')), copy),
       el('label', { class: 'w-field' }, el('span', {}, t('dGeneral')), general),
       el('div', { class: 'studio-sub' }, t('dFiles')), filesBox, add, fileInput),
@@ -1521,19 +1653,24 @@
      ========================================================= */
   const ABBR = {
     knit: {
-      he: 'ימ׳ = ימין · שמ׳ = שמאל · 2 יחד ימ׳ = סריגת 2 עיניים יחד בימין · ליפוף = הנחת החוט על המסרגה · החל׳ = החלקת עין · צ״י = צד ימין · צ״ש = צד שמאל · ח״ז = חזרה',
-      en: 'k = knit · p = purl · k2tog = knit 2 together · ssk = slip, slip, knit · yo = yarn over · sl = slip · RS = right side · WS = wrong side · rep = repeat · st(s) = stitch(es)',
+      he: 'ימ׳ = ימין\nשמ׳ = שמאל\n2 יחד ימ׳ = סריגת 2 עיניים יחד בימין\nליפוף = הנחת החוט על המסרגה\nהחל׳ = החלקת עין\nצ״י = צד ימין\nצ״ש = צד שמאל\nח״ז = חזרה',
+      en: 'k = knit\np = purl\nk2tog = knit 2 together\nssk = slip, slip, knit\nyo = yarn over\nsl = slip\nRS = right side\nWS = wrong side\nrep = repeat\nst(s) = stitch(es)',
     },
     crochet: {
-      he: 'ע״ש = עין שרשרת (ch) · ע״ח = עין חיבור (sl st) · ח״ע = חצי עמוד (sc) · ע״נ = עמוד נמוך (hdc) · ע׳ = עמוד (dc) · ע״כ = עמוד כפול (tr) · הגד׳ = הגדלה · הור׳ = הורדה · ח״ז = חזרה',
-      en: 'ch = chain · sl st = slip stitch · sc = single crochet · hdc = half double crochet · dc = double crochet · tr = treble · inc = increase · dec = decrease · rep = repeat · st(s) = stitch(es)',
+      he: 'ע״ש = עין שרשרת (ch)\nע״ח = עין חיבור (sl st)\nח״ע = חצי עמוד (sc)\nע״נ = עמוד נמוך (hdc)\nע׳ = עמוד (dc)\nע״כ = עמוד כפול (tr)\nהגד׳ = הגדלה\nהור׳ = הורדה\nח״ז = חזרה',
+      en: 'ch = chain\nsl st = slip stitch\nsc = single crochet\nhdc = half double crochet\ndc = double crochet\ntr = treble\ninc = increase\ndec = decrease\nrep = repeat\nst(s) = stitch(es)',
     },
   };
-  const emptyInfo = (craft) => ({ craft: craft || 'knit', level: '', designer: '', sizes: '', measure: '', yarn: '', tools: '', gauge: '', notions: '', abbr: '', notes: '', sections: [{ title: '', text: '' }], cover: '', images: [], links: [] });
+  const emptyInfo = (craft) => ({ craft: craft || 'knit', level: '', description: '', sizes: '', yarn: '', needles: [], g: { sts: '', rows: '', unit: 'cm' }, notions: '', abbr: '', notes: '', sections: [{ title: '', text: '' }], cover: '', images: [], links: [], chartFiles: [], linked: [] });
+  const ND_TYPES = { pair: 'ndPair', circ: 'ndCirc', dpn: 'ndDpn', hook: 'ndHook' };
+  const needlesText = (w) => (w.needles || []).filter((n) => n.size || n.type).map((n) => `${t(ND_TYPES[n.type] || 'ndPair')}${n.size ? ` ${n.size} mm` : ''}`).join(' · ');
+  const gaugeText = (w) => (w.g && (w.g.sts || w.g.rows) ? t('gLine', { s: w.g.sts || '–', r: w.g.rows || '–' }) : '');
 
   function infoForm(w, ed, opts = {}) {
     w.sections = w.sections && w.sections.length ? w.sections : [{ title: '', text: '' }];
-    w.images = w.images || []; w.links = w.links || [];
+    w.images = w.images || []; w.links = w.links || []; w.needles = w.needles || []; w.g = w.g || { sts: '', rows: '', unit: 'cm' };
+    w.chartFiles = w.chartFiles || []; w.linked = w.linked || [];
+    if (!w.needles.length) w.needles.push({ type: w.craft === 'crochet' ? 'hook' : 'pair', size: '' });
     const field = (key, label, multi) => {
       const inp = multi ? el('textarea', { rows: '3' }) : el('input', { type: 'text' });
       inp.value = w[key] || '';
@@ -1551,6 +1688,58 @@
       const std = ABBR[w.craft][LANG === 'he' ? 'he' : 'en'];
       ta.value = ta.value ? ta.value + '\n' + std : std; w.abbr = ta.value; ed.setDirty();
     } }, t('wAbbrStd'));
+
+    // מסרגות: סוג (1, 2 או יותר) ומספר המסרגה
+    const ndBox = el('div', { class: 'needles' });
+    const renderNeedles = () => {
+      ndBox.innerHTML = '';
+      w.needles.forEach((n, i) => {
+        const type = el('select', {}, ...Object.entries(ND_TYPES).map(([k, v]) => el('option', { value: k }, t(v))));
+        type.value = n.type; type.onchange = () => { n.type = type.value; ed.setDirty(); };
+        const size = el('input', { type: 'number', step: '0.25', min: '0.5', max: '30', class: 'num', placeholder: 'mm', value: n.size || '' });
+        size.oninput = () => { n.size = size.value; ed.setDirty(); };
+        ndBox.append(el('div', { class: 'studio-row' }, type, el('label', {}, t('ndSize'), size),
+          w.needles.length > 1 ? el('button', { class: 'btn small danger', onclick: () => { w.needles.splice(i, 1); ed.setDirty(); renderNeedles(); } }, '✕') : null));
+      });
+    };
+    const addNeedle = el('button', { class: 'btn small', onclick: () => { w.needles.push({ type: w.needles[0] ? w.needles[0].type : 'pair', size: '' }); renderNeedles(); } }, t('ndAdd'));
+    // דוגמית 10×10 ס"מ / 4×4 אינץ'
+    const gTitle = el('span', {});
+    const gS = el('input', { type: 'number', min: '1', class: 'num', value: w.g.sts || '' });
+    const gR = el('input', { type: 'number', min: '1', class: 'num', value: w.g.rows || '' });
+    gS.oninput = () => { w.g.sts = gS.value; ed.setDirty(); }; gR.oninput = () => { w.g.rows = gR.value; ed.setDirty(); };
+    const gUnit = el('button', { class: 'btn small', onclick: () => { w.g.unit = w.g.unit === 'in' ? 'cm' : 'in'; updG(); ed.setDirty(); } });
+    const updG = () => { gTitle.textContent = t(w.g.unit === 'in' ? 'gTitleIn' : 'gTitleCm'); gUnit.textContent = t(w.g.unit === 'in' ? 'gToCm' : 'gToIn'); };
+    updG();
+    // קובץ תרשים קיים (PDF או תמונה) לצירוף
+    const cfBox = el('div', { class: 'files-list' });
+    const cfInput = el('input', { type: 'file', multiple: '', accept: 'image/*,.pdf,application/pdf', hidden: '' });
+    const renderCF = () => {
+      cfBox.innerHTML = '';
+      w.chartFiles.forEach((f, i) => cfBox.append(el('div', { class: 'file-chip' }, el('span', {}, (f.pages.length > 1 ? '📄 ' : '🖼️ ') + f.name),
+        el('button', { class: 'btn small danger', onclick: () => { w.chartFiles.splice(i, 1); ed.setDirty(); renderCF(); } }, '✕'))));
+    };
+    const addCF = el('button', { class: 'btn small', onclick: async () => {
+      const files = await pickFile(cfInput); if (!files || !files.length) return;
+      w.chartFiles.push(...await busy(t('loading'), () => filesToImages(files))); ed.setDirty(); renderCF();
+    } }, t('dAddFiles'));
+    // תרשימים מקושרים (נוצרים מכאן ומצורפים ל-PDF)
+    const lkBox = el('div', { class: 'files-list' });
+    const renderLinked = () => {
+      lkBox.innerHTML = '';
+      w.linked.forEach((l, i) => lkBox.append(el('div', { class: 'file-chip' }, el('span', {}, (l.type === 'mosaic' ? '🟪 ' : '🎨 ') + l.title),
+        el('button', { class: 'btn small danger', onclick: () => { w.linked.splice(i, 1); ed.setDirty(); renderLinked(); } }, '✕'))));
+    };
+    const makeLinked = (type) => {
+      const base = (ed.nameIn.value || '').trim();
+      const seed = { title: base ? `${base} – ${t(type === 'mosaic' ? 'stMosaic' : 'stChart')}` : '', info: { ...JSON.parse(JSON.stringify(w)), linked: [], chartFiles: [] } };
+      const onSaved = (r, title) => {
+        const ex = w.linked.find((l) => l.jsonId === r.jsonId);
+        if (ex) { ex.mainId = r.ids.main; ex.title = title; } else w.linked.push({ type, jsonId: r.jsonId, mainId: r.ids.main, title });
+        ed.setDirty(); renderLinked();
+      };
+      (type === 'mosaic' ? mosaicEditor : chartEditor)(null, null, { seed, onSaved }).catch(err);
+    };
 
     // תמונת שער
     const coverImg = el('div', { class: 'search-preview' }, '🖼️');
@@ -1609,14 +1798,21 @@
     };
     const addSec = el('button', { class: 'btn small', onclick: () => { w.sections.push({ title: '', text: '' }); renderSections(); } }, t('wAddSection'));
 
-    renderSections(); renderImgs(); renderLinks(); showCover();
+    renderSections(); renderImgs(); renderLinks(); showCover(); renderNeedles(); renderCF(); renderLinked();
     return el('div', { class: 'studio-panel written' },
       el('button', { class: 'btn small defaults-link', onclick: () => defaultsEditor().catch(err) }, t('editDefaults')),
       el('div', { class: 'studio-row' }, el('label', {}, t('stCraft'), craft), el('label', {}, t('wLevel'), level)),
-      field('designer', 'wDesigner'),
+      field('description', 'wDescription', true),
       el('div', { class: 'studio-row' }, coverImg, el('div', { class: 'search-pick-btns' }, el('b', {}, t('wCover')), pickCover, rmCover)),
-      field('tools', 'wTools'), field('yarn', 'wYarn', true), field('gauge', 'wGauge'),
-      field('sizes', 'wSizes'), field('measure', 'wMeasure'), field('notions', 'wNotions'),
+      el('div', { class: 'studio-sub' }, t('wNeedles')), ndBox, addNeedle,
+      field('yarn', 'wYarn', true),
+      el('div', { class: 'studio-sub' }, gTitle), el('div', { class: 'studio-row' }, gS, el('span', {}, t('gSts')), '×', gR, el('span', {}, t('gRows')), gUnit),
+      field('sizes', 'wFinished'), field('notions', 'wNotions'),
+      opts.linkCharts ? el('div', { class: 'studio-sub' }, t('wLinked')) : null,
+      opts.linkCharts ? el('div', { class: 'studio-row' }, el('button', { class: 'btn small primary', onclick: () => makeLinked('chart') }, t('wMakeChart')), el('button', { class: 'btn small', onclick: () => makeLinked('mosaic') }, t('wMakeMosaic'))) : null,
+      opts.linkCharts ? lkBox : null,
+      opts.linkCharts ? el('p', { class: 'muted small-note' }, t('wLinkedHint')) : null,
+      el('div', { class: 'studio-sub' }, t('wChartFiles')), cfBox, addCF, cfInput,
       abbrField, abbrBtn,
       field('notes', 'wGeneralNotes', true),
       el('div', { class: 'studio-sub' }, t('wInstructions')), secBox, addSec,
@@ -1625,11 +1821,13 @@
   }
 
   // מסמך הדוגמה המלא (HTML ← Google Docs ← PDF)
-  function patternHtml({ title, w, chartUrl, rowsTitle, rows, defaults, kind, workNotes }) {
+  function patternHtml({ title, w, chartUrl, rowsTitle, rows, defaults, kind, workNotes, extraCharts, opt }) {
+    opt = opt || { rows: true, fixed: true, imgs: true };
+    if (!opt.fixed) defaults = { designer: defaults && defaults.designer, copyright: ' ', general: '', files: [] };
     const dir = isRtl() ? 'rtl' : 'ltr';
     const br = (v) => esc(v).replace(/\n/g, '<br>');
     const row = (k, v) => (v ? `<p><b>${esc(t(k))}:</b> ${br(v)}</p>` : '');
-    const designer = w.designer || (defaults && defaults.designer) || '';
+    const designer = (defaults && defaults.designer) || w.designer || '';
     const sections = (w.sections || []).filter((x) => x.title || x.text).map((x) => `${x.title ? `<h3>${esc(x.title)}</h3>` : ''}<p>${br(x.text)}</p>`).join('');
     const links = (w.links || []).filter((l) => /^https?:\/\//.test((l.url || '').trim())).map((l) => {
       const url = l.url.trim(), yt = youtubeInfo(url);
@@ -1642,20 +1840,21 @@
     return `<!doctype html><html><head><meta charset="utf-8"></head><body dir="${dir}" style="font-family:Arial,sans-serif">
 <h1>${esc(title)}</h1>
 ${designer ? `<p>${esc(t('wDesigner'))}: ${esc(designer)}</p>` : ''}
+${w.description ? `<p>${br(w.description)}</p>` : ''}
 ${w.cover ? `<p><img src="${w.cover}" style="max-width:440px"></p>` : ''}
 <p><b>${esc(kind)}</b> · ${esc(w.craft === 'crochet' ? t('stCrochet') : t('stKnit'))}${w.level ? ` · <b>${esc(t('wLevel'))}:</b> ${esc(t(levels[w.level]))}` : ''}</p>
-${row('wTools', w.tools)}${row('wYarn', w.yarn)}${row('wGauge', w.gauge)}${row('wSizes', w.sizes)}${row('wMeasure', w.measure)}${row('wNotions', w.notions)}
+${row('wNeedles', needlesText(w) || w.tools)}${row('wYarn', w.yarn)}${row('wGauge', gaugeText(w) || w.gauge)}${row('wFinished', w.sizes)}${row('wMeasure', w.measure)}${row('wNotions', w.notions)}
 ${w.abbr ? `<h2>${esc(t('wAbbr'))}</h2><p>${br(w.abbr)}</p>` : ''}
 ${w.notes ? `<h2>${esc(t('wGeneralNotes'))}</h2><p>${br(w.notes)}</p>` : ''}
 ${workNotes ? `<h2>${esc(t('workNotes').replace(/^\S+\s/, ''))}</h2><p>${br(workNotes)}</p>` : ''}
-${chartUrl ? `<h2>${esc(t('hChart'))}</h2><p><img src="${chartUrl}" style="max-width:100%"></p>` : ''}
-${rows && rows.length ? `<h2>${esc(rowsTitle || t('hRows'))}</h2>${rows.map((l) => `<p style="margin:2px 0">${esc(l)}</p>`).join('')}` : ''}
+${chartUrl || (extraCharts && extraCharts.length) || (w.chartFiles && w.chartFiles.length) ? `<h2>${esc(t('hChart'))}</h2>` : ''}${chartUrl ? `<p><img src="${chartUrl}" style="max-width:100%"></p>` : ''}${(extraCharts || []).map((u) => `<p><img src="${u}" style="max-width:100%"></p>`).join('')}${(w.chartFiles || []).map((f) => f.pages.map((pg) => `<p><img src="${pg}" style="max-width:100%"></p>`).join('')).join('')}
+${opt.rows && rows && rows.length ? `<h2>${esc(rowsTitle || t('hRows'))}</h2>${rows.map((l) => `<p style="margin:2px 0">${esc(l)}</p>`).join('')}` : ''}
 ${sections ? `<h2>${esc(t('wInstructions'))}</h2>${sections}` : ''}
-${imgs ? `<h2>${esc(t('hImages'))}</h2>${imgs}` : ''}
-${links ? `<h2>${esc(t('hLinks'))}</h2>${links}` : ''}
+${opt.imgs && imgs ? `<h2>${esc(t('hImages'))}</h2>${imgs}` : ''}
+${opt.imgs && links ? `<h2>${esc(t('hLinks'))}</h2>${links}` : ''}
 ${defaults && defaults.general ? `<h2>${esc(t('hGeneral'))}</h2><p>${br(defaults.general)}</p>` : ''}
 ${attach ? `<h2>${esc(t('hAttach'))}</h2>${attach}` : ''}
-<hr><p style="font-size:9pt;color:#555">${br(copyrightText(defaults || {}, designer))}</p>
+${opt.fixed ? `<hr><p style="font-size:9pt;color:#555">${br(copyrightText(defaults || {}, designer))}</p>` : ''}
 </body></html>`;
   }
 
@@ -1665,19 +1864,31 @@ ${attach ? `<h2>${esc(t('hAttach'))}</h2>${attach}` : ''}
   async function writtenEditor(data, existing) {
     const { d: defaults0 } = await busy(t('loading'), loadDefaults);
     const w = data ? { ...emptyInfo(), ...data } : { ...emptyInfo(), designer: defaults0.designer || '' };
-    let withPdf = !existing || !!(existing.ids && existing.ids.pdf);
+    const pdf = { on: !existing || !!(existing.ids && existing.ids.pdf), opt: { ...PDF_OPT0(), ...(w.pdfOpt || {}) } };
+    w.pdfOpt = pdf.opt;
     const ed = editorShell('📝 ' + t('stWritten'), (data && data.title) || '', existing, save);
-    const pdfChk = el('input', { type: 'checkbox' }); pdfChk.checked = withPdf; pdfChk.onchange = () => { withPdf = pdfChk.checked; };
-    ed.body.append(infoForm(w, ed), el('div', { class: 'studio-panel' },
-      el('label', { class: 'chk' }, pdfChk, t('exportPdf')), el('p', { class: 'muted small-note' }, t('wDocNote'))));
+    ed.body.append(infoForm(w, ed, { linkCharts: true }), el('div', { class: 'studio-panel' },
+      pdfPanel(ed, pdf, writtenHtml, false), el('p', { class: 'muted small-note' }, t('wDocNote'))));
 
+    // תמונות התרשימים המקושרים (נוצרו מתוך הדוגמה הזו)
+    async function linkedCharts() {
+      const out = [];
+      for (const l of w.linked || []) {
+        if (!l.mainId) continue;
+        try { out.push(await blobDataUrl(new Blob([await drive.media(l.mainId)], { type: 'image/png' }))); } catch (e) { console.warn('linked chart', e); }
+      }
+      return out;
+    }
+    async function writtenHtml(name) {
+      const defaults = (await loadDefaults()).d;
+      return patternHtml({ title: name, w, defaults, kind: t('stWritten'), extraCharts: await linkedCharts(), opt: pdf.opt });
+    }
     async function save(name) {
       w.title = name;
-      const defaults = (await loadDefaults()).d;
-      const html = patternHtml({ title: name, w, defaults, kind: t('stWritten') });
       const r = await busy(t('stSaving'), async () => {
+        const html = await writtenHtml(name);
         const outputs = [{ key: 'main', blob: new Blob([html], { type: 'text/html' }), name, doc: true }];
-        if (withPdf) { $('#busyText').textContent = t('pdfMaking'); outputs.push({ key: 'pdf', blob: await htmlToPdf(html, ed.folder.id), name: name + '.pdf' }); }
+        if (pdf.on) { $('#busyText').textContent = t('pdfMaking'); outputs.push({ key: 'pdf', blob: await htmlToPdf(html, ed.folder.id), name: name + '.pdf' }); }
         return saveDesign({ type: 'written', name, data: { type: 'written', v: 2, ...w }, outputs, existing, folderId: ed.folder.id });
       });
       existing = { jsonId: r.jsonId, ids: r.ids, folderId: ed.folder.id, folderName: ed.folder.name };
@@ -1696,8 +1907,8 @@ ${attach ? `<h2>${esc(t('hAttach'))}</h2>${attach}` : ''}
       el('h2', { class: 'section-title' }, t('myDesigns')), where, mine,
       el('h2', { class: 'section-title' }, '＋ ' + t('newDesign')),
       el('div', { class: 'studio-cards' },
-        card('📝', t('stWritten'), t('stWrittenHint'), () => writtenEditor(null, null).catch(err)),
-        card('🎨', t('stChart'), t('stChartHint'), () => chartEditor(null, null).catch(err)),
+        card('📝', t('stWritten'), t('hintWrittenOnly'), () => writtenEditor(null, null).catch(err)),
+        card('🎨', t('stChart'), t('hintChartOnly'), () => chartEditor(null, null).catch(err)),
         card('🟪', t('stMosaic'), t('stMosaicHint'), () => mosaicEditor(null, null).catch(err)),
         card('🌈', t('cpTitle') + ' · ' + t('cpPro'), t('cpHint'), () => colorEditor(null, null).catch(err))));
     designsFolder().then((f) => { where.textContent = t('myDesignsWhere', { name: f.name }); }).catch(() => {});

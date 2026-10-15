@@ -509,3 +509,26 @@ body.studio-open { overflow: hidden; }
 .defaults-link { align-self: flex-start; }
 .rep-info { color: #b3261e; font-weight: 600; }
 .studio-stats .btn { margin-inline-start: 8px; }
+
+/* תצוגת רשימה */
+.grid.list-view { grid-template-columns: 1fr; gap: 8px; }
+.grid.list-view .card { flex-direction: row; align-items: center; min-height: 76px; }
+.grid.list-view .card .cover, .grid.list-view .card.folder .cover { width: 76px; height: 76px; aspect-ratio: auto; flex: 0 0 auto; font-size: 30px; }
+.grid.list-view .card .cover.logo-ph { background-size: 60%; }
+.grid.list-view .card .meta { flex: 1; padding: 8px 12px; }
+.grid.list-view .card .more { position: static; margin-inline-end: 8px; flex: 0 0 auto; }
+.grid.list-view .notes-badge { position: static; margin-inline-end: 4px; flex: 0 0 auto; }
+.grid.list-view .edit-pill { position: static; margin-inline-end: 4px; flex: 0 0 auto; }
+.grid.list-view .progress-dot { position: static; margin-inline-end: 6px; }
+
+/* מצב צביעה / גלילה – בורר מפולח ליד התרשים */
+.seg { display: inline-flex; border: 2px solid var(--primary); border-radius: 999px; overflow: hidden; }
+.seg-btn { border: 0; background: transparent; color: inherit; padding: 6px 14px; font: inherit; font-weight: 600; cursor: pointer; }
+.seg-btn.on { background: var(--primary); color: var(--primary-ink); }
+.canvas-tools { position: sticky; top: 0; z-index: 3; background: var(--bg, #f5efe4); padding: 6px 0; flex-wrap: wrap; align-items: center; }
+.zoom-lbl { display: inline-flex; align-items: center; gap: 4px; }
+.zoom-lbl input { width: 120px; }
+.canvas-hint { margin: 2px 16px 6px; }
+.sym-legend { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; padding: 6px 0; }
+.sym-legend-item { display: flex; align-items: center; gap: 8px; font-size: .9rem; }
+.sym-legend-item canvas { border: 1px solid #bbb; border-radius: 3px; flex: none; }

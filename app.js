@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 28;
+const APP_V = 29;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -719,8 +719,9 @@ function openModal(title, body, buttons = []) {
   const f = $('#modalFoot'); f.innerHTML = '';
   for (const btn of buttons) f.append(btn);
   $('#modal').classList.remove('hidden');
+  ensureBackEntry();
 }
-function closeModal() { $('#modal').classList.add('hidden'); }
+function closeModal() { $('#modal').classList.add('hidden'); setTimeout(consumeBackEntry, 0); }
 $('#modalClose').onclick = closeModal;
 $('#modal').addEventListener('click', (e) => { if (e.target.id === 'modal') closeModal(); });
 
@@ -983,6 +984,7 @@ const dash = {
   },
   render() {
     const grid = $('#grid'); grid.innerHTML = '';
+    grid.classList.toggle('list-view', store.get('viewMode', 'grid') === 'list');
     const q = $('#searchInput').value.trim().toLowerCase();
     const items = this.items.filter((f) => !q || f.name.toLowerCase().includes(q));
     $('#emptyNote').classList.toggle('hidden', items.length > 0);
@@ -1043,7 +1045,7 @@ const dash = {
     // לחיצה ארוכה (בטלפון) או קליק ימני (במחשב) פותחים את אותו תפריט
     card.addEventListener('contextmenu', (e) => { e.preventDefault(); showMenu(more); });
     card.addEventListener('click', () => {
-      if (isFolder) { nav.push(f); $('#searchInput').value = ''; this.load(); scrollTo(0, 0); }
+      if (isFolder) { nav.push(f); $('#searchInput').value = ''; this.load(); scrollTo(0, 0); ensureBackEntry(); }
       else openFile(f);
     });
     return card;
@@ -1157,7 +1159,7 @@ async function openFile(f, localBlob) {
   setSync(V.local ? t('localFile') : '');
   content.innerHTML = '';
   show('#viewerView');
-  if (location.hash !== '#view') history.pushState({ view: 1 }, '', '#view');
+  ensureBackEntry();
   applyRulers();
   applyLock();
   updateCounter();
@@ -1571,14 +1573,41 @@ function closeViewer(fromPop) {
   if (V.pdf) V.pdf.destroy();
   V.pdf = null; V.file = null; V.pages = []; V.frameUrl = null;
   content.innerHTML = '';
-  if (!fromPop && location.hash === '#view') history.back();
   start();
+  if (!fromPop) consumeBackEntry();
 }
 $('#closeViewerBtn').onclick = () => closeViewer();
 $('#notesBtn').onclick = () => { if (V.file && !V.local) openNotes(V.file, () => {}); };
 $('#extBtn').onclick = () => { if (V.linkUrl) window.open(V.linkUrl, '_blank', 'noopener'); };
+/* ---------------- כפתור "חזרה" של הטלפון ---------------- */
+// כל עוד יש לאן לחזור (חלון, עורך, דוגמה פתוחה, תת-תיקייה) שומרים רשומה בהיסטוריה,
+// וכפתור החזרה סוגר את השכבה העליונה במקום לצאת מהאפליקציה.
+const isOpen = (sel) => { const e = $(sel); return !!e && !e.classList.contains('hidden'); };
+function backable() {
+  return isOpen('#modal') || isOpen('#menu') || !!document.querySelector('.studio-editor') || isOpen('#viewerView') ||
+    isOpen('#studioPane') || nav.path.length > 0;
+}
+let ignorePop = false;
+function ensureBackEntry() {
+  if (!(history.state && history.state.mp)) history.pushState({ mp: 1 }, '');
+}
+function consumeBackEntry() {
+  if (!backable() && history.state && history.state.mp) { ignorePop = true; history.back(); }
+}
+function handleBack() {
+  if (isOpen('#menu')) { closeMenu(); return; }
+  if (isOpen('#modal')) { $('#modalClose').click(); return; }
+  if (!notesPop.classList.contains('hidden')) { hideNotesPop(); return; }
+  const eds = document.querySelectorAll('.studio-editor'), editor = eds[eds.length - 1];
+  if (editor) { editor.querySelector('.studio-top .back-arrow').click(); return; }
+  if (isOpen('#viewerView')) { closeViewer(true); return; }
+  if (isOpen('#studioPane')) { setTab('patterns'); return; }
+  if (nav.path.length) { nav.to(nav.path.length - 1); dash.load(); }
+}
 window.addEventListener('popstate', () => {
-  if (!$('#viewerView').classList.contains('hidden')) closeViewer(true);
+  if (ignorePop) { ignorePop = false; return; }
+  handleBack();
+  if (backable()) ensureBackEntry();
 });
 document.addEventListener('visibilitychange', () => { if (document.hidden && V.file) saveState(); });
 
@@ -1657,7 +1686,7 @@ function setTab(tab) {
   $('#patternsPane').classList.toggle('hidden', studio);
   $('#studioPane').classList.toggle('hidden', !studio);
   $('#addBtn').classList.toggle('hidden', studio);
-  if (studio) loadStudio().then(() => Studio.home($('#studioPane'))).catch(err);
+  if (studio) { ensureBackEntry(); loadStudio().then(() => Studio.home($('#studioPane'))).catch(err); } else setTimeout(consumeBackEntry, 0);
 }
 $('#tabPatterns').onclick = () => setTab('patterns');
 $('#tabStudio').onclick = () => setTab('studio');
@@ -1674,10 +1703,8 @@ function openSettings() {
     row('©️ ' + t('defaultsRow'), t('defaultsRowHint'), el('button', { class: 'btn', onclick: () => { closeModal(); loadStudio().then(() => Studio.defaults()).catch(err); } }, t('change'))),
     isInstalled() ? null : row('📲 ' + t('installTitle'), t('installHint'),
       el('button', { class: 'btn primary', onclick: () => { closeModal(); installApp(); } }, t('install'))),
-    row(t('patternsFolder'), root ? root.name : t('notChosen'),
+    row('📁 ' + t('rootFolder') + ': ' + (root ? root.name : t('notChosen')), t('rootFolderHint'),
       el('button', { class: 'btn', onclick: () => pickRootFolder().catch(err) }, t('change'))),
-    row(t('openLocalTitle'), t('openLocalHint'),
-      el('button', { class: 'btn', onclick: () => { closeModal(); document.querySelector('.open-local-btn').click(); } }, t('open'))),
     row(t('clearCache'), t('clearCacheHint'),
       el('button', { class: 'btn', onclick: async () => { indexedDB.deleteDatabase('mypatterns'); toast(t('cacheCleared')); setTimeout(() => location.reload(), 600); } }, t('clear'))),
     // המזהים עצמם לא מוצגים – רק אם הם מוגדרים
@@ -1742,7 +1769,10 @@ $('#refreshBtn').onclick = () => dash.load(true);
 $('#settingsBtn').onclick = openSettings;
 $('#addBtn').onclick = openAddSheet;
 $('#newFolderBtn').onclick = () => newFolder();
-$('#backBtn').onclick = () => { nav.to(nav.path.length - 1); dash.load(); };
+function updViewBtn() { const list = store.get('viewMode', 'grid') === 'list'; $('#viewBtn').textContent = list ? '▦' : '☰'; $('#viewBtn').title = list ? t('viewGrid') : t('viewList'); }
+$('#viewBtn').onclick = () => { store.set('viewMode', store.get('viewMode', 'grid') === 'list' ? 'grid' : 'list'); updViewBtn(); dash.render(); };
+updViewBtn();
+$('#backBtn').onclick = () => { nav.to(nav.path.length - 1); dash.load(); setTimeout(consumeBackEntry, 0); };
 $('#searchInput').oninput = () => dash.render();
 $('#reauthBtn').onclick = async () => {
   try { await auth.request(''); $('#authNote').classList.add('hidden'); dash.load(true); } catch (e) { err(e); }
@@ -1806,7 +1836,7 @@ if (window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc = 'vendor/pdf.worker
 if ('serviceWorker' in navigator && location.protocol !== 'file:') {
   navigator.serviceWorker.register('sw.js').catch(() => {});
 }
-if (location.hash === '#view') history.replaceState(null, '', location.pathname);
+if (location.hash) history.replaceState(null, '', location.pathname);
 let pendingShare = takeShared();
 applyI18n();
 document.querySelectorAll('.lang-slot').forEach((slot) => {
