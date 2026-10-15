@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>MyPatterns</title>
+  <meta name="theme-color" content="#8a4f7d">
+  <meta name="description" content="שמירה ומעקב אחרי דוגמאות סריגה, מסונכרן לגוגל דרייב">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- ===== מסך הגדרה ראשונית ===== -->
+  <section id="setupView" class="screen hidden">
+    <div class="setup-card">
+      <div class="logo">🧶</div>
+      <h1>MyPatterns</h1>
+      <p class="muted">כדי לחבר את האפליקציה לגוגל דרייב צריך להזין פעם אחת מזהה לקוח (Client ID) של Google. ההוראות המלאות בקובץ README.</p>
+      <label class="field">
+        <span>Google OAuth Client ID</span>
+        <input id="clientIdInput" type="text" dir="ltr" placeholder="xxxxxxxx.apps.googleusercontent.com" autocomplete="off">
+      </label>
+      <button id="saveClientIdBtn" class="btn primary wide">שמירה והמשך</button>
+      <div class="or">או</div>
+      <button class="btn wide open-local-btn">📂 פתיחת קובץ מהמכשיר (בלי דרייב)</button>
+    </div>
+  </section>
+
+  <!-- ===== מסך התחברות ===== -->
+  <section id="loginView" class="screen hidden">
+    <div class="setup-card">
+      <div class="logo">🧶</div>
+      <h1>MyPatterns</h1>
+      <p class="muted">יש להתחבר לחשבון Google כדי לראות את הדוגמאות מהדרייב.</p>
+      <button id="loginBtn" class="btn primary wide">התחברות עם Google</button>
+      <div class="or">או</div>
+      <button class="btn wide open-local-btn">📂 פתיחת קובץ מהמכשיר</button>
+      <button id="resetClientBtn" class="btn link">שינוי Client ID</button>
+    </div>
+  </section>
+
+  <!-- ===== דשבורד ===== -->
+  <section id="dashView" class="screen hidden">
+    <header class="topbar">
+      <button id="backBtn" class="icon-btn hidden" title="חזרה" aria-label="חזרה">→</button>
+      <h1 id="dashTitle">MyPatterns</h1>
+      <div class="spacer"></div>
+      <button id="refreshBtn" class="icon-btn" title="רענון" aria-label="רענון">⟳</button>
+      <button id="addBtn" class="icon-btn" title="הוספה" aria-label="הוספה">＋</button>
+      <button id="settingsBtn" class="icon-btn" title="הגדרות" aria-label="הגדרות">⚙</button>
+    </header>
+    <nav id="crumbs" class="crumbs"></nav>
+    <div class="search-row">
+      <input id="searchInput" type="search" placeholder="חיפוש דוגמה…">
+    </div>
+    <div id="offlineNote" class="note hidden">אין חיבור – מוצגת הרשימה השמורה האחרונה.</div>
+    <div id="authNote" class="note hidden">החיבור לגוגל פג. <button id="reauthBtn" class="btn small primary">התחברות מחדש</button></div>
+    <section id="recentSection" class="hidden">
+      <h2 class="section-title">להמשיך לסרוג</h2>
+      <div id="recentRow" class="recent-row"></div>
+    </section>
+    <div id="grid" class="grid"></div>
+    <div id="emptyNote" class="empty hidden">
+      <div class="logo">🧶</div>
+      <p>התיקייה ריקה. אפשר להוסיף דוגמאות (PDF / Word / תמונה) בכפתור ＋</p>
+    </div>
+  </section>
+
+  <!-- ===== מציג דוגמה ===== -->
+  <section id="viewerView" class="screen hidden">
+    <header class="topbar viewer-top">
+      <button id="closeViewerBtn" class="icon-btn" title="חזרה" aria-label="חזרה">→</button>
+      <h1 id="viewerTitle" class="ellipsis"></h1>
+      <div class="spacer"></div>
+      <span id="syncBadge" class="sync-badge" title="סטטוס סנכרון"></span>
+      <button id="accurateBtn" class="btn small hidden" title="המרה דרך גוגל לתצוגה זהה לוורד">תצוגה מדויקת</button>
+    </header>
+    <div id="stage" class="stage">
+      <div id="scroller" class="scroller">
+        <div id="content" class="content"></div>
+      </div>
+      <div id="dimLayer" class="dim-layer hidden"></div>
+      <div id="hRuler" class="ruler h" aria-label="סרגל אופקי">
+        <div class="band"></div>
+        <div class="grip">⇕</div>
+      </div>
+      <div id="vRuler" class="ruler v" aria-label="סרגל אנכי">
+        <div class="band"></div>
+        <div class="grip">⇔</div>
+      </div>
+      <div id="viewerLoading" class="viewer-loading hidden"><div class="spinner"></div><span>טוען…</span></div>
+    </div>
+
+    <!-- פאנל הגדרות סרגלים -->
+    <div id="rulerPanel" class="ruler-panel hidden">
+      <div class="panel-grid">
+        <div class="panel-col">
+          <h3>סרגל אופקי (שורות)</h3>
+          <label class="row-field"><span>עובי</span>
+            <input id="hThick" type="range" min="3" max="250" step="1"><output id="hThickOut"></output></label>
+          <label class="row-field"><span>צבע</span><input id="hColor" type="color"></label>
+        </div>
+        <div class="panel-col">
+          <h3>סרגל אנכי (עמודות)</h3>
+          <label class="row-field"><span>עובי</span>
+            <input id="vThick" type="range" min="3" max="250" step="1"><output id="vThickOut"></output></label>
+          <label class="row-field"><span>צבע</span><input id="vColor" type="color"></label>
+        </div>
+        <div class="panel-col">
+          <h3>כללי</h3>
+          <label class="row-field"><span>שקיפות</span>
+            <input id="opacity" type="range" min="0.08" max="0.8" step="0.02"><output id="opacityOut"></output></label>
+          <label class="row-field check"><input id="dimToggle" type="checkbox"><span>האפלת שאר הדף</span></label>
+          <label class="row-field check"><input id="lockToggle" type="checkbox"><span>נעילת הדוגמה (שלא תזוז)</span></label>
+        </div>
+      </div>
+    </div>
+
+    <footer class="viewer-bar">
+      <div class="bar-group">
+        <button id="hToggle" class="tool on" title="סרגל אופקי">▬</button>
+        <button id="hUp" class="tool" title="סרגל אופקי למעלה">▲</button>
+        <button id="hDown" class="tool" title="סרגל אופקי למטה">▼</button>
+      </div>
+      <div class="bar-group">
+        <button id="vToggle" class="tool on" title="סרגל אנכי">▮</button>
+        <button id="vRight" class="tool" title="סרגל אנכי ימינה">▶</button>
+        <button id="vLeft" class="tool" title="סרגל אנכי שמאלה">◀</button>
+      </div>
+      <div class="bar-group counter" title="מונה שורות">
+        <button id="cMinus" class="tool">−</button>
+        <button id="cValue" class="counter-val" title="לחיצה לאיפוס">0</button>
+        <button id="cPlus" class="tool">+</button>
+      </div>
+      <div class="bar-group">
+        <button id="zoomOut" class="tool" title="הקטנה">−🔍</button>
+        <button id="zoomFit" class="tool" title="התאמה לרוחב">⤢</button>
+        <button id="zoomIn" class="tool" title="הגדלה">+🔍</button>
+      </div>
+      <div class="bar-group">
+        <button id="panelToggle" class="tool" title="הגדרות סרגלים">🎨</button>
+      </div>
+    </footer>
+  </section>
+
+  <!-- ===== חלונות ===== -->
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <header class="modal-head">
+        <h2 id="modalTitle"></h2>
+        <button id="modalClose" class="icon-btn" aria-label="סגירה">✕</button>
+      </header>
+      <div id="modalBody" class="modal-body"></div>
+      <footer id="modalFoot" class="modal-foot"></footer>
+    </div>
+  </div>
+
+  <div id="menu" class="menu hidden"></div>
+  <div id="toast" class="toast hidden"></div>
+  <div id="busy" class="busy hidden"><div class="spinner"></div><span id="busyText">רגע…</span></div>
+
+  <input id="imageInput" type="file" accept="image/*" hidden>
+  <input id="uploadInput" type="file" accept=".pdf,.doc,.docx,.rtf,.odt,image/*,application/pdf" multiple hidden>
+  <input id="localInput" type="file" accept=".pdf,.docx,image/*,application/pdf" hidden>
+
+  <script src="config.js"></script>
+  <script src="vendor/pdf.min.js"></script>
+  <script src="vendor/mammoth.browser.min.js" defer></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="app.js"></script>
+</body>
+</html>
