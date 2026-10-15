@@ -1,13 +1,33 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="112" fill="#8a4f7d"/>
-  <circle cx="256" cy="268" r="150" fill="#f3c6dc"/>
-  <g fill="none" stroke="#b0638f" stroke-width="14" stroke-linecap="round">
-    <path d="M130 220 C200 180 320 180 384 230"/>
-    <path d="M110 280 C200 230 330 240 402 300"/>
-    <path d="M140 350 C220 300 320 310 380 360"/>
-    <path d="M200 125 C170 220 180 330 240 412"/>
-    <path d="M300 122 C340 220 330 330 290 414"/>
+  <defs>
+    <pattern id="knit" x="118" y="150" width="46" height="46" patternUnits="userSpaceOnUse">
+      <rect width="46" height="46" fill="#d8c3a1"/>
+      <ellipse cx="13.5" cy="23" rx="9.5" ry="20" transform="rotate(-27 13.5 23)" fill="#fffaf2" stroke="#a88c63" stroke-width="2.5"/>
+      <ellipse cx="32.5" cy="23" rx="9.5" ry="20" transform="rotate(27 32.5 23)" fill="#fffaf2" stroke="#a88c63" stroke-width="2.5"/>
+    </pattern>
+    <clipPath id="sq"><rect x="118" y="150" width="276" height="276" rx="28"/></clipPath>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#0f5e63"/>
+
+  <!-- left: two yellow knitting needles -->
+  <g stroke-linecap="round">
+    <line x1="70" y1="140" x2="250" y2="320" stroke="#f6c453" stroke-width="17"/>
+    <circle cx="64" cy="134" r="22" fill="#f6c453"/>
+    <line x1="140" y1="70" x2="320" y2="250" stroke="#f6c453" stroke-width="17"/>
+    <circle cx="134" cy="64" r="22" fill="#f6c453"/>
   </g>
-  <line x1="120" y1="440" x2="420" y2="90" stroke="#fff" stroke-width="16" stroke-linecap="round"/>
-  <circle cx="420" cy="90" r="16" fill="#fff"/>
+
+  <!-- right: orange crochet hook with a clearly visible hook head -->
+  <g transform="translate(432 50) rotate(42)">
+    <path d="M-11 330 L-11 44 Q-11 4 13 4 Q37 4 35 28 L13 34 Q5 44 11 60 L11 330 Z" fill="#ff7a59"/>
+    <rect x="-18" y="170" width="36" height="76" rx="12" fill="#ff7a59"/>
+  </g>
+
+  <!-- knitted square -->
+  <rect x="118" y="150" width="276" height="276" fill="url(#knit)" clip-path="url(#sq)"/>
+  <rect x="118" y="150" width="276" height="276" rx="28" fill="none" stroke="#fffaf2" stroke-width="9"/>
+
+  <!-- yellow ruler -->
+  <rect x="100" y="262" width="312" height="56" rx="10" fill="#ffd400" opacity=".8"/>
+  <rect x="100" y="262" width="312" height="56" rx="10" fill="none" stroke="#0b4447" stroke-width="5"/>
 </svg>

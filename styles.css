@@ -319,3 +319,4 @@ input { font: inherit; }
 .search-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
 .modal-body input[type=url] { width: 100%; padding: 11px 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); color: var(--text); }
 .frame-tip { flex-basis: 100%; background: var(--surface-2); color: var(--text); padding: 8px 10px; border-radius: 8px; line-height: 1.5; }
+.logo img { display: block; margin: 0 auto; border-radius: 22px; box-shadow: var(--shadow); }

@@ -9,14 +9,14 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=9">
+  <link rel="stylesheet" href="styles.css?v=10">
 </head>
 <body>
   <!-- ===== מסך הגדרה ראשונית ===== -->
   <section id="setupView" class="screen hidden">
     <div class="setup-card">
       <div class="lang-slot"></div>
-      <div class="logo">🧶</div>
+      <div class="logo"><img src="icons/icon.svg" alt="MyPatterns" width="96" height="96"></div>
       <h1>MyPatterns</h1>
       <p class="muted" data-i18n="setupText"></p>
       <label class="field">
@@ -37,7 +37,7 @@
   <section id="loginView" class="screen hidden">
     <div class="setup-card">
       <div class="lang-slot"></div>
-      <div class="logo">🧶</div>
+      <div class="logo"><img src="icons/icon.svg" alt="MyPatterns" width="96" height="96"></div>
       <h1>MyPatterns</h1>
       <p class="muted" data-i18n="loginText"></p>
       <button id="loginBtn" class="btn primary wide" data-i18n="loginBtn"></button>
@@ -79,7 +79,7 @@
       </div>
     </div>
     <div id="welcome" class="empty hidden">
-      <div class="logo">🧶</div>
+      <div class="logo"><img src="icons/icon.svg" alt="MyPatterns" width="96" height="96"></div>
       <h2 data-i18n="welcome"></h2>
       <p class="muted small-note" data-i18n="welcomeHelp"></p>
       <div class="empty-actions">
@@ -191,11 +191,11 @@
   <input id="uploadInput" type="file" multiple hidden>
   <input id="localInput" type="file" accept=".pdf,.docx,image/*,application/pdf" hidden>
 
-  <script src="config.js?v=9"></script>
-  <script src="i18n.js?v=9"></script>
+  <script src="config.js?v=10"></script>
+  <script src="i18n.js?v=10"></script>
   <script src="vendor/pdf.min.js"></script>
   <script src="vendor/mammoth.browser.min.js" defer></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="app.js?v=9"></script>
+  <script src="app.js?v=10"></script>
 </body>
 </html>
