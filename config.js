@@ -1,6 +1,6 @@
-// אפשר להדביק כאן את המזהים מ-Google Cloud כדי שלא יהיה צורך להזין אותם בכל מכשיר.
-// (המזהים האלה אינם סודיים – מותר שיופיעו בקוד ציבורי.)
+// המזהים של MyPatterns ב-Google Cloud.
+// (המזהים האלה אינם סודיים – הם רק מזהים את האפליקציה, ומותר שיופיעו בקוד ציבורי.)
 window.KNIT_CONFIG = {
-  clientId: '', // מסתיים ב-apps.googleusercontent.com
-  apiKey: ''    // מתחיל ב-AIza
+  clientId: '1037274139020-v6js5onc5uc49aj0jmc9dggq89lohc6b.apps.googleusercontent.com',
+  apiKey: 'AIzaSyBB5CnoubEn3Nftgziprs16L8wURQScwy8'
 };
