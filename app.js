@@ -587,14 +587,18 @@ function openImageSearch() {
     preview.textContent = '';
     preview.style.backgroundImage = `url("${URL.createObjectURL(f)}")`;
     preview.classList.add('has-img');
+    lensBtn.textContent = t('searchLensNow');
+    lensBtn.classList.add('pulse');
   } }, t('chooseImage'));
   const words = () => kw.value.trim();
   const openSearch = (url) => window.open(url, '_blank', 'noopener');
   const q = () => encodeURIComponent((words() + ' ' + t('freePatternQuery')).trim());
+  // בלי תמונה – הכפתור קודם פותח את בחירת התמונה
+  const lensBtn = el('button', { class: 'btn primary wide', onclick: () => (file ? lensSearch(file).catch(err) : pick.click()) }, t('searchLens'));
   const body = el('div', { class: 'img-search' },
     el('p', { class: 'muted' }, t('imgSearchHint')),
     el('div', { class: 'search-pick' }, preview, pick),
-    el('button', { class: 'btn primary wide', onclick: () => lensSearch(file).catch(err) }, t('searchLens')),
+    lensBtn,
     el('p', { class: 'muted', style: 'margin-top:16px' }, t('searchByWords')),
     kw,
     el('div', { class: 'search-links' },
@@ -606,26 +610,24 @@ function openImageSearch() {
   openModal(t('imgSearchTitle'), body);
 }
 
+// שליחת התמונה ישר ל-Google Lens – כמו "חיפוש תמונה ב-Google" של Chrome – בלי להעלות אותה שוב
 async function lensSearch(file) {
   if (!file) { toast(t('needImage')); return; }
-  // בטלפון: שיתוף התמונה ישירות ל-Google Lens / אפליקציית Google
-  const jpg = file;
-  const shareFile = file;
-  if (navigator.canShare && navigator.canShare({ files: [shareFile] }) && matchMedia('(pointer: coarse)').matches) {
-    try { await navigator.share({ files: [shareFile] }); return; } catch (e) { if (e.name === 'AbortError') return; }
-  }
-  // במחשב: העתקת התמונה ופתיחת חיפוש התמונות של גוגל להדבקה
-  try {
-    const png = await new Promise((res) => {
-      createImageBitmap(jpg).then((b) => {
-        const c = document.createElement('canvas'); c.width = b.width; c.height = b.height;
-        c.getContext('2d').drawImage(b, 0, 0); c.toBlob(res, 'image/png');
-      });
-    });
-    await navigator.clipboard.write([new ClipboardItem({ 'image/png': png })]);
-    toast(t('imageCopied'), 7000);
-  } catch { /* העתקה לא נתמכת – עדיין פותחים את הדף */ }
-  window.open('https://lens.google.com/', '_blank', 'noopener');
+  let w = 0, h = 0;
+  try { const bmp = await createImageBitmap(file); w = bmp.width; h = bmp.height; } catch { /* ignore */ }
+  const form = el('form', {
+    method: 'POST', enctype: 'multipart/form-data', target: '_blank', style: 'display:none',
+    action: `https://lens.google.com/v3/upload?ep=ccm&s=&st=${Date.now()}`,
+  });
+  const input = el('input', { type: 'file', name: 'encoded_image' });
+  const dt = new DataTransfer();
+  dt.items.add(file);
+  input.files = dt.files;
+  form.append(input);
+  if (w && h) form.append(el('input', { type: 'hidden', name: 'processed_image_dimensions', value: `${w},${h}` }));
+  document.body.append(form);
+  form.submit();
+  setTimeout(() => form.remove(), 1000);
 }
 
 /* ---------------- ניווט ---------------- */

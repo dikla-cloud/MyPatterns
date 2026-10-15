@@ -361,3 +361,5 @@ input { font: inherit; }
 .sheet-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .sheet-text b { font-size: 15px; }
 .sheet-text small { color: var(--muted); font-size: 13px; line-height: 1.35; }
+.btn.pulse { animation: pulse 1.4s ease-in-out 2; }
+@keyframes pulse { 50% { transform: scale(1.03); box-shadow: 0 0 0 6px rgba(246, 196, 83, .45); } }
