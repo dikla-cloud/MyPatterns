@@ -29,7 +29,7 @@
 
 ### 1. אחסון האתר
 GitHub Pages: מאגר `MyPatterns` ← Settings ← Pages ← Source: `Deploy from a branch`, ולבחור ב-`main` / `/ (root)`.
-הכתובת תהיה `https://USERNAME.github.io/MyPatterns/`.
+הכתובת תהיה `https://dikla-cloud.github.io/MyPatterns/`.
 
 ### 2. הגדרה ב-Google Cloud (כ-10 דקות)
 1. **פרויקט:** https://console.cloud.google.com ← בורר הפרויקטים ← **New Project** ← שם `MyPatterns` ← **Create**. מוודאים שהפרויקט נבחר.
@@ -41,10 +41,10 @@ GitHub Pages: מאגר `MyPatterns` ← Settings ← Pages ← Source: `Deploy f
    - **Audience** ← **Test users** ← **Add users** ← הג'ימייל שלך ← Save.
    - **Data Access** ← **Add or remove scopes** ← מסמנים את `.../auth/drive.file` ← Update ← Save.
 4. **Client ID:** **Clients** ← **Create client** ← Web application ← שם `MyPatterns web`.
-   - **Authorized JavaScript origins** ← Add URI ← `https://USERNAME.github.io` (בלי נתיב ובלי `/` בסוף).
+   - **Authorized JavaScript origins** ← Add URI ← `https://dikla-cloud.github.io` (בלי נתיב ובלי `/` בסוף).
    - Create ← מעתיקים את ה-**Client ID**.
 5. **מפתח API:** מחפשים **Credentials** ← **Create credentials** ← **API key** ← מעתיקים (מתחיל ב-`AIza`).
-   - מומלץ ללחוץ על המפתח ← **Application restrictions: Websites** ← מוסיפים `https://USERNAME.github.io/*`.
+   - מומלץ ללחוץ על המפתח ← **Application restrictions: Websites** ← מוסיפים `https://dikla-cloud.github.io/*`.
    - **API restrictions: Restrict key** ← מסמנים **Google Picker API** ← Save.
 6. פותחים את האפליקציה, מדביקים Client ID ו-API key ← מתחברים ← בוחרים תיקייה.
    אפשר גם לכתוב את שניהם ב-`config.js`, וכך לא צריך להזין אותם בכל מכשיר. שני המזהים אינם סודיים.
