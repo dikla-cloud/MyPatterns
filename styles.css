@@ -285,3 +285,6 @@ input { font: inherit; }
 .empty-actions .btn { min-width: 260px; }
 .empty h2 { margin: 6px 0; }
 .grant-row { text-align: center; padding: 0 16px 90px; }
+
+.panel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+.panel-head b { font-size: 15px; }

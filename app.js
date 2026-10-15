@@ -1120,12 +1120,16 @@ function applyLock() {
 }
 
 // פאנל הגדרות סרגלים
-$('#panelToggle').onclick = () => {
-  const p = $('#rulerPanel');
-  p.classList.toggle('hidden');
-  $('#panelToggle').classList.toggle('on', !p.classList.contains('hidden'));
+function setPanel(open) {
+  $('#rulerPanel').classList.toggle('hidden', !open);
+  $('#panelToggle').classList.toggle('on', open);
   requestAnimationFrame(applyRulers);
-};
+}
+const panelOpen = () => !$('#rulerPanel').classList.contains('hidden');
+$('#panelToggle').onclick = () => setPanel(!panelOpen());
+$('#panelClose').onclick = () => setPanel(false);
+// לחיצה על הדוגמה סוגרת את הפאנל
+scroller.addEventListener('pointerdown', () => { if (panelOpen()) setPanel(false); });
 function syncPanel() {
   if (!V.st) return;
   $('#hThick').value = V.st.h.th; $('#hThickOut').textContent = V.st.h.th;
@@ -1146,12 +1150,16 @@ $('#lockToggle').onchange = (e) => { V.st.lock = e.target.checked ? 1 : 0; apply
 // מקלדת במחשב
 document.addEventListener('keydown', (e) => {
   if ($('#viewerView').classList.contains('hidden') || !V.st) return;
+  if (e.key === 'Escape') {
+    e.preventDefault();
+    if (panelOpen()) { setPanel(false); e.target.blur && e.target.blur(); } else closeViewer();
+    return;
+  }
   if (e.target.matches('input')) return;
   const map = { ArrowUp: ['h', -1], ArrowDown: ['h', 1], ArrowLeft: ['v', -1], ArrowRight: ['v', 1] };
   if (map[e.key]) { e.preventDefault(); stepRuler(...map[e.key]); }
   else if (e.key === '+' || e.key === '=') { V.st.c++; updateCounter(); saveStateSoon(); }
   else if (e.key === '-') { V.st.c = Math.max(0, V.st.c - 1); updateCounter(); saveStateSoon(); }
-  else if (e.key === 'Escape') closeViewer();
 });
 
 $('#accurateBtn').onclick = async () => {
@@ -1166,6 +1174,7 @@ $('#accurateBtn').onclick = async () => {
 };
 
 function closeViewer(fromPop) {
+  setPanel(false);
   if (V.file) saveState();
   if (V.observer) V.observer.disconnect();
   if (V.pdf) V.pdf.destroy();

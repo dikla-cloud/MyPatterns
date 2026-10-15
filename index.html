@@ -9,7 +9,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
   <!-- ===== מסך הגדרה ראשונית ===== -->
@@ -114,6 +114,10 @@
 
     <!-- פאנל הגדרות סרגלים -->
     <div id="rulerPanel" class="ruler-panel hidden">
+      <div class="panel-head">
+        <b>הגדרות סרגלים</b>
+        <button id="panelClose" class="btn small primary">✓ סיום</button>
+      </div>
       <div class="panel-grid">
         <div class="panel-col">
           <h3>סרגל אופקי (שורות)</h3>
@@ -184,10 +188,10 @@
   <input id="uploadInput" type="file" accept=".pdf,.doc,.docx,.rtf,.odt,image/*,application/pdf" multiple hidden>
   <input id="localInput" type="file" accept=".pdf,.docx,image/*,application/pdf" hidden>
 
-  <script src="config.js?v=4"></script>
+  <script src="config.js?v=5"></script>
   <script src="vendor/pdf.min.js"></script>
   <script src="vendor/mammoth.browser.min.js" defer></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="app.js?v=4"></script>
+  <script src="app.js?v=5"></script>
 </body>
 </html>
