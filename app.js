@@ -323,12 +323,25 @@ async function rescanCover(f) {
   dash.load(true);
 }
 
+// מחיקת דוגמה (גם תמונה שהועלתה כדוגמה) – מעבר לאשפה של הדרייב, אפשר לשחזר משם
+async function deletePattern(f) {
+  if (!confirm(t('deleteConfirm', { name: f.name }))) return;
+  await busy(t('deleting'), async () => {
+    await drive.patch(f.id, { trashed: true });
+    const c = coverOf(f);
+    if (c) drive.patch(c, { trashed: true }).catch(() => {});
+  });
+  store.set('recent', store.get('recent', []).filter((r) => r.id !== f.id));
+  toast(t('deleted'), 4000);
+  dash.load(true);
+}
+
 async function removeCover(target) {
   const old = coverOf(target);
-  if (!old) return;
+  // גם כשהתמונה מגיעה מדוגמה שבתוך התיקייה – מסמנים שהכרטיס יישאר בלי תמונה
   await busy(t('removingImage'), async () => {
     await drive.patch(target.id, { appProperties: { kpCover: 'none' } });
-    drive.patch(old, { trashed: true }).catch(() => {});
+    if (old) drive.patch(old, { trashed: true }).catch(() => {});
   });
   dash.load(true);
 }
@@ -589,7 +602,21 @@ function openImageSearch() {
     preview.classList.add('has-img');
     lensBtn.textContent = t('searchLensNow');
     lensBtn.classList.add('pulse');
+    pick.textContent = t('replaceSearchImage');
+    clearBtn.classList.remove('hidden');
+    // בטלפון ממשיכים מיד ל-Google Lens
+    if (matchMedia('(pointer: coarse)').matches) { toast(t('openingLens')); setTimeout(() => lensSearch(file, true).catch(err), 300); }
   } }, t('chooseImage'));
+  const clearBtn = el('button', { class: 'btn danger hidden', onclick: () => {
+    file = null;
+    preview.style.backgroundImage = '';
+    preview.classList.remove('has-img');
+    preview.textContent = '📷';
+    pick.textContent = t('chooseImage');
+    lensBtn.textContent = t('searchLens');
+    lensBtn.classList.remove('pulse');
+    clearBtn.classList.add('hidden');
+  } }, t('removeSearchImage'));
   const words = () => kw.value.trim();
   const openSearch = (url) => window.open(url, '_blank', 'noopener');
   const q = () => encodeURIComponent((words() + ' ' + t('freePatternQuery')).trim());
@@ -597,7 +624,7 @@ function openImageSearch() {
   const lensBtn = el('button', { class: 'btn primary wide', onclick: () => (file ? lensSearch(file).catch(err) : pick.click()) }, t('searchLens'));
   const body = el('div', { class: 'img-search' },
     el('p', { class: 'muted' }, t('imgSearchHint')),
-    el('div', { class: 'search-pick' }, preview, pick),
+    el('div', { class: 'search-pick' }, preview, el('div', { class: 'search-pick-btns' }, pick, clearBtn)),
     lensBtn,
     el('p', { class: 'muted', style: 'margin-top:16px' }, t('searchByWords')),
     kw,
@@ -611,12 +638,13 @@ function openImageSearch() {
 }
 
 // שליחת התמונה ישר ל-Google Lens – כמו "חיפוש תמונה ב-Google" של Chrome – בלי להעלות אותה שוב
-async function lensSearch(file) {
+async function lensSearch(file, sameWindow = matchMedia('(pointer: coarse)').matches) {
   if (!file) { toast(t('needImage')); return; }
   let w = 0, h = 0;
   try { const bmp = await createImageBitmap(file); w = bmp.width; h = bmp.height; } catch { /* ignore */ }
   const form = el('form', {
-    method: 'POST', enctype: 'multipart/form-data', target: '_blank', style: 'display:none',
+    // בטלפון נפתח באותו חלון (לא נחסם כחלון קופץ); חוזרים לאפליקציה בכפתור "חזרה"
+    method: 'POST', enctype: 'multipart/form-data', target: sameWindow ? '_self' : '_blank', style: 'display:none',
     action: `https://lens.google.com/v3/upload?ep=ccm&s=&st=${Date.now()}`,
   });
   const input = el('input', { type: 'file', name: 'encoded_image' });
@@ -787,7 +815,7 @@ const dash = {
     $('#welcome').classList.toggle('hidden', !!cur);
     $('.search-row').classList.toggle('hidden', !cur);
     if (!cur) {
-      $('#grid').innerHTML = ''; $('#emptyNote').classList.add('hidden'); $('#grantRow').classList.add('hidden');
+      $('#grid').innerHTML = ''; $('#emptyNote').classList.add('hidden');
       $('#crumbs').classList.add('hidden'); $('#recentSection').classList.add('hidden');
       return;
     }
@@ -838,7 +866,6 @@ const dash = {
     const q = $('#searchInput').value.trim().toLowerCase();
     const items = this.items.filter((f) => !q || f.name.toLowerCase().includes(q));
     $('#emptyNote').classList.toggle('hidden', items.length > 0);
-    $('#grantRow').classList.toggle('hidden', items.length === 0);
     for (const f of items) grid.append(this.card(f));
   },
   card(f) {
@@ -853,7 +880,7 @@ const dash = {
       const host = hostOf(linkUrl(f));
       if (host) { cover.classList.add('favicon'); cover.style.backgroundImage = `url("https://www.google.com/s2/favicons?domain=${encodeURIComponent(host)}&sz=128")`; }
     }
-    else if (isFolder) folderCover(f).then((id) => id && queueImage(id, paint)).catch(() => {});
+    else if (isFolder && !(f.appProperties && f.appProperties.kpCover === 'none')) folderCover(f).then((id) => id && queueImage(id, paint)).catch(() => {});
     else if (kind !== 'link') autoCover(f).then((id) => id && queueImage(id, paint)).catch(() => {});
     const displayName = isFolder ? f.name : f.name.replace(/\.(pdf|docx?|rtf|odt|xlsx?|ods|csv|url|jpe?g|png|gif|webp|heic)$/i, '');
     const meta = el('div', { class: 'meta' }, el('div', { class: 'name' }, displayName),
@@ -861,16 +888,20 @@ const dash = {
     const card = el('div', { class: 'card ' + (isFolder ? 'folder' : 'file'), title: f.name }, cover, meta);
     const st = !isFolder && loadLocalState(f.id);
     if (st && st.c) card.append(el('span', { class: 'progress-dot' }, t('rowN', { n: st.c })));
-    const more = el('button', { class: 'more', 'aria-label': t('options'), onclick: (e) => {
-      e.stopPropagation();
-      const items = [{ label: coverId ? t('replaceImage') : t('addImage'), fn: () => setCover(f).catch(err) }];
-      if (coverId) items.push({ label: t('removeImage'), fn: () => removeCover(f).catch(err) });
+    const showMenu = (anchor) => {
+      const shown = cover.classList.contains('has-img');
+      const items = [{ label: coverId || shown ? t('replaceImage') : t('addImage'), fn: () => setCover(f).catch(err) }];
+      if (coverId || (shown && kind !== 'image')) items.push({ label: t('removeImage'), fn: () => removeCover(f).catch(err) });
       if (kind === 'link') items.push({ label: t('openInBrowser'), fn: () => window.open(linkUrl(f), '_blank', 'noopener') });
       if (!isFolder && kind !== 'image' && kind !== 'link') items.push({ label: t('rescanImage'), fn: () => rescanCover(f).catch(err) });
+      if (!isFolder) items.push({ label: t('deleteFile'), fn: () => deletePattern(f).catch(err) });
       items.push({ label: t('openInDrive'), fn: () => window.open(`https://drive.google.com/${isFolder ? 'drive/folders/' : 'file/d/'}${f.id}`, '_blank') });
-      openMenu(e.currentTarget, items);
-    } }, '⋯');
+      openMenu(anchor, items);
+    };
+    const more = el('button', { class: 'more', 'aria-label': t('options'), onclick: (e) => { e.stopPropagation(); showMenu(e.currentTarget); } }, '⋯');
     card.append(more);
+    // לחיצה ארוכה (בטלפון) או קליק ימני (במחשב) פותחים את אותו תפריט
+    card.addEventListener('contextmenu', (e) => { e.preventDefault(); showMenu(more); });
     card.addEventListener('click', () => {
       if (isFolder) { nav.push(f); $('#searchInput').value = ''; this.load(); scrollTo(0, 0); }
       else openFile(f);
@@ -1450,8 +1481,6 @@ function openSettings() {
       el('button', { class: 'btn primary', onclick: () => { closeModal(); installApp(); } }, t('install'))),
     row(t('patternsFolder'), root ? root.name : t('notChosen'),
       el('button', { class: 'btn', onclick: () => pickRootFolder().catch(err) }, t('change'))),
-    row(t('pickFromDrive'), t('pickFromDriveHint'),
-      el('button', { class: 'btn', onclick: () => grantAccess().catch(err) }, t('choose'))),
     row(t('openLocalTitle'), t('openLocalHint'),
       el('button', { class: 'btn', onclick: () => { closeModal(); document.querySelector('.open-local-btn').click(); } }, t('open'))),
     row(t('clearCache'), t('clearCacheHint'),
@@ -1537,7 +1566,6 @@ $('#saveClientIdBtn').onclick = () => {
 $('#resetClientBtn').onclick = () => { store.set('clientId', ''); store.set('apiKey', ''); start(); };
 $('#pickExistingBtn').onclick = () => pickRootFolder().catch(err);
 $('#createRootBtn').onclick = () => createRootFolder().catch(err);
-document.querySelectorAll('.grant-btn').forEach((b) => { b.onclick = () => grantAccess().catch(err); });
 document.querySelectorAll('.upload-btn').forEach((b) => { b.onclick = openAddSheet; });
 $('#loginBtn').onclick = async () => {
   try {
