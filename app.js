@@ -585,7 +585,7 @@ function openImageSearch() {
     kw,
     el('div', { class: 'search-links' },
       el('button', { class: 'btn', onclick: () => openSearch(`https://www.google.com/search?q=${q()}`) }, 'Google'),
-      el('button', { class: 'btn', onclick: () => openSearch(`https://www.ravelry.com/patterns/search#query=${encodeURIComponent(words())}&availability=free`) }, t('searchRavelry')),
+      el('button', { class: 'btn', onclick: () => openSearch(`https://www.ravelry.com/patterns/search#query=${encodeURIComponent(words())}`) }, t('searchRavelry')),
       el('button', { class: 'btn', onclick: () => openSearch(`https://www.pinterest.com/search/pins/?q=${q()}`) }, 'Pinterest'),
       el('button', { class: 'btn', onclick: () => openSearch(`https://www.etsy.com/search?q=${encodeURIComponent((words() + ' knitting pattern').trim())}`) }, 'Etsy')),
     el('p', { class: 'muted small-note' }, t('foundTip')));
