@@ -225,6 +225,8 @@ function kindOf(f) {
 const KIND_LABEL = { pdf: 'PDF', docx: 'WORD', doc: 'WORD', gdoc: 'DOC', image: 'תמונה' };
 const KIND_ICON = { folder: '🧶', pdf: '📄', docx: '📝', doc: '📝', gdoc: '📝', image: '🖼️' };
 const isAppImage = (f) => f.appProperties && f.appProperties.kpRole === 'image';
+// מזהה התמונה המייצגת ('none' = הוסרה בכוונה ולא מחפשים אוטומטית)
+const coverOf = (f) => { const c = f && f.appProperties && f.appProperties.kpCover; return c && c !== 'none' ? c : null; };
 
 /* ---------------- תמונות ---------------- */
 const imgUrlCache = new Map();
@@ -284,30 +286,195 @@ function pickFile(input) {
 async function setCover(target) {
   const file = await pickFile($('#imageInput'));
   if (!file) return;
-  await busy('מעלה תמונה…', async () => {
-    const blob = await resizeImage(file);
-    const parent = target.mimeType === FOLDER ? target.id : ((target.parents && target.parents[0]) || nav.current().id);
-    const img = await drive.upload(blob, {
-      name: `_תמונה_${target.name}.jpg`, parents: [parent], mimeType: 'image/jpeg',
-      appProperties: { kpRole: 'image', kpFor: target.id },
-    });
-    const old = target.appProperties && target.appProperties.kpCover;
-    await drive.patch(target.id, { appProperties: { kpCover: img.id } });
-    if (old) drive.patch(old, { trashed: true }).catch(() => {});
-    await idb.put('blobs', 'img:' + img.id, blob);
-  });
+  await busy('מעלה תמונה…', async () => saveCover(target, await resizeImage(file)));
   toast('התמונה נשמרה');
   dash.load(true);
 }
 
+// מעלה תמונה לדרייב ומקשר אותה לקובץ/תיקייה
+async function saveCover(target, blob, extraProps = {}) {
+  const parent = target.mimeType === FOLDER ? target.id : ((target.parents && target.parents[0]) || nav.current().id);
+  const img = await drive.upload(blob, {
+    name: `_תמונה_${target.name}.jpg`, parents: [parent], mimeType: 'image/jpeg',
+    appProperties: { kpRole: 'image', kpFor: target.id },
+  });
+  await idb.put('blobs', 'img:' + img.id, blob);
+  const old = coverOf(target);
+  const updated = await drive.patch(target.id, { appProperties: { kpCover: img.id, ...extraProps } });
+  target.appProperties = updated.appProperties;
+  if (old) drive.patch(old, { trashed: true }).catch(() => {});
+  return img.id;
+}
+
+async function rescanCover(f) {
+  const id = await busy('מחפש תמונה בקובץ…', async () => {
+    const blob = await findCoverImage(f);
+    if (!blob) return null;
+    return saveCover(f, blob, { kpAuto: AUTO_V });
+  });
+  toast(id ? 'נמצאה תמונה ונשמרה' : 'לא נמצאה תמונה בקובץ');
+  dash.load(true);
+}
+
 async function removeCover(target) {
-  const old = target.appProperties && target.appProperties.kpCover;
+  const old = coverOf(target);
   if (!old) return;
   await busy('מסיר תמונה…', async () => {
-    await drive.patch(target.id, { appProperties: { kpCover: null } });
+    await drive.patch(target.id, { appProperties: { kpCover: 'none' } });
     drive.patch(old, { trashed: true }).catch(() => {});
   });
   dash.load(true);
+}
+
+/* ---------------- תמונה אוטומטית מתוך הקובץ ---------------- */
+const AUTO_V = '1';              // גרסת האלגוריתם – קובץ שנבדק לא נבדק שוב
+const MIN_SIDE = 140;            // מתחת לזה זה כנראה אייקון/לוגו
+const autoQueue = [];
+let autoBusy = false;
+const autoPending = new Map();
+
+function autoCover(f) {
+  const kind = kindOf(f);
+  if (!['pdf', 'docx', 'doc', 'gdoc'].includes(kind)) return Promise.resolve(null);
+  const ap = f.appProperties || {};
+  if (ap.kpCover === 'none' || ap.kpAuto === AUTO_V) return Promise.resolve(coverOf(f));
+  if (autoPending.has(f.id)) return autoPending.get(f.id);
+  const p = new Promise((resolve) => autoQueue.push({ f, resolve }));
+  autoPending.set(f.id, p);
+  pumpAuto();
+  return p;
+}
+
+async function pumpAuto() {
+  if (autoBusy) return;
+  autoBusy = true;
+  while (autoQueue.length) {
+    const { f, resolve } = autoQueue.shift();
+    let id = null;
+    try {
+      const blob = await findCoverImage(f);
+      const extra = { kpAuto: AUTO_V };
+      if (blob) id = await saveCover(f, blob, extra);
+      else { const u = await drive.patch(f.id, { appProperties: extra }); f.appProperties = u.appProperties; }
+      updateCachedItem(f);
+    } catch (e) { console.warn('auto cover', f.name, e); }
+    autoPending.delete(f.id);
+    resolve(id);
+  }
+  autoBusy = false;
+}
+
+// שמירת המאפיינים המעודכנים ברשימה השמורה במכשיר
+async function updateCachedItem(f) {
+  const parent = f.parents && f.parents[0];
+  if (!parent) return;
+  const key = 'list:' + parent;
+  const list = await idb.get('lists', key);
+  if (!list) return;
+  const it = list.find((x) => x.id === f.id);
+  if (it) { it.appProperties = f.appProperties; idb.put('lists', key, list); }
+}
+
+// לתיקייה בלי תמונה: התמונה של אחת הדוגמאות שבתוכה
+async function folderCover(folder) {
+  const key = 'list:' + folder.id;
+  let list = await idb.get('lists', key);
+  if (!list) {
+    list = (await drive.list(folder.id)).filter((x) => !isAppImage(x) && kindOf(x));
+    idb.put('lists', key, list);
+  }
+  const withCover = list.find((x) => coverOf(x));
+  if (withCover) return coverOf(withCover);
+  const img = list.find((x) => kindOf(x) === 'image');
+  if (img) return img.id;
+  for (const x of list) {
+    if (kindOf(x) === 'folder') continue;
+    const id = await autoCover(x);
+    if (id) return id;
+  }
+  return null;
+}
+
+async function findCoverImage(f) {
+  const kind = kindOf(f);
+  if (kind === 'docx') {
+    const fromDocx = await docxImage(await fileBlob(f));
+    if (fromDocx) return fromDocx;
+    return null;
+  }
+  const blob = kind === 'pdf' ? await fileBlob(f) : await convertedPdf(f);
+  return pdfImage(blob);
+}
+
+async function blobToCanvasJpeg(source, sx, sy, sw, sh) {
+  const s = Math.min(1, 1000 / Math.max(sw, sh));
+  const c = document.createElement('canvas');
+  c.width = Math.max(1, Math.round(sw * s)); c.height = Math.max(1, Math.round(sh * s));
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
+  ctx.drawImage(source, sx, sy, sw, sh, 0, 0, c.width, c.height);
+  return new Promise((res) => c.toBlob(res, 'image/jpeg', 0.85));
+}
+
+// התמונה הראשונה בגודל סביר במסמך Word
+async function docxImage(blob) {
+  if (!window.mammoth) await new Promise((r) => window.addEventListener('load', r, { once: true }));
+  const imgs = [];
+  await mammoth.convertToHtml({ arrayBuffer: await blob.arrayBuffer() }, {
+    convertImage: mammoth.images.imgElement(async (image) => {
+      if (imgs.length < 8) imgs.push(new Blob([await image.read()], { type: image.contentType }));
+      return { src: '' };
+    }),
+  });
+  for (const b of imgs) {
+    const bmp = await createImageBitmap(b).catch(() => null);
+    if (bmp && Math.min(bmp.width, bmp.height) >= MIN_SIDE) return blobToCanvasJpeg(bmp, 0, 0, bmp.width, bmp.height);
+  }
+  return null;
+}
+
+// התמונה הגדולה ביותר בעמוד הראשון (או השני) של PDF
+async function pdfImage(blob) {
+  const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await blob.arrayBuffer()) }).promise;
+  try {
+    const OPS = pdfjsLib.OPS, mul = pdfjsLib.Util.transform;
+    const paintOps = new Set([OPS.paintImageXObject, OPS.paintInlineImageXObject, OPS.paintImageXObjectRepeat, OPS.paintJpegXObject].filter((x) => x != null));
+    for (let n = 1; n <= Math.min(2, pdf.numPages); n++) {
+      const page = await pdf.getPage(n);
+      const base = page.getViewport({ scale: 1 });
+      const vp = page.getViewport({ scale: 900 / base.width });
+      const ops = await page.getOperatorList();
+      let ctm = [1, 0, 0, 1, 0, 0];
+      const stack = [];
+      let best = null;
+      for (let i = 0; i < ops.fnArray.length; i++) {
+        const fn = ops.fnArray[i], args = ops.argsArray[i];
+        if (fn === OPS.save) stack.push(ctm);
+        else if (fn === OPS.restore) ctm = stack.pop() || [1, 0, 0, 1, 0, 0];
+        else if (fn === OPS.transform) ctm = mul(ctm, args);
+        else if (fn === OPS.paintFormXObjectBegin) { stack.push(ctm); if (args && args[0]) ctm = mul(ctm, args[0]); }
+        else if (fn === OPS.paintFormXObjectEnd) ctm = stack.pop() || [1, 0, 0, 1, 0, 0];
+        else if (paintOps.has(fn)) {
+          const pts = [[0, 0], [1, 0], [0, 1], [1, 1]].map(([x, y]) =>
+            vp.convertToViewportPoint(ctm[0] * x + ctm[2] * y + ctm[4], ctm[1] * x + ctm[3] * y + ctm[5]));
+          const xs = pts.map((p) => p[0]), ys = pts.map((p) => p[1]);
+          const x0 = Math.max(0, Math.min(...xs)), y0 = Math.max(0, Math.min(...ys));
+          const x1 = Math.min(vp.width, Math.max(...xs)), y1 = Math.min(vp.height, Math.max(...ys));
+          const w = x1 - x0, h = y1 - y0;
+          if (Math.min(w, h) >= MIN_SIDE && (!best || w * h > best.w * best.h)) best = { x: x0, y: y0, w, h };
+        }
+      }
+      if (best) {
+        const c = document.createElement('canvas');
+        c.width = Math.ceil(vp.width); c.height = Math.ceil(vp.height);
+        await page.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise;
+        return blobToCanvasJpeg(c, best.x, best.y, best.w, best.h);
+      }
+    }
+    return null;
+  } finally {
+    pdf.destroy();
+  }
 }
 
 /* ---------------- ניווט ---------------- */
@@ -499,9 +666,12 @@ const dash = {
     const kind = kindOf(f);
     const isFolder = kind === 'folder';
     const cover = el('div', { class: 'cover' }, KIND_ICON[kind] || '📄');
-    const coverId = f.appProperties && f.appProperties.kpCover;
-    if (coverId) queueImage(coverId, (u) => { cover.style.backgroundImage = `url("${u}")`; cover.classList.add('has-img'); });
-    else if (kind === 'image') queueImage(f.id, (u) => { cover.style.backgroundImage = `url("${u}")`; cover.classList.add('has-img'); });
+    const coverId = coverOf(f);
+    const paint = (u) => { cover.style.backgroundImage = `url("${u}")`; cover.classList.add('has-img'); };
+    if (coverId) queueImage(coverId, paint);
+    else if (kind === 'image') queueImage(f.id, paint);
+    else if (isFolder) folderCover(f).then((id) => id && queueImage(id, paint)).catch(() => {});
+    else autoCover(f).then((id) => id && queueImage(id, paint)).catch(() => {});
     const displayName = isFolder ? f.name : f.name.replace(/\.(pdf|docx?|rtf|odt|jpe?g|png|gif|webp|heic)$/i, '');
     const meta = el('div', { class: 'meta' }, el('div', { class: 'name' }, displayName),
       isFolder ? null : el('span', { class: 'badge ' + kind }, KIND_LABEL[kind]));
@@ -512,6 +682,7 @@ const dash = {
       e.stopPropagation();
       const items = [{ label: coverId ? '🖼️ החלפת תמונה' : '🖼️ הוספת תמונה', fn: () => setCover(f).catch(err) }];
       if (coverId) items.push({ label: '🗑️ הסרת התמונה', fn: () => removeCover(f).catch(err) });
+      if (!isFolder && kind !== 'image') items.push({ label: '🔍 חיפוש תמונה בתוך הקובץ', fn: () => rescanCover(f).catch(err) });
       items.push({ label: '↗ פתיחה בגוגל דרייב', fn: () => window.open(`https://drive.google.com/${isFolder ? 'drive/folders/' : 'file/d/'}${f.id}`, '_blank') });
       openMenu(e.currentTarget, items);
     } }, '⋯');
@@ -610,7 +781,7 @@ async function openFileById(id, hint) {
 function addRecent(f) {
   if (V.local) return;
   const rec = store.get('recent', []).filter((r) => r.id !== f.id);
-  rec.unshift({ id: f.id, name: f.name.replace(/\.[a-z0-9]+$/i, ''), kind: kindOf(f), mime: f.mimeType, cover: f.appProperties && f.appProperties.kpCover });
+  rec.unshift({ id: f.id, name: f.name.replace(/\.[a-z0-9]+$/i, ''), kind: kindOf(f), mime: f.mimeType, cover: coverOf(f) });
   store.set('recent', rec.slice(0, 8));
 }
 
