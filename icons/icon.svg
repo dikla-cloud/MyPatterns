@@ -9,25 +9,25 @@
   </defs>
   <rect width="512" height="512" rx="112" fill="#0f5e63"/>
 
-  <!-- left: two yellow knitting needles -->
-  <g stroke-linecap="round">
-    <line x1="70" y1="140" x2="250" y2="320" stroke="#f6c453" stroke-width="17"/>
-    <circle cx="64" cy="134" r="22" fill="#f6c453"/>
-    <line x1="140" y1="70" x2="320" y2="250" stroke="#f6c453" stroke-width="17"/>
-    <circle cx="134" cy="64" r="22" fill="#f6c453"/>
+  <!-- left: two crossed yellow knitting needles -->
+  <g stroke="#f6c453" stroke-width="17" stroke-linecap="round" fill="#f6c453">
+    <line x1="76" y1="76" x2="250" y2="250"/>
+    <circle cx="70" cy="70" r="22" stroke="none"/>
+    <line x1="196" y1="64" x2="64" y2="216"/>
+    <circle cx="202" cy="58" r="22" stroke="none"/>
   </g>
 
-  <!-- right: orange crochet hook with a clearly visible hook head -->
-  <g transform="translate(432 50) rotate(42)">
-    <path d="M-11 330 L-11 44 Q-11 4 13 4 Q37 4 35 28 L13 34 Q5 44 11 60 L11 330 Z" fill="#ff7a59"/>
-    <rect x="-18" y="170" width="36" height="76" rx="12" fill="#ff7a59"/>
+  <!-- right: orange crochet hook; the lip at the top points down -->
+  <g transform="translate(424 56) rotate(40) scale(1.15)">
+    <path d="M-11 300 L-11 30 Q-11 0 12 0 Q31 0 31 19 L28 46 Q24 52 19 45 L17 27 Q9 22 5 34 L5 50 Q5 58 11 62 L11 300 Z" fill="#ff7a59"/>
+    <rect x="-17" y="150" width="34" height="66" rx="11" fill="#ff7a59"/>
   </g>
 
   <!-- knitted square -->
   <rect x="118" y="150" width="276" height="276" fill="url(#knit)" clip-path="url(#sq)"/>
   <rect x="118" y="150" width="276" height="276" rx="28" fill="none" stroke="#fffaf2" stroke-width="9"/>
 
-  <!-- yellow ruler -->
-  <rect x="100" y="262" width="312" height="56" rx="10" fill="#ffd400" opacity=".8"/>
-  <rect x="100" y="262" width="312" height="56" rx="10" fill="none" stroke="#0b4447" stroke-width="5"/>
+  <!-- yellow ruler over exactly one row of stitches -->
+  <rect x="100" y="242" width="312" height="46" rx="8" fill="#ffd400" opacity=".8"/>
+  <rect x="100" y="242" width="312" height="46" rx="8" fill="none" stroke="#0b4447" stroke-width="5"/>
 </svg>
