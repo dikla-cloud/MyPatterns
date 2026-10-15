@@ -7,7 +7,8 @@ const SCOPE_VERSION = 2;
 const DRIVE = 'https://www.googleapis.com/drive/v3';
 const UPLOAD = 'https://www.googleapis.com/upload/drive/v3';
 const FOLDER = 'application/vnd.google-apps.folder';
-const FIELDS = 'id,name,mimeType,modifiedTime,appProperties,size,parents';
+const FIELDS = 'id,name,mimeType,modifiedTime,appProperties,size,parents,description';
+const LINK_MIME = 'application/x-mswinurl';
 
 const $ = (s) => document.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
@@ -214,6 +215,7 @@ const drive = {
 function kindOf(f) {
   const m = f.mimeType || '', n = (f.name || '').toLowerCase();
   if (m === FOLDER) return 'folder';
+  if ((f.appProperties && f.appProperties.kpRole === 'link') || n.endsWith('.url')) return 'link';
   if (m === 'application/pdf' || n.endsWith('.pdf')) return 'pdf';
   if (m === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || n.endsWith('.docx')) return 'docx';
   if (m === 'application/vnd.google-apps.document') return 'gdoc';
@@ -224,11 +226,11 @@ function kindOf(f) {
   if (m.startsWith('image/')) return 'image';
   return null;
 }
-const KIND_LABEL = { pdf: 'PDF', docx: 'WORD', doc: 'WORD', gdoc: 'DOC', sheet: 'EXCEL', gsheet: 'SHEET' };
-const kindLabel = (k) => (k === 'image' ? t('kindImage') : KIND_LABEL[k]);
+const KIND_LABEL = { link: '🔗', pdf: 'PDF', docx: 'WORD', doc: 'WORD', gdoc: 'DOC', sheet: 'EXCEL', gsheet: 'SHEET' };
+const kindLabel = (k) => (k === 'image' ? t('kindImage') : k === 'link' ? t('kindLink') : KIND_LABEL[k]);
 // סוגים שמוצגים אחרי המרה ל-PDF דרך גוגל
 const CONVERTED = ['doc', 'gdoc', 'sheet', 'gsheet'];
-const KIND_ICON = { folder: '🧶', pdf: '📄', docx: '📝', doc: '📝', gdoc: '📝', sheet: '📊', gsheet: '📊', image: '🖼️' };
+const KIND_ICON = { folder: '🧶', pdf: '📄', docx: '📝', doc: '📝', gdoc: '📝', sheet: '📊', gsheet: '📊', image: '🖼️', link: '🔗' };
 const isAppImage = (f) => f.appProperties && f.appProperties.kpRole === 'image';
 // מזהה התמונה המייצגת ('none' = הוסרה בכוונה ולא מחפשים אוטומטית)
 const coverOf = (f) => { const c = f && f.appProperties && f.appProperties.kpCover; return c && c !== 'none' ? c : null; };
@@ -482,6 +484,136 @@ async function pdfImage(blob) {
   }
 }
 
+/* ---------------- קישורים לדוגמאות מהאינטרנט ---------------- */
+const linkUrl = (f) => (f && f.description && /^https?:\/\//.test(f.description) ? f.description : '');
+const hostOf = (u) => { try { return new URL(u).hostname; } catch { return ''; } };
+
+async function linkUrlFromContent(f) {
+  const txt = await (await fileBlob(f)).text();
+  const m = txt.match(/^URL=(.+)$/m);
+  return m ? m[1].trim() : '';
+}
+
+function normalizeUrl(u) {
+  u = (u || '').trim();
+  const m = u.match(/https?:\/\/\S+/); // גם כשמדביקים טקסט שמכיל קישור
+  if (m) u = m[0];
+  else if (/^[\w-]+(\.[\w-]+)+(\/\S*)?$/.test(u)) u = 'https://' + u;
+  try { const x = new URL(u); return /^https?:$/.test(x.protocol) ? x.href : ''; } catch { return ''; }
+}
+
+// קישור לקובץ בגוגל דרייב של מישהו אחר – תצוגה מקדימה שאפשר להטמיע
+function frameUrlFor(u) {
+  const m = u.match(/drive\.google\.com\/(?:file\/d\/|open\?id=)([\w-]+)/);
+  if (m) return `https://drive.google.com/file/d/${m[1]}/preview`;
+  return u;
+}
+
+// אם הקישור הוא קובץ PDF שאפשר להוריד – מציגים אותו עם הסרגלים כמו כל דוגמה
+async function tryFetchPdf(url, f) {
+  // רוב הקישורים הם דפי אינטרנט – מנסים להוריד רק כשזה נראה כמו קובץ PDF
+  if (!url || !/\.pdf($|[?#])/i.test(new URL(url).pathname + new URL(url).search)) return null;
+  const key = 'link:' + f.id + ':' + url;
+  const cached = await idb.get('blobs', key);
+  if (cached) return cached;
+  try {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 15000);
+    const r = await fetch(url, { signal: ctrl.signal, credentials: 'omit' });
+    clearTimeout(timer);
+    if (!r.ok) return null;
+    const blob = await r.blob();
+    const head = String.fromCharCode(...new Uint8Array(await blob.slice(0, 5).arrayBuffer()));
+    if (!head.startsWith('%PDF')) return null;
+    idb.put('blobs', key, blob);
+    return blob;
+  } catch { return null; }
+}
+
+function openAddLink(prefill = {}) {
+  const cur = nav.current();
+  if (!cur) return;
+  const urlIn = el('input', { type: 'url', dir: 'ltr', placeholder: 'https://…', value: prefill.url || '' });
+  const nameIn = el('input', { type: 'text', placeholder: t('linkNamePh'), value: prefill.title || '' });
+  const pasteBtn = el('button', { class: 'btn small', onclick: async () => {
+    try { urlIn.value = await navigator.clipboard.readText(); } catch { urlIn.focus(); }
+  } }, t('paste'));
+  const body = el('div', {},
+    el('label', { class: 'field' }, el('span', {}, t('linkUrl')), urlIn),
+    navigator.clipboard && navigator.clipboard.readText ? pasteBtn : null,
+    el('label', { class: 'field' }, el('span', {}, t('linkName')), nameIn));
+  openModal(t('linkTitle'), body, [
+    el('button', { class: 'btn primary', onclick: async () => {
+      const url = normalizeUrl(urlIn.value);
+      if (!url) { toast(t('linkInvalid')); return; }
+      const name = (nameIn.value.trim() || hostOf(url)).replace(/[\\/:*?"<>|]/g, ' ').slice(0, 120);
+      closeModal();
+      try {
+        await busy(t('saving'), () => drive.upload(
+          new Blob([`[InternetShortcut]\r\nURL=${url}\r\n`], { type: LINK_MIME }),
+          { name: name + '.url', parents: [cur.id], mimeType: LINK_MIME, description: url, appProperties: { kpRole: 'link' } }));
+        toast(t('linkSaved'));
+        dash.load(true);
+      } catch (e) { err(e); }
+    } }, t('save')),
+  ]);
+  setTimeout(() => (prefill.url ? nameIn : urlIn).focus(), 50);
+}
+
+/* ---------------- חיפוש דוגמה לפי תמונה ---------------- */
+function openImageSearch() {
+  let file = null;
+  const preview = el('div', { class: 'search-preview' }, '📷');
+  const kw = el('input', { type: 'text', placeholder: t('keywordsPh') });
+  const pick = el('button', { class: 'btn', onclick: async () => {
+    const f = await pickFile($('#imageInput'));
+    if (!f) return;
+    // מכינים מראש כדי שהשיתוף יקרה מיד בלחיצה
+    file = new File([await resizeImage(f, 1600)], 'pattern.jpg', { type: 'image/jpeg' });
+    preview.textContent = '';
+    preview.style.backgroundImage = `url("${URL.createObjectURL(f)}")`;
+    preview.classList.add('has-img');
+  } }, t('chooseImage'));
+  const words = () => kw.value.trim();
+  const openSearch = (url) => window.open(url, '_blank', 'noopener');
+  const q = () => encodeURIComponent((words() + ' ' + t('freePatternQuery')).trim());
+  const body = el('div', { class: 'img-search' },
+    el('p', { class: 'muted' }, t('imgSearchHint')),
+    el('div', { class: 'search-pick' }, preview, pick),
+    el('button', { class: 'btn primary wide', onclick: () => lensSearch(file).catch(err) }, t('searchLens')),
+    el('p', { class: 'muted', style: 'margin-top:16px' }, t('searchByWords')),
+    kw,
+    el('div', { class: 'search-links' },
+      el('button', { class: 'btn', onclick: () => openSearch(`https://www.google.com/search?q=${q()}`) }, 'Google'),
+      el('button', { class: 'btn', onclick: () => openSearch(`https://www.ravelry.com/patterns/search#query=${encodeURIComponent(words())}&availability=free`) }, t('searchRavelry')),
+      el('button', { class: 'btn', onclick: () => openSearch(`https://www.pinterest.com/search/pins/?q=${q()}`) }, 'Pinterest'),
+      el('button', { class: 'btn', onclick: () => openSearch(`https://www.etsy.com/search?q=${encodeURIComponent((words() + ' knitting pattern').trim())}`) }, 'Etsy')),
+    el('p', { class: 'muted small-note' }, t('foundTip')));
+  openModal(t('imgSearchTitle'), body);
+}
+
+async function lensSearch(file) {
+  if (!file) { toast(t('needImage')); return; }
+  // בטלפון: שיתוף התמונה ישירות ל-Google Lens / אפליקציית Google
+  const jpg = file;
+  const shareFile = file;
+  if (navigator.canShare && navigator.canShare({ files: [shareFile] }) && matchMedia('(pointer: coarse)').matches) {
+    try { await navigator.share({ files: [shareFile] }); return; } catch (e) { if (e.name === 'AbortError') return; }
+  }
+  // במחשב: העתקת התמונה ופתיחת חיפוש התמונות של גוגל להדבקה
+  try {
+    const png = await new Promise((res) => {
+      createImageBitmap(jpg).then((b) => {
+        const c = document.createElement('canvas'); c.width = b.width; c.height = b.height;
+        c.getContext('2d').drawImage(b, 0, 0); c.toBlob(res, 'image/png');
+      });
+    });
+    await navigator.clipboard.write([new ClipboardItem({ 'image/png': png })]);
+    toast(t('imageCopied'), 7000);
+  } catch { /* העתקה לא נתמכת – עדיין פותחים את הדף */ }
+  window.open('https://lens.google.com/', '_blank', 'noopener');
+}
+
 /* ---------------- ניווט ---------------- */
 const nav = {
   path: store.get('path', []), // [{id,name}]
@@ -701,9 +833,13 @@ const dash = {
     const paint = (u) => { cover.style.backgroundImage = `url("${u}")`; cover.classList.add('has-img'); };
     if (coverId) queueImage(coverId, paint);
     else if (kind === 'image') queueImage(f.id, paint);
+    else if (kind === 'link') {
+      const host = hostOf(linkUrl(f));
+      if (host) { cover.classList.add('favicon'); cover.style.backgroundImage = `url("https://www.google.com/s2/favicons?domain=${encodeURIComponent(host)}&sz=128")`; }
+    }
     else if (isFolder) folderCover(f).then((id) => id && queueImage(id, paint)).catch(() => {});
-    else autoCover(f).then((id) => id && queueImage(id, paint)).catch(() => {});
-    const displayName = isFolder ? f.name : f.name.replace(/\.(pdf|docx?|rtf|odt|xlsx?|ods|csv|jpe?g|png|gif|webp|heic)$/i, '');
+    else if (kind !== 'link') autoCover(f).then((id) => id && queueImage(id, paint)).catch(() => {});
+    const displayName = isFolder ? f.name : f.name.replace(/\.(pdf|docx?|rtf|odt|xlsx?|ods|csv|url|jpe?g|png|gif|webp|heic)$/i, '');
     const meta = el('div', { class: 'meta' }, el('div', { class: 'name' }, displayName),
       isFolder ? null : el('span', { class: 'badge ' + kind }, kindLabel(kind)));
     const card = el('div', { class: 'card ' + (isFolder ? 'folder' : 'file'), title: f.name }, cover, meta);
@@ -713,7 +849,8 @@ const dash = {
       e.stopPropagation();
       const items = [{ label: coverId ? t('replaceImage') : t('addImage'), fn: () => setCover(f).catch(err) }];
       if (coverId) items.push({ label: t('removeImage'), fn: () => removeCover(f).catch(err) });
-      if (!isFolder && kind !== 'image') items.push({ label: t('rescanImage'), fn: () => rescanCover(f).catch(err) });
+      if (kind === 'link') items.push({ label: t('openInBrowser'), fn: () => window.open(linkUrl(f), '_blank', 'noopener') });
+      if (!isFolder && kind !== 'image' && kind !== 'link') items.push({ label: t('rescanImage'), fn: () => rescanCover(f).catch(err) });
       items.push({ label: t('openInDrive'), fn: () => window.open(`https://drive.google.com/${isFolder ? 'drive/folders/' : 'file/d/'}${f.id}`, '_blank') });
       openMenu(e.currentTarget, items);
     } }, '⋯');
@@ -819,14 +956,15 @@ function addRecent(f) {
 async function openFile(f, localBlob) {
   closeMenu();
   V.file = f; V.kind = kindOf(f); V.local = !!localBlob; V.ready = false;
-  V.pdf = null; V.docxHtml = null; V.img = null; V.pages = [];
+  V.pdf = null; V.docxHtml = null; V.img = null; V.pages = []; V.frameUrl = null;
   const local = loadLocalState(f.id);
   const remote = parseRemoteState(f.appProperties);
   V.st = Object.assign(defaultState(), (remote && (!local || remote.t > local.t)) ? remote : (local || {}));
   addRecent(f);
-  $('#viewerTitle').textContent = f.name;
+  $('#viewerTitle').textContent = f.name.replace(/\.url$/i, '');
   $('#accurateBtn').classList.toggle('hidden', !(V.kind === 'docx' && !V.local));
   $('#accurateBtn').textContent = t('accurate');
+  V.linkUrl = V.kind === 'link' ? linkUrl(f) : '';
   setSync(V.local ? t('localFile') : '');
   content.innerHTML = '';
   show('#viewerView');
@@ -837,7 +975,13 @@ async function openFile(f, localBlob) {
   $('#viewerLoading').classList.remove('hidden');
   try {
     let blob = localBlob;
-    if (CONVERTED.includes(V.kind)) {
+    if (V.kind === 'link') {
+      const url = linkUrl(f) || await linkUrlFromContent(f);
+      V.linkUrl = url;
+      blob = await tryFetchPdf(url, f);
+      if (!blob) { V.frameUrl = frameUrlFor(url); layout(); V.ready = true; return; }
+      V.kind = 'pdf';
+    } else if (CONVERTED.includes(V.kind)) {
       blob = await convertedPdf(f);
       V.kind = 'pdf';
     } else if (!blob) {
@@ -923,6 +1067,16 @@ function layout() {
   const gen = ++V.renderGen;
   if (V.observer) V.observer.disconnect();
   content.innerHTML = '';
+  content.classList.toggle('frame-mode', !!V.frameUrl);
+  if (V.frameUrl) {
+    const tip = el('div', { class: 'frame-tip hidden' }, t('pdfTip'));
+    const note = el('div', { class: 'frame-note' }, el('span', {}, t('iframeHint')),
+      el('button', { class: 'btn small', onclick: () => tip.classList.toggle('hidden') }, t('rulersOnWeb')),
+      el('button', { class: 'btn small primary', onclick: () => window.open(V.linkUrl, '_blank', 'noopener') }, t('openInBrowser')), tip);
+    const frame = el('iframe', { src: V.frameUrl, class: 'web-frame', referrerpolicy: 'no-referrer', allow: 'fullscreen' });
+    content.append(note, frame);
+    return;
+  }
   if (V.pdf) {
     const scale = (V.fitW / V.natW) * z;
     V.observer = new IntersectionObserver((entries) => {
@@ -990,6 +1144,7 @@ function restoreScroll() {
 
 // זום שמשאיר נקודת מוקד במקום
 function setZoom(z, fx, fy) {
+  if (V.frameUrl) return;
   z = clamp(z, 0.3, 8);
   const old = V.st.z;
   if (Math.abs(z - old) < 0.001) return;
@@ -1211,12 +1366,13 @@ function closeViewer(fromPop) {
   if (V.file) saveState();
   if (V.observer) V.observer.disconnect();
   if (V.pdf) V.pdf.destroy();
-  V.pdf = null; V.file = null; V.pages = [];
+  V.pdf = null; V.file = null; V.pages = []; V.frameUrl = null;
   content.innerHTML = '';
   if (!fromPop && location.hash === '#view') history.back();
   start();
 }
 $('#closeViewerBtn').onclick = () => closeViewer();
+$('#extBtn').onclick = () => { if (V.linkUrl) window.open(V.linkUrl, '_blank', 'noopener'); };
 window.addEventListener('popstate', () => {
   if (!$('#viewerView').classList.contains('hidden')) closeViewer(true);
 });
@@ -1267,6 +1423,8 @@ function openAddMenu(anchor) {
   openMenu(anchor, [
     { label: t('uploadPattern'), fn: uploadPatterns },
     { label: t('newFolder'), fn: newFolder },
+    { label: t('addLink'), fn: () => openAddLink() },
+    { label: t('imageSearch'), fn: openImageSearch },
     { label: t('grantExisting'), fn: () => grantAccess().catch(err) },
   ]);
 }
@@ -1337,6 +1495,19 @@ async function start() {
   if (!auth.valid() && !store.get('signedIn', false)) { show('#loginView'); return; }
   show('#dashView');
   dash.load();
+  if (pendingShare && nav.current()) { openAddLink(pendingShare); pendingShare = null; }
+}
+
+// קישור ששותף לאפליקציה מתפריט "שיתוף" של הטלפון
+function takeShared() {
+  const p = new URLSearchParams(location.search);
+  if (!p.has('share')) return null;
+  history.replaceState(null, '', location.pathname);
+  const url = normalizeUrl(p.get('url') || p.get('text') || '');
+  if (!url) return null;
+  let title = (p.get('title') || '').trim();
+  if (!title) title = (p.get('text') || '').replace(url, '').trim();
+  return { url, title: title.slice(0, 120) };
 }
 
 if (window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc = 'vendor/pdf.worker.min.js';
@@ -1344,6 +1515,7 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
   navigator.serviceWorker.register('sw.js').catch(() => {});
 }
 if (location.hash === '#view') history.replaceState(null, '', location.pathname);
+let pendingShare = takeShared();
 applyI18n();
 document.querySelectorAll('.lang-slot').forEach((slot) => {
   const sel = langSelect();

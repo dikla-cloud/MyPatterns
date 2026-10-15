@@ -1,5 +1,5 @@
 // Service worker: שמירת קבצי האפליקציה כדי שתיפתח גם בלי אינטרנט
-const CACHE = 'mypatterns-v7';
+const CACHE = 'mypatterns-v8';
 const SHELL = [
   './', 'index.html', 'styles.css', 'app.js', 'config.js', 'manifest.webmanifest',
   'i18n.js', 'vendor/pdf.min.js', 'vendor/pdf.worker.min.js', 'vendor/mammoth.browser.min.js',
