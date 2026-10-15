@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#0f5e63"/>
+  <!-- needle (left) and hook (right) behind the chart -->
+  <g stroke-linecap="round">
+    <line x1="96" y1="96" x2="300" y2="300" stroke="#f6c453" stroke-width="20"/>
+    <circle cx="92" cy="92" r="24" fill="#f6c453"/>
+    <line x1="416" y1="96" x2="212" y2="300" stroke="#ff7a59" stroke-width="20"/>
+    <path d="M404 84 a20 20 0 1 1 26 26" fill="none" stroke="#ff7a59" stroke-width="20"/>
+  </g>
+  <rect x="118" y="150" width="276" height="276" rx="28" fill="#fffaf2"/>
+  <g fill="none" stroke="#c9d8d6" stroke-width="4">
+    <path d="M118 205h276M118 260h276M118 315h276M118 370h276M173 150v276M228 150v276M283 150v276M338 150v276"/>
+  </g>
+  <g fill="#0f5e63">
+    <circle cx="145" cy="178" r="11"/><circle cx="255" cy="178" r="11"/><circle cx="365" cy="178" r="11"/>
+    <circle cx="200" cy="233" r="11"/><circle cx="310" cy="233" r="11"/>
+    <circle cx="145" cy="343" r="11"/><circle cx="255" cy="343" r="11"/><circle cx="365" cy="343" r="11"/>
+    <circle cx="200" cy="398" r="11"/><circle cx="310" cy="398" r="11"/>
+  </g>
+  <!-- highlighted ruler row -->
+  <rect x="96" y="260" width="320" height="56" rx="10" fill="#ffd400" opacity=".75"/>
+  <g fill="#0f5e63"><circle cx="145" cy="288" r="11"/><circle cx="255" cy="288" r="11"/><circle cx="365" cy="288" r="11"/></g>
+  <rect x="96" y="260" width="320" height="56" rx="10" fill="none" stroke="#0b4447" stroke-width="5"/>
+</svg>

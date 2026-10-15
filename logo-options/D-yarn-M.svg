@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#ff6b35"/>
+  <path id="m" d="M118 400 V150 Q118 120 146 140 L256 280 L366 140 Q394 120 394 150 V400" fill="none" stroke="#fff4e6" stroke-width="52" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M118 400 V150 Q118 120 146 140 L256 280 L366 140 Q394 120 394 150 V400" fill="none" stroke="#ffb38f" stroke-width="6" stroke-dasharray="4 18" stroke-linecap="round"/>
+  <!-- loop and hook at the end -->
+  <circle cx="394" cy="430" r="26" fill="none" stroke="#fff4e6" stroke-width="16"/>
+  <g stroke-linecap="round">
+    <line x1="350" y1="470" x2="470" y2="360" stroke="#5a2a82" stroke-width="18"/>
+    <path d="M470 360 q16 -16 26 -2" fill="none" stroke="#5a2a82" stroke-width="14"/>
+  </g>
+</svg>

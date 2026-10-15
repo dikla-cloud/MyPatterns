@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#fff4e0"/>
+  <rect x="56" y="56" width="400" height="400" rx="40" fill="#2f9e8f"/>
+  <g fill="#ffd166">
+    <rect x="92" y="92" width="92" height="40" rx="14"/><rect x="210" y="92" width="92" height="40" rx="14"/><rect x="328" y="92" width="92" height="40" rx="14"/>
+    <rect x="92" y="380" width="92" height="40" rx="14"/><rect x="210" y="380" width="92" height="40" rx="14"/><rect x="328" y="380" width="92" height="40" rx="14"/>
+    <rect x="92" y="150" width="40" height="92" rx="14"/><rect x="92" y="270" width="40" height="92" rx="14"/>
+    <rect x="380" y="150" width="40" height="92" rx="14"/><rect x="380" y="270" width="40" height="92" rx="14"/>
+  </g>
+  <rect x="150" y="150" width="212" height="212" rx="26" fill="#ef476f"/>
+  <g fill="#fff4e0">
+    <rect x="176" y="176" width="70" height="30" rx="12"/><rect x="266" y="176" width="70" height="30" rx="12"/>
+    <rect x="176" y="306" width="70" height="30" rx="12"/><rect x="266" y="306" width="70" height="30" rx="12"/>
+  </g>
+  <!-- knit V in the centre -->
+  <ellipse cx="238" cy="256" rx="16" ry="34" transform="rotate(-28 238 256)" fill="#fff4e0"/>
+  <ellipse cx="274" cy="256" rx="16" ry="34" transform="rotate(28 274 256)" fill="#fff4e0"/>
+</svg>

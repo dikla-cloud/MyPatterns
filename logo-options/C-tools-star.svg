@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#1d2b53"/>
+  <circle cx="256" cy="256" r="150" fill="none" stroke="#7fe0c8" stroke-width="26"/>
+  <circle cx="256" cy="256" r="150" fill="none" stroke="#1d2b53" stroke-width="6" stroke-dasharray="18 26"/>
+  <g stroke-linecap="round">
+    <!-- needle 1 -->
+    <line x1="120" y1="120" x2="392" y2="392" stroke="#ffcf5c" stroke-width="22"/>
+    <circle cx="114" cy="114" r="30" fill="#ffcf5c"/>
+    <!-- needle 2 -->
+    <line x1="392" y1="120" x2="120" y2="392" stroke="#ffcf5c" stroke-width="22"/>
+    <circle cx="398" cy="114" r="30" fill="#ffcf5c"/>
+    <!-- crochet hook -->
+    <line x1="256" y1="440" x2="256" y2="92" stroke="#ff6f61" stroke-width="24"/>
+    <rect x="236" y="250" width="40" height="80" rx="14" fill="#ff6f61"/>
+    <path d="M256 92 q0 -26 22 -26 q16 0 16 18" fill="none" stroke="#ff6f61" stroke-width="20"/>
+  </g>
+</svg>
