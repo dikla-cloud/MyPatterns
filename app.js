@@ -1,5 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
+const APP_V = 26;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -199,11 +200,19 @@ const drive = {
     const b = 'kp' + Math.random().toString(36).slice(2);
     const body = new Blob([
       `--${b}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${JSON.stringify(meta)}\r\n`,
-      `--${b}\r\nContent-Type: ${meta.mimeType || blob.type || 'application/octet-stream'}\r\n\r\n`,
+      `--${b}\r\nContent-Type: ${blob.type || meta.mimeType || 'application/octet-stream'}\r\n\r\n`,
       blob, `\r\n--${b}--`,
     ]);
     return (await gfetch(`${UPLOAD}/files?uploadType=multipart&fields=${FIELDS}&supportsAllDrives=true`,
       { method: 'POST', headers: { 'Content-Type': 'multipart/related; boundary=' + b }, body })).json();
+  },
+  // החלפת התוכן של קובץ קיים (למשל שמירה חוזרת של עיצוב)
+  async updateMedia(id, blob) {
+    return (await gfetch(`${UPLOAD}/files/${id}?uploadType=media&fields=${FIELDS}&supportsAllDrives=true`,
+      { method: 'PATCH', headers: { 'Content-Type': blob.type || 'application/octet-stream' }, body: blob })).json();
+  },
+  async about() {
+    return (await gfetch(`${DRIVE}/about?fields=user(displayName,emailAddress,photoLink)`)).json();
   },
   async mkdir(name, parent) {
     return (await gfetch(`${DRIVE}/files?fields=${FIELDS}&supportsAllDrives=true`,
@@ -231,7 +240,8 @@ const kindLabel = (k) => (k === 'image' ? t('kindImage') : k === 'link' ? t('kin
 // סוגים שמוצגים אחרי המרה ל-PDF דרך גוגל
 const CONVERTED = ['doc', 'gdoc', 'sheet', 'gsheet'];
 const KIND_ICON = { folder: '', pdf: '📄', docx: '📝', doc: '📝', gdoc: '📝', sheet: '📊', gsheet: '📊', image: '🖼️', link: '🔗' };
-const isAppImage = (f) => f.appProperties && f.appProperties.kpRole === 'image';
+// קבצי עזר של האפליקציה (תמונות שער, נתוני עיצוב) – לא מוצגים ברשימה
+const isAppImage = (f) => f.appProperties && (f.appProperties.kpRole === 'image' || f.appProperties.kpRole === 'design');
 // מזהה התמונה המייצגת ('none' = הוסרה בכוונה ולא מחפשים אוטומטית)
 const coverOf = (f) => { const c = f && f.appProperties && f.appProperties.kpCover; return c && c !== 'none' ? c : null; };
 
@@ -1008,6 +1018,7 @@ const dash = {
       if (kind === 'link') items.push({ label: t('openInBrowser'), fn: () => window.open(linkUrl(f), '_blank', 'noopener') });
       if (!isFolder && kind !== 'image' && kind !== 'link') items.push({ label: t('rescanImage'), fn: () => rescanCover(f).catch(err) });
       items.push({ label: t('notesMenu'), fn: () => openNotes(f) });
+      if (f.appProperties && f.appProperties.kpDesign) items.push({ label: t('editInStudio'), fn: () => loadStudio().then(() => Studio.edit(f)).catch(err) });
       if (!isFolder) items.push({ label: t('deleteFile'), fn: () => deletePattern(f).catch(err) });
       items.push({ label: t('openInDrive'), fn: () => window.open(`https://drive.google.com/${isFolder ? 'drive/folders/' : 'file/d/'}${f.id}`, '_blank') });
       openMenu(anchor, items);
@@ -1610,6 +1621,42 @@ async function installApp() {
 document.querySelectorAll('.install-btn').forEach((b) => b.addEventListener('click', installApp));
 updateInstallButtons();
 
+/* ---------------- החשבון המחובר ---------------- */
+function accountText() {
+  const a = store.get('account', null);
+  return a ? (a.displayName ? `${a.displayName} · ${a.emailAddress}` : a.emailAddress) : '…';
+}
+async function refreshAccount() {
+  try { const r = await drive.about(); if (r.user) store.set('account', r.user); } catch { /* ignore */ }
+}
+
+/* ---------------- לשוניות: דוגמאות קיימות / יצירת דוגמה ---------------- */
+let studioLoading = null;
+function loadStudio() {
+  if (window.Studio) return Promise.resolve();
+  if (!studioLoading) {
+    studioLoading = new Promise((res, rej) => {
+      const sc = document.createElement('script');
+      sc.src = 'studio.js?v=' + APP_V;
+      sc.onload = () => res();
+      sc.onerror = () => { studioLoading = null; rej(new Error(t('studioLoadFail'))); };
+      document.head.append(sc);
+    });
+  }
+  return busy(t('loading'), () => studioLoading);
+}
+function setTab(tab) {
+  const studio = tab === 'studio';
+  $('#tabPatterns').classList.toggle('on', !studio);
+  $('#tabStudio').classList.toggle('on', studio);
+  $('#patternsPane').classList.toggle('hidden', studio);
+  $('#studioPane').classList.toggle('hidden', !studio);
+  $('#addBtn').classList.toggle('hidden', studio);
+  if (studio) loadStudio().then(() => Studio.home($('#studioPane'))).catch(err);
+}
+$('#tabPatterns').onclick = () => setTab('patterns');
+$('#tabStudio').onclick = () => setTab('studio');
+
 /* ---------------- הגדרות ---------------- */
 function openSettings() {
   const root = nav.root();
@@ -1617,6 +1664,7 @@ function openSettings() {
   sel.onchange = () => { setLang(sel.value); closeModal(); refreshLanguage(); openSettings(); };
   const row = (title, hint, btn) => el('div', { class: 'row' }, el('div', {}, el('b', {}, title), hint != null ? el('small', {}, hint) : null), btn);
   const body = el('div', { class: 'settings-list' },
+    row('👤 ' + t('account'), accountText(), el('button', { class: 'btn danger', onclick: () => { auth.signOut(); store.set('account', null); closeModal(); start(); } }, t('signOut'))),
     row('🌐 ' + t('language'), null, sel),
     isInstalled() ? null : row('📲 ' + t('installTitle'), t('installHint'),
       el('button', { class: 'btn primary', onclick: () => { closeModal(); installApp(); } }, t('install'))),
@@ -1629,8 +1677,6 @@ function openSettings() {
     // המזהים עצמם לא מוצגים – רק אם הם מוגדרים
     row(t('googleIds'), clientId() && apiKey() ? t('configured') : t('notConfigured'),
       el('button', { class: 'btn', onclick: () => { store.set('clientId', ''); store.set('apiKey', ''); auth.signOut(); location.reload(); } }, t('change'))),
-    row(t('signOutGoogle'), null,
-      el('button', { class: 'btn danger', onclick: () => { auth.signOut(); closeModal(); start(); } }, t('signOut'))),
   );
   openModal(t('settings'), body);
 }
@@ -1711,6 +1757,7 @@ document.querySelectorAll('.upload-btn').forEach((b) => { b.onclick = openAddShe
 $('#loginBtn').onclick = async () => {
   try {
     await auth.request('select_account');
+    store.set('account', null);
     start();
   } catch (e) {
     toast(t('loginFailed', { msg: e.message }), 4000);
@@ -1719,11 +1766,21 @@ $('#loginBtn').onclick = async () => {
 window.addEventListener('online', () => { $('#offlineNote').classList.add('hidden'); if (V.file) pushRemote(); });
 
 /* ---------------- הפעלה ---------------- */
+// מסך פתיחה עם הלוגו – לפחות חצי שנייה, לכל היותר עד שהדוגמאות נטענו
+const splashStart = Date.now();
+function hideSplash() {
+  const sp = $('#splash');
+  if (!sp || sp.classList.contains('gone')) return;
+  setTimeout(() => { sp.classList.add('gone'); setTimeout(() => sp.remove(), 400); }, Math.max(0, 600 - (Date.now() - splashStart)));
+}
+setTimeout(hideSplash, 2500);
+
 async function start() {
-  if (!clientId() || !apiKey()) { show('#setupView'); return; }
-  if (!auth.valid() && !store.get('signedIn', false)) { show('#loginView'); return; }
+  if (!clientId() || !apiKey()) { show('#setupView'); hideSplash(); return; }
+  if (!auth.valid() && !store.get('signedIn', false)) { show('#loginView'); hideSplash(); return; }
   show('#dashView');
-  dash.load();
+  dash.load().finally(hideSplash);
+  if (auth.valid() && !store.get('account', null)) refreshAccount();
   if (pendingShare && nav.current()) { openAddLink(pendingShare); pendingShare = null; }
 }
 
