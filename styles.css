@@ -472,3 +472,25 @@ body.studio-open { overflow: hidden; }
 .thumb-x { position: absolute; top: 4px; inset-inline-end: 4px; width: 24px; height: 24px; border-radius: 50%; border: 0; background: rgba(0,0,0,.6); color: #fff; font-size: 12px; }
 .files-list { display: flex; flex-direction: column; gap: 6px; }
 .file-chip { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 10px; border-radius: 10px; background: var(--surface-2); font-size: 14px; }
+
+/* תכנון צבעים */
+.pro-badge { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .5px; padding: 2px 7px; border-radius: 6px; background: var(--accent); color: #10282a; vertical-align: middle; }
+.yarns { display: flex; flex-direction: column; gap: 8px; }
+.yarn { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 8px; border-radius: 12px; background: var(--surface-2); }
+.yarn input[type=text] { flex: 1; min-width: 120px; }
+.yarn label { display: flex; align-items: center; gap: 6px; font-size: 13px; }
+.yarn-letter { width: 38px; height: 38px; border-radius: 50%; border: 2px solid rgba(0,0,0,.2); font-weight: 800; font-size: 16px; }
+.yarn-letter.on { outline: 3px solid var(--primary); outline-offset: 2px; }
+.yarn-cols { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+.yarn-cols input[type=color] { width: 36px; height: 30px; padding: 0; border: 1px solid #999; border-radius: 6px; }
+.mini-x { border: 0; background: none; color: #c0392b; font-size: 12px; padding: 0 2px; }
+.seq { display: flex; flex-direction: column; gap: 3px; max-height: 360px; overflow: auto; }
+.seq-row { display: grid; grid-template-columns: 92px 70px 1fr; align-items: center; gap: 8px; text-align: start; padding: 4px 8px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); font-size: 13px; }
+.seq-row.sel { outline: 3px solid var(--accent); }
+.seq-label { color: var(--muted); }
+.seq-sw { height: 18px; border-radius: 5px; border: 1px solid rgba(0,0,0,.2); }
+.rep { max-width: 200px; }
+.pal-bar { display: flex; height: 26px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+.pal-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; font-size: 13px; }
+.pal-chip { display: inline-flex; align-items: center; gap: 4px; }
+.pal-chip i { width: 14px; height: 14px; border-radius: 4px; border: 1px solid rgba(0,0,0,.2); display: inline-block; }

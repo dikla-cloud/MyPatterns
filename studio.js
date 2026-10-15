@@ -147,6 +147,36 @@
     dAddFiles: ['＋ הוספת קבצים', '＋ Add files', '＋ Добавить файлы', '＋ إضافة ملفات', '＋ Dateien hinzufügen', '＋ Añadir archivos', '＋ Aggiungi file', '＋ Ajouter des fichiers'],
     dSaved: ['הפרטים הקבועים נשמרו', 'Saved', 'Сохранено', 'تم الحفظ', 'Gespeichert', 'Guardado', 'Salvato', 'Enregistré'],
     dPages: ['{n} עמודים', '{n} pages', 'стр.: {n}', '{n} صفحات', '{n} Seiten', '{n} páginas', '{n} pagine', '{n} pages'],
+    cpTitle: ['תכנון צבעים', 'Colour planner', 'Подбор цветов', 'تخطيط الألوان', 'Farbplaner', 'Planificador de colores', 'Pianificatore colori', 'Planificateur de couleurs'],
+    cpHint: ['ריבוע סבתא ופסים – כולל חוטים מחליפי צבעים ופלטה צפויה', 'Granny squares and stripes – including self-striping yarns and the expected palette', 'Бабушкин квадрат и полосы – с секционной пряжей и ожидаемой палитрой', 'مربع الجدة والخطوط – مع خيوط متغيرة الألوان واللوحة المتوقعة', 'Granny Squares und Streifen – mit Farbverlaufsgarn und erwarteter Palette', 'Granny squares y rayas – con hilos multicolor y la paleta prevista', 'Granny square e righe – con filati multicolore e la palette prevista', 'Granny squares et rayures – avec fils multicolores et palette prévue'],
+    cpMode: ['סוג', 'Type', 'Тип', 'النوع', 'Art', 'Tipo', 'Tipo', 'Type'],
+    cpGranny: ['ריבוע סבתא', 'Granny square', 'Бабушкин квадрат', 'مربع الجدة', 'Granny Square', 'Granny square', 'Granny square', 'Granny square'],
+    cpStripes: ['פסים בשורות', 'Stripes in rows', 'Полосы по рядам', 'خطوط بالصفوف', 'Streifen in Reihen', 'Rayas por vueltas', 'Righe per ferri', 'Rayures par rangs'],
+    cpRounds: ['סיבובים', 'Rounds', 'Круги', 'الدورات', 'Runden', 'Vueltas', 'Giri', 'Tours'],
+    cpYarns: ['חוטים', 'Yarns', 'Пряжа', 'الخيوط', 'Garne', 'Hilos', 'Filati', 'Fils'],
+    cpAddYarn: ['＋ חוט', '＋ Yarn', '＋ Пряжа', '＋ خيط', '＋ Garn', '＋ Hilo', '＋ Filato', '＋ Fil'],
+    cpSolid: ['חלק', 'Solid', 'Однотонная', 'سادة', 'Uni', 'Liso', 'Tinta unita', 'Uni'],
+    cpVari: ['מחליף צבעים', 'Self-striping', 'Секционная', 'متغير الألوان', 'Farbwechsel', 'Multicolor', 'Multicolore', 'Multicolore'],
+    cpGrad: ['גרדיאנט (מעבר הדרגתי)', 'Gradient', 'Градиент', 'تدرج', 'Farbverlauf', 'Degradado', 'Sfumato', 'Dégradé'],
+    cpLen: ['עיניים לכל צבע', 'Stitches per colour', 'Петель на цвет', 'غرز لكل لون', 'Maschen pro Farbe', 'Puntos por color', 'Maglie per colore', 'Mailles par couleur'],
+    cpAddColor: ['＋ צבע', '＋ Colour', '＋ Цвет', '＋ لون', '＋ Farbe', '＋ Color', '＋ Colore', '＋ Couleur'],
+    cpSeq: ['צבע לכל שורה / סיבוב', 'Colour of each row / round', 'Цвет каждого ряда / круга', 'لون كل صف / دورة', 'Farbe jeder Reihe / Runde', 'Color de cada vuelta', 'Colore di ogni ferro / giro', 'Couleur de chaque rang / tour'],
+    cpSeqHint: ['בוחרים חוט ולוחצים על השורות כדי לצבוע אותן.', 'Pick a yarn and tap rows to colour them.', 'Выберите пряжу и нажимайте на ряды.', 'اختر خيطًا وانقر على الصفوف لتلوينها.', 'Garn wählen und Reihen antippen.', 'Elige un hilo y toca las vueltas para colorearlas.', 'Scegli un filato e tocca i ferri per colorarli.', 'Choisissez un fil et touchez les rangs pour les colorer.'],
+    cpSwapMode: ['⇄ החלפה בין שורות', '⇄ Swap rows', '⇄ Поменять ряды', '⇄ تبديل الصفوف', '⇄ Reihen tauschen', '⇄ Intercambiar vueltas', '⇄ Scambia ferri', '⇄ Échanger des rangs'],
+    cpSwapHint: ['לוחצים על שתי שורות כדי להחליף ביניהן', 'Tap two rows to swap them', 'Нажмите на два ряда, чтобы поменять их', 'انقر على صفين لتبديلهما', 'Zwei Reihen antippen zum Tauschen', 'Toca dos vueltas para intercambiarlas', 'Tocca due ferri per scambiarli', 'Touchez deux rangs pour les échanger'],
+    cpSwapYarns: ['החלפת צבעים בכל התרשים:', 'Swap colours everywhere:', 'Поменять цвета везде:', 'تبديل الألوان في كل المخطط:', 'Farben überall tauschen:', 'Intercambiar colores en todo:', 'Scambia i colori ovunque:', 'Échanger les couleurs partout :'],
+    cpDoSwap: ['⇄ החלפה', '⇄ Swap', '⇄ Поменять', '⇄ تبديل', '⇄ Tauschen', '⇄ Intercambiar', '⇄ Scambia', '⇄ Échanger'],
+    cpReverse: ['↕ היפוך סדר', '↕ Reverse order', '↕ Обратный порядок', '↕ عكس الترتيب', '↕ Reihenfolge umkehren', '↕ Invertir orden', '↕ Inverti ordine', '↕ Inverser l\'ordre'],
+    cpRepeat: ['רצף חוזר (למשל ABAC)', 'Repeat sequence (e.g. ABAC)', 'Повтор (например ABAC)', 'تسلسل متكرر (مثلًا ABAC)', 'Wiederholung (z. B. ABAC)', 'Secuencia (p. ej. ABAC)', 'Sequenza (es. ABAC)', 'Séquence (ex. ABAC)'],
+    cpApply: ['החלה', 'Apply', 'Применить', 'تطبيق', 'Anwenden', 'Aplicar', 'Applica', 'Appliquer'],
+    cpPalette: ['פלטת הצבעים הצפויה', 'Expected palette', 'Ожидаемая палитра', 'اللوحة المتوقعة', 'Erwartete Palette', 'Paleta prevista', 'Palette prevista', 'Palette prévue'],
+    cpRound: ['סיבוב {n}', 'Round {n}', 'Круг {n}', 'الدورة {n}', 'Runde {n}', 'Vuelta {n}', 'Giro {n}', 'Tour {n}'],
+    cpRowN: ['שורה {n}', 'Row {n}', 'Ряд {n}', 'الصف {n}', 'Reihe {n}', 'Vuelta {n}', 'Ferro {n}', 'Rang {n}'],
+    cpYarnName: ['שם החוט', 'Yarn name', 'Название пряжи', 'اسم الخيط', 'Garnname', 'Nombre del hilo', 'Nome del filato', 'Nom du fil'],
+    cpPro: ['PRO', 'PRO', 'PRO', 'PRO', 'PRO', 'PRO', 'PRO', 'PRO'],
+    cpMosaicColors: ['🎨 צבע לכל שורה (תכנון צבעים)', '🎨 Colour per row (colour planner)', '🎨 Цвет каждого ряда', '🎨 لون لكل صف', '🎨 Farbe pro Reihe', '🎨 Color por vuelta', '🎨 Colore per giro', '🎨 Couleur par rang'],
+    cpUsePlan: ['צבע נפרד לכל שורה, כולל חוטים מחליפי צבעים', 'A separate yarn for each row, including self-striping yarns', 'Своя пряжа для каждого ряда, включая секционную', 'خيط مختلف لكل صف، بما فيه الخيوط متغيرة الألوان', 'Eigenes Garn je Reihe, auch Farbverlaufsgarn', 'Un hilo para cada vuelta, incluidos multicolor', 'Un filato per ogni giro, anche multicolore', 'Un fil par rang, y compris multicolores'],
+    cpPooling: ['בחוטים מחליפי צבעים התוצאה תלויה בכיוון הסריגה ובמספר העיניים בשורה – התצוגה מדמה את מה שצפוי לצאת.', 'With self-striping yarns the result depends on the working direction and stitches per row – the preview simulates the expected outcome.', 'У секционной пряжи результат зависит от направления и числа петель в ряду – превью показывает ожидаемое.', 'مع الخيوط متغيرة الألوان تعتمد النتيجة على اتجاه العمل وعدد الغرز – المعاينة تحاكي النتيجة المتوقعة.', 'Bei Farbverlaufsgarn hängt das Ergebnis von Strickrichtung und Maschenzahl ab – die Vorschau simuliert es.', 'Con hilos multicolor el resultado depende de la dirección y de los puntos por vuelta: la vista previa lo simula.', 'Con i filati multicolore il risultato dipende da direzione e numero di maglie: l\'anteprima lo simula.', 'Avec un fil multicolore, le résultat dépend du sens et du nombre de mailles : l\'aperçu le simule.'],
   };
   ORDER.forEach((l, i) => { for (const [k, arr] of Object.entries(TR)) I18N[l][k] = arr[i]; });
 
@@ -476,7 +506,9 @@
     const C = (r) => (m.start + r) % 2;
     const o = { W, H, cs, x0, y0, dpr, rowSwatch: true };
     drawGrid(ctx, { ...o, cell: (r, c, x, y) => {
-      const i = r * W + c, col = m.colors[res.D[i]];
+      const i = r * W + c;
+      const sr = r + 1 < H && res.X[(r + 1) * W + c] ? r + 1 : r; // השורה שהעין שלה נראית כאן
+      const col = m.plan ? m._rowCols[sr][c] : m.colors[res.D[i]];
       ctx.fillStyle = col; ctx.fillRect(x, y, cs, cs);
       if (res.X[i]) {
         ctx.strokeStyle = ink(col); ctx.lineWidth = Math.max(1.2, cs * .12); ctx.lineCap = 'round';
@@ -492,8 +524,8 @@
     // צבע כל שורה בצד
     for (let r = 0; r < H; r++) {
       const y = y0 + (H - 1 - r) * cs;
-      ctx.fillStyle = m.colors[C(r)];
-      ctx.fillRect(x0 + W * cs + 4, y + 1, 12, cs - 2);
+      if (m.plan) { const yn = m.plan.yarns[m.plan.seq[r]] || m.plan.yarns[0]; const n = yn.colors.length; yn.colors.forEach((cc, j) => { ctx.fillStyle = cc; ctx.fillRect(x0 + W * cs + 4, y + 1 + j * (cs - 2) / n, 12, (cs - 2) / n); }); }
+      else { ctx.fillStyle = m.colors[C(r)]; ctx.fillRect(x0 + W * cs + 4, y + 1, 12, cs - 2); }
       ctx.strokeStyle = 'rgba(0,0,0,.35)'; ctx.strokeRect(x0 + W * cs + 4.5, y + 1.5, 11, cs - 3);
     }
     return o;
@@ -501,10 +533,10 @@
 
   function mosaicInstructions(m, res) {
     const C = (r) => (m.start + r) % 2;
-    const name = (k) => (k ? t('mB') : t('mA'));
+    const rowName = (r) => (m.plan ? yarnLabel(m.plan.yarns[m.plan.seq[r]], m.plan.seq[r]) : (C(r) ? t('mB') : t('mA')));
     const lines = [];
-    lines.push(t('mRow', { r: 1, c: name(C(0)), s: t('mFoundation', { n: m.W + 1, m: m.W }) }));
-    lines.push(t('mRow', { r: 2, c: name(C(1)), s: t('mPlain', { n: m.W }) }));
+    lines.push(t('mRow', { r: 1, c: rowName(0), s: t('mFoundation', { n: m.W + 1, m: m.W }) }));
+    lines.push(t('mRow', { r: 2, c: rowName(1), s: t('mPlain', { n: m.W }) }));
     for (let r = 2; r < m.H; r++) {
       const runs = [];
       for (let c = m.W - 1; c >= 0; c--) { // מימין לשמאל
@@ -512,7 +544,7 @@
         const st = res.X[r * m.W + c] ? 'dc' : 'sc';
         if (runs.length && runs[runs.length - 1][0] === st) runs[runs.length - 1][1]++; else runs.push([st, 1]);
       }
-      lines.push(t('mRow', { r: r + 1, c: name(C(r)), s: runs.map(([st, n]) => `${n} ${st}`).join(', ') }));
+      lines.push(t('mRow', { r: r + 1, c: rowName(r), s: runs.map(([st, n]) => `${n} ${st}`).join(', ') }));
     }
     return lines;
   }
@@ -566,6 +598,14 @@
       T: fromB64(data.T), threshold: 128, invert: false, src: null,
     } : { W: 40, H: 30, start: 0, edges: true, colors: ['#f4ede1', '#0f5e63'], userColors: false, threshold: 128, invert: false, src: null };
     if (!data) { m.T = new Uint8Array(m.W * m.H); for (let r = 0; r < m.H; r++) for (let c = 0; c < m.W; c++) m.T[r * m.W + c] = (m.start + r) % 2; }
+    m.plan = data && data.plan ? data.plan : null;
+    const planFit = () => {
+      if (!m.plan) return;
+      while (m.plan.seq.length < m.H) m.plan.seq.push((m.start + m.plan.seq.length) % 2);
+      m.plan.seq.length = m.H;
+      m._rowCols = rowStitchColors(m.plan.yarns, m.plan.seq, m.W, m.H, 'round'); // במוזאיק כל השורות מהצד הקדמי
+    };
+    planFit();
     let res = mosaicSolve(m);
     let cs = 16, brush = 1, showErr = true, withPdf = !existing || !!(existing.ids && existing.ids.pdf);
     const ed = editorShell('🟪 ' + t('stMosaic'), (data && data.title) || '', existing, save);
@@ -579,7 +619,7 @@
       stats.classList.toggle('ok', !res.errors);
       sizeLbl.textContent = t('mSize', { w: m.W, h: m.H });
     };
-    const solve = () => { res = mosaicSolve(m); redraw(); };
+    const solve = () => { planFit(); res = mosaicSolve(m); redraw(); };
 
     // --- מקור: תמונה או ריק ---
     const widthIn = el('input', { type: 'number', min: '10', max: '250', value: String(m.W), class: 'num' });
@@ -648,6 +688,22 @@
       solve();
     });
 
+    // תכנון צבעים לפי שורות (PRO)
+    const usePlan = el('input', { type: 'checkbox' }); usePlan.checked = !!m.plan;
+    const planHolder = el('div', {});
+    const buildPlan = () => {
+      planHolder.innerHTML = '';
+      if (!m.plan) return;
+      planHolder.append(planEditor(m.plan, (r) => t('cpRowN', { n: r + 1 }), () => { ed.setDirty(); planFit(); redraw(); }));
+    };
+    usePlan.onchange = () => {
+      m.plan = usePlan.checked ? { yarns: [{ ...newYarn(m.colors[0]), name: '' }, { ...newYarn(m.colors[1]), name: '' }], seq: [] } : null;
+      planFit(); buildPlan(); ed.setDirty(); redraw();
+    };
+    const planWrap = el('details', { class: 'studio-help', open: m.plan ? '' : null },
+      el('summary', {}, t('cpMosaicColors'), ' ', el('span', { class: 'pro-badge' }, t('cpPro'))),
+      el('label', { class: 'chk' }, usePlan, t('cpUsePlan')), planHolder);
+    buildPlan();
     const chartPane = el('div', {});
     editorTabs(ed, [[t('tabChart'), chartPane], [t('tabInfo'), infoForm(info, ed, { fixedCraft: true })]]);
     chartPane.append(
@@ -660,14 +716,15 @@
           el('span', {}, t('mPaint')), bA, bB),
         el('div', { class: 'studio-row' }, el('label', { class: 'chk' }, edges, t('mEdges')), el('label', { class: 'chk' }, errChk, t('mShowErr'))),
         el('div', { class: 'studio-row' }, el('label', {}, t('stCellSize'), zoom), el('label', { class: 'chk' }, docChk, t('exportPdf'))),
-        el('details', { class: 'studio-help' }, el('summary', {}, 'ℹ️ ' + t('stMosaic')), el('p', {}, t('mRules')))),
+        el('details', { class: 'studio-help' }, el('summary', {}, 'ℹ️ ' + t('stMosaic')), el('p', {}, t('mRules'))),
+        planWrap),
       stats,
       el('div', { class: 'studio-canvas-wrap' }, canvas));
     updBrush(); redraw();
 
     async function save(name) {
       const png = await exportMosaicPng(m, res, name);
-      const data2 = { type: 'mosaic', v: 2, title: name, W: m.W, H: m.H, start: m.start, edges: m.edges, colors: m.colors, T: toB64(m.T), info };
+      const data2 = { type: 'mosaic', v: 2, title: name, W: m.W, H: m.H, start: m.start, edges: m.edges, colors: m.colors, T: toB64(m.T), info, plan: m.plan };
       await busy(t('stSaving'), async () => {
         const outputs = [{ key: 'main', blob: png, name: name + '.png' }];
         if (withPdf) {
@@ -913,6 +970,275 @@
           outputs.push({ key: 'pdf', blob: await htmlToPdf(html, ed.folder.id), name: name + '.pdf' });
         }
         return saveDesign({ type: 'chart', name, data: data2, outputs, existing, folderId: ed.folder.id });
+      });
+      afterSave(ed.folder);
+    }
+  }
+
+  /* =========================================================
+     תכנון צבעים – חוטים חלקים, מחליפי צבעים וגרדיאנט
+     ========================================================= */
+  const LETTER = (i) => String.fromCharCode(65 + (i % 26));
+  const yarnLabel = (y, i) => (y.name ? `${LETTER(i)} – ${y.name}` : LETTER(i));
+  const newYarn = (c) => ({ name: '', kind: 'solid', colors: [c || '#0f5e63'], len: 6 });
+  const mix = (a, b, f) => { const x = parseInt(a.slice(1), 16), y = parseInt(b.slice(1), 16);
+    return hex(((x >> 16) * (1 - f)) + ((y >> 16) * f), (((x >> 8) & 255) * (1 - f)) + (((y >> 8) & 255) * f), ((x & 255) * (1 - f)) + ((y & 255) * f)); };
+  function yarnColorAt(y, k) {
+    if (!y) return '#cccccc';
+    const n = y.colors.length;
+    if (y.kind === 'solid' || n < 2) return y.colors[0];
+    const len = Math.max(1, y.len | 0), seg = Math.floor(k / len), i = seg % n;
+    if (y.kind === 'grad') return mix(y.colors[i], y.colors[(i + 1) % n], (k % len) / len);
+    return y.colors[i];
+  }
+  // צבע כל עין בכל שורה, לפי סדר העבודה. החוט ממשיך מאותה נקודה בכל שורה שבה משתמשים בו.
+  function rowStitchColors(yarns, rowYarn, W, H, work) {
+    const counters = new Array(yarns.length).fill(0), rows = [];
+    for (let r = 0; r < H; r++) {
+      const yi = rowYarn[r] | 0, y = yarns[yi], row = new Array(W);
+      const ltr = work === 'flat' && r % 2 === 1;
+      for (let k = 0; k < W; k++) { const c = ltr ? k : W - 1 - k; row[c] = yarnColorAt(y, counters[yi]++); }
+      rows.push(row);
+    }
+    return rows;
+  }
+  function paletteOf(colors) {
+    const m = new Map(); let total = 0;
+    for (const c of colors) { m.set(c, (m.get(c) || 0) + 1); total++; }
+    return [...m.entries()].sort((a, b) => b[1] - a[1]).map(([c, n]) => ({ c, p: n / total }));
+  }
+  function paletteBars(box, pal) {
+    box.innerHTML = '';
+    const top = pal.slice(0, 14);
+    const bar = el('div', { class: 'pal-bar' });
+    for (const x of top) bar.append(el('span', { style: `background:${x.c};flex:${x.p}`, title: `${x.c} ${(x.p * 100).toFixed(1)}%` }));
+    box.append(bar, el('div', { class: 'pal-list' }, ...top.map((x) => el('span', { class: 'pal-chip' }, el('i', { style: `background:${x.c}` }), `${Math.round(x.p * 100)}%`))));
+  }
+
+  // עורך חוטים + רצף צבעים לשורות (משותף לתכנון הצבעים ולמוזאיק)
+  function planEditor(plan, rowLabel, onChange) {
+    const box = el('div', { class: 'plan' });
+    let brush = 0, swapMode = false, swapFirst = -1;
+    const yarnsBox = el('div', { class: 'yarns' });
+    const seqBox = el('div', { class: 'seq' });
+    const selA = el('select'), selB = el('select');
+    const changed = () => { onChange(); renderSeq(); };
+    function renderYarns() {
+      yarnsBox.innerHTML = '';
+      plan.yarns.forEach((y, i) => {
+        const nameIn = el('input', { type: 'text', placeholder: t('cpYarnName'), value: y.name || '' });
+        nameIn.oninput = () => { y.name = nameIn.value; renderSeq(); fillSelects(); };
+        const kind = el('select', {}, el('option', { value: 'solid' }, t('cpSolid')), el('option', { value: 'vari' }, t('cpVari')), el('option', { value: 'grad' }, t('cpGrad')));
+        kind.value = y.kind;
+        kind.onchange = () => { y.kind = kind.value; if (y.kind !== 'solid' && y.colors.length < 2) y.colors.push('#f6c453'); renderYarns(); changed(); };
+        const cols = el('div', { class: 'yarn-cols' });
+        y.colors.forEach((c, j) => {
+          if (y.kind === 'solid' && j > 0) return;
+          const ci = el('input', { type: 'color', value: c });
+          ci.oninput = () => { y.colors[j] = ci.value; changed(); };
+          cols.append(ci);
+          if (y.kind !== 'solid' && y.colors.length > 2) cols.append(el('button', { class: 'mini-x', onclick: () => { y.colors.splice(j, 1); renderYarns(); changed(); } }, '✕'));
+        });
+        if (y.kind !== 'solid') cols.append(el('button', { class: 'btn small', onclick: () => { y.colors.push('#ffffff'); renderYarns(); changed(); } }, t('cpAddColor')));
+        const len = el('input', { type: 'number', min: '1', max: '200', value: String(y.len || 6), class: 'num' });
+        len.oninput = () => { y.len = Math.max(1, Number(len.value) | 0); changed(); };
+        const pick = el('button', { class: 'yarn-letter' + (brush === i ? ' on' : ''), style: `background:${y.colors[0]};color:${ink(y.colors[0])}`, onclick: () => { brush = i; swapMode = false; renderYarns(); renderSeq(); } }, LETTER(i));
+        const rm = plan.yarns.length > 1 ? el('button', { class: 'btn small danger', onclick: () => {
+          plan.yarns.splice(i, 1);
+          plan.seq = plan.seq.map((v) => (v === i ? 0 : v > i ? v - 1 : v));
+          brush = 0; renderYarns(); fillSelects(); changed();
+        } }, '✕') : null;
+        yarnsBox.append(el('div', { class: 'yarn' }, pick, nameIn, kind, cols,
+          y.kind !== 'solid' ? el('label', {}, t('cpLen'), len) : null, rm));
+      });
+    }
+    function fillSelects() {
+      for (const s2 of [selA, selB]) {
+        const v = s2.value; s2.innerHTML = '';
+        plan.yarns.forEach((y, i) => s2.append(el('option', { value: String(i) }, yarnLabel(y, i))));
+        if (v) s2.value = v;
+      }
+      if (!selB.value || selB.value === selA.value) selB.value = String(Math.min(1, plan.yarns.length - 1));
+    }
+    function renderSeq() {
+      seqBox.innerHTML = '';
+      for (let r = plan.seq.length - 1; r >= 0; r--) { // השורה העליונה למעלה
+        const yi = plan.seq[r], y = plan.yarns[yi] || plan.yarns[0];
+        const g = y.kind === 'solid' ? y.colors[0] : `linear-gradient(90deg, ${y.colors.join(',')})`;
+        const chip = el('button', { class: 'seq-row' + (swapFirst === r ? ' sel' : ''), onclick: () => {
+          if (swapMode) {
+            if (swapFirst < 0) { swapFirst = r; renderSeq(); return; }
+            const a = plan.seq[swapFirst]; plan.seq[swapFirst] = plan.seq[r]; plan.seq[r] = a; swapFirst = -1; changed(); return;
+          }
+          plan.seq[r] = brush; changed();
+        } }, el('span', { class: 'seq-label' }, rowLabel(r)), el('span', { class: 'seq-sw', style: `background:${g}` }), el('span', {}, yarnLabel(y, yi)));
+        seqBox.append(chip);
+      }
+    }
+    const addYarn = el('button', { class: 'btn small', onclick: () => {
+      if (plan.yarns.length >= 12) return;
+      plan.yarns.push(newYarn(['#f6c453', '#ff7a59', '#8a4f7d', '#2e86de', '#27ae60', '#e84393', '#1d1d1d', '#f4ede1'][plan.yarns.length % 8]));
+      renderYarns(); fillSelects();
+    } }, t('cpAddYarn'));
+    const swapBtn = el('button', { class: 'btn small', onclick: () => { swapMode = !swapMode; swapFirst = -1; swapBtn.classList.toggle('primary', swapMode); swapHint.classList.toggle('hidden', !swapMode); renderSeq(); } }, t('cpSwapMode'));
+    const swapHint = el('span', { class: 'muted hidden' }, t('cpSwapHint'));
+    const doSwap = el('button', { class: 'btn small', onclick: () => {
+      const a = Number(selA.value), b = Number(selB.value); if (a === b) return;
+      plan.seq = plan.seq.map((v) => (v === a ? b : v === b ? a : v)); changed();
+    } }, t('cpDoSwap'));
+    const reverse = el('button', { class: 'btn small', onclick: () => { plan.seq.reverse(); changed(); } }, t('cpReverse'));
+    const rep = el('input', { type: 'text', dir: 'ltr', placeholder: t('cpRepeat'), class: 'rep' });
+    const applyRep = el('button', { class: 'btn small', onclick: () => {
+      const seq = rep.value.toUpperCase().replace(/[^A-Z]/g, '').split('').map((ch) => ch.charCodeAt(0) - 65).filter((i) => i < plan.yarns.length);
+      if (!seq.length) return;
+      plan.seq = plan.seq.map((_, i) => seq[i % seq.length]); changed();
+    } }, t('cpApply'));
+    renderYarns(); fillSelects(); renderSeq();
+    box.append(
+      el('div', { class: 'studio-sub' }, t('cpYarns')), yarnsBox, addYarn,
+      el('p', { class: 'muted small-note' }, t('cpPooling')),
+      el('div', { class: 'studio-sub' }, t('cpSeq')),
+      el('p', { class: 'muted small-note' }, t('cpSeqHint')),
+      el('div', { class: 'studio-row' }, swapBtn, swapHint),
+      el('div', { class: 'studio-row' }, el('span', {}, t('cpSwapYarns')), selA, el('span', {}, '⇄'), selB, doSwap, reverse),
+      el('div', { class: 'studio-row' }, rep, applyRep),
+      seqBox);
+    box.refresh = () => { renderYarns(); fillSelects(); renderSeq(); };
+    return box;
+  }
+
+  // ריבוע סבתא: בכל סיבוב k יש 4k קבוצות של 3 עמודים, מפוזרות באופן שווה לאורך הסיבוב (עם כיוון השעון)
+  function renderGranny(canvas, plan, N) {
+    const size = 520, dpr = Math.min(2, window.devicePixelRatio || 1);
+    canvas.width = size * dpr; canvas.height = size * dpr; canvas.style.width = size + 'px'; canvas.style.height = size + 'px';
+    const ctx = canvas.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.fillStyle = '#f7f3ec'; ctx.fillRect(0, 0, size, size);
+    const u = (size - 24) / (2 * N), cx = size / 2, cy = size / 2;
+    const counters = new Array(plan.yarns.length).fill(0), used = [];
+    for (let k = 1; k <= N; k++) {
+      const yi = plan.seq[k - 1] | 0, y = plan.yarns[yi];
+      const h = (k - 0.5) * u, L = 2 * h, P = 4 * L, groups = 4 * k;
+      const gap = P / groups, stp = Math.min(0.55 * u, gap / 3.4), bw = stp * 0.9, bh = u * 0.86;
+      for (let q = 0; q < groups; q++) {
+        const center = (q + 0.5) * gap;
+        for (let st = 0; st < 3; st++) {
+          const col = yarnColorAt(y, counters[yi]++); used.push(col);
+          let sp = (center + (st - 1) * stp + P) % P;
+          const side = Math.floor(sp / L) % 4, tt = sp - side * L;
+          ctx.fillStyle = col;
+          if (side === 0) ctx.fillRect(cx - h + tt - bw / 2, cy - h - bh / 2, bw, bh);
+          else if (side === 1) ctx.fillRect(cx + h - bh / 2, cy - h + tt - bw / 2, bh, bw);
+          else if (side === 2) ctx.fillRect(cx + h - tt - bw / 2, cy + h - bh / 2, bw, bh);
+          else ctx.fillRect(cx - h - bh / 2, cy + h - tt - bw / 2, bh, bw);
+        }
+      }
+    }
+    return used;
+  }
+  function renderStripes(canvas, plan, W, H, work) {
+    const cs = Math.max(4, Math.min(18, Math.floor(560 / Math.max(W, H)))), dpr = Math.min(2, window.devicePixelRatio || 1);
+    const w = W * cs + 40, h = H * cs + 4;
+    canvas.width = w * dpr; canvas.height = h * dpr; canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+    const ctx = canvas.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h);
+    const rows = rowStitchColors(plan.yarns, plan.seq, W, H, work), used = [];
+    ctx.font = `600 ${Math.max(8, Math.min(12, cs * .8))}px system-ui`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    for (let r = 0; r < H; r++) {
+      const y = 2 + (H - 1 - r) * cs;
+      for (let c = 0; c < W; c++) { ctx.fillStyle = rows[r][c]; used.push(rows[r][c]); ctx.fillRect(c * cs, y, cs, cs); }
+      if (cs >= 8 && ((r + 1) % (cs >= 12 ? 1 : 5) === 0 || r === 0)) { ctx.fillStyle = '#333'; ctx.fillText(String(r + 1), W * cs + 20, y + cs / 2); }
+    }
+    return used;
+  }
+
+  async function colorEditor(data, existing) {
+    const { d: defaults } = await busy(t('loading'), loadDefaults);
+    const plan = data ? { ...data.plan } : {
+      mode: 'granny', N: 6, W: 40, H: 30, work: 'flat',
+      yarns: [newYarn('#0f5e63'), newYarn('#f6c453'), { name: '', kind: 'vari', colors: ['#ff7a59', '#8a4f7d', '#f4ede1'], len: 5 }],
+      seq: [],
+    };
+    const info = data && data.info ? { ...emptyInfo('crochet'), ...data.info } : { ...emptyInfo('crochet'), designer: defaults.designer || '' };
+    let withPdf = !existing || !!(existing.ids && existing.ids.pdf);
+    const fitSeq = () => {
+      const n = plan.mode === 'granny' ? plan.N : plan.H;
+      while (plan.seq.length < n) plan.seq.push(plan.seq.length % plan.yarns.length);
+      plan.seq.length = n;
+    };
+    fitSeq();
+    const ed = editorShell('🌈 ' + t('cpTitle'), (data && data.title) || '', existing, save);
+    const canvas = el('canvas', { class: 'studio-canvas' });
+    const palBox = el('div', { class: 'pal' });
+    const redraw = () => {
+      const used = plan.mode === 'granny' ? renderGranny(canvas, plan, plan.N) : renderStripes(canvas, plan, plan.W, plan.H, plan.work);
+      paletteBars(palBox, paletteOf(used));
+    };
+    const label = (r) => (plan.mode === 'granny' ? t('cpRound', { n: r + 1 }) : t('cpRowN', { n: r + 1 }));
+    const pe = planEditor(plan, label, () => { ed.setDirty(); redraw(); });
+    const mode = el('select', {}, el('option', { value: 'granny' }, t('cpGranny')), el('option', { value: 'stripes' }, t('cpStripes')));
+    mode.value = plan.mode;
+    const nIn = el('input', { type: 'number', min: '1', max: '30', value: String(plan.N), class: 'num' });
+    const wIn = el('input', { type: 'number', min: '4', max: '200', value: String(plan.W), class: 'num' });
+    const hIn = el('input', { type: 'number', min: '2', max: '200', value: String(plan.H), class: 'num' });
+    const work = el('select', {}, el('option', { value: 'flat' }, t('cWorkFlat')), el('option', { value: 'round' }, t('cWorkRound')));
+    work.value = plan.work;
+    const grannyRow = el('div', { class: 'studio-row' }, el('label', {}, t('cpRounds'), nIn));
+    const stripeRow = el('div', { class: 'studio-row' }, el('label', {}, t('stWidth'), wIn), el('label', {}, t('stHeight'), hIn), work);
+    const sync = () => {
+      grannyRow.classList.toggle('hidden', plan.mode !== 'granny'); stripeRow.classList.toggle('hidden', plan.mode !== 'stripes');
+      fitSeq(); pe.refresh(); redraw();
+    };
+    mode.onchange = () => { plan.mode = mode.value; ed.setDirty(); sync(); };
+    nIn.onchange = () => { plan.N = Math.max(1, Math.min(30, Number(nIn.value) | 0)); ed.setDirty(); sync(); };
+    wIn.onchange = () => { plan.W = Math.max(4, Math.min(200, Number(wIn.value) | 0)); ed.setDirty(); sync(); };
+    hIn.onchange = () => { plan.H = Math.max(2, Math.min(200, Number(hIn.value) | 0)); ed.setDirty(); sync(); };
+    work.onchange = () => { plan.work = work.value; ed.setDirty(); redraw(); };
+    const pdfChk = el('input', { type: 'checkbox' }); pdfChk.checked = withPdf; pdfChk.onchange = () => { withPdf = pdfChk.checked; };
+    const planPane = el('div', {},
+      el('div', { class: 'studio-panel' },
+        el('div', { class: 'studio-row' }, el('label', {}, t('cpMode'), mode), el('span', { class: 'pro-badge' }, t('cpPro'))),
+        grannyRow, stripeRow,
+        el('label', { class: 'chk' }, pdfChk, t('exportPdf'))),
+      el('div', { class: 'studio-panel' }, el('div', { class: 'studio-sub' }, t('cpPalette')), palBox),
+      el('div', { class: 'studio-canvas-wrap' }, canvas),
+      el('div', { class: 'studio-panel' }, pe));
+    editorTabs(ed, [[t('tabChart'), planPane], [t('tabInfo'), infoForm(info, ed)]]);
+    sync();
+
+    async function save(name) {
+      // תמונה: התצוגה + הפלטה + מקרא החוטים
+      const out = document.createElement('canvas');
+      const pad = 24, legendH = 40 + plan.yarns.length * 28;
+      out.width = Math.max(canvas.width, 640) + pad * 2; out.height = canvas.height + 120 + legendH;
+      const ctx = out.getContext('2d');
+      ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, out.width, out.height);
+      const rtl = isRtl(); ctx.direction = rtl ? 'rtl' : 'ltr'; ctx.textAlign = rtl ? 'right' : 'left';
+      const tx = rtl ? out.width - pad : pad;
+      ctx.fillStyle = '#10282a'; ctx.font = '700 26px system-ui'; ctx.fillText(name, tx, 36);
+      ctx.font = '16px system-ui'; ctx.fillStyle = '#555'; ctx.fillText(`${t('cpTitle')} · ${plan.mode === 'granny' ? t('cpGranny') : t('cpStripes')}`, tx, 62);
+      ctx.drawImage(canvas, pad, 80);
+      let y = 80 + canvas.height + 30;
+      const pal = paletteOf(plan.mode === 'granny' ? renderGranny(document.createElement('canvas'), plan, plan.N) : renderStripes(document.createElement('canvas'), plan, plan.W, plan.H, plan.work));
+      let x = pad; const bw = out.width - pad * 2;
+      for (const p2 of pal.slice(0, 14)) { ctx.fillStyle = p2.c; ctx.fillRect(x, y, bw * p2.p, 18); x += bw * p2.p; }
+      y += 40; ctx.font = '15px system-ui';
+      plan.yarns.forEach((yn, i) => {
+        const bx = rtl ? out.width - pad - 60 : pad;
+        yn.colors.forEach((c, j) => { ctx.fillStyle = c; ctx.fillRect(bx + j * (60 / yn.colors.length), y, 60 / yn.colors.length, 18); });
+        ctx.fillStyle = '#222'; ctx.fillText(yarnLabel(yn, i) + (yn.kind !== 'solid' ? ` (${t(yn.kind === 'grad' ? 'cpGrad' : 'cpVari')})` : ''), rtl ? bx - 10 : bx + 70, y + 14);
+        y += 28;
+      });
+      const png = await canvasBlob(out);
+      const rows = plan.seq.map((yi, r) => `${label(r)}: ${yarnLabel(plan.yarns[yi], yi)}`);
+      const data2 = { type: 'colors', v: 1, title: name, plan, info };
+      await busy(t('stSaving'), async () => {
+        const outputs = [{ key: 'main', blob: png, name: name + '.png' }];
+        if (withPdf) {
+          $('#busyText').textContent = t('pdfMaking');
+          const html = patternHtml({ title: name, w: info, chartUrl: await blobDataUrl(png), rowsTitle: t('cpSeq'), rows, defaults, kind: t('cpTitle') });
+          outputs.push({ key: 'pdf', blob: await htmlToPdf(html, ed.folder.id), name: name + '.pdf' });
+        }
+        return saveDesign({ type: 'colors', name, data: data2, outputs, existing, folderId: ed.folder.id });
       });
       afterSave(ed.folder);
     }
@@ -1173,7 +1499,8 @@ ${attach ? `<h2>${esc(t('hAttach'))}</h2>${attach}` : ''}
       el('div', { class: 'studio-cards' },
         card('📝', t('stWritten'), t('stWrittenHint'), () => writtenEditor(null, null).catch(err)),
         card('🎨', t('stChart'), t('stChartHint'), () => chartEditor(null, null).catch(err)),
-        card('🟪', t('stMosaic'), t('stMosaicHint'), () => mosaicEditor(null, null).catch(err))),
+        card('🟪', t('stMosaic'), t('stMosaicHint'), () => mosaicEditor(null, null).catch(err)),
+        card('🌈', t('cpTitle') + ' · ' + t('cpPro'), t('cpHint'), () => colorEditor(null, null).catch(err))),
       el('div', { class: 'studio-defaults' }, el('button', { class: 'btn', onclick: () => defaultsEditor().catch(err) }, t('dBtn'))),
       el('p', { class: 'muted small-note studio-folder' }, cur ? t('stSaveTo', { name: cur.name }) : t('stNoFolder')));
   }
@@ -1192,6 +1519,7 @@ ${attach ? `<h2>${esc(t('hAttach'))}</h2>${attach}` : ''}
     const existing = { jsonId, ids, folderId: (meta.parents && meta.parents[0]) || (f.parents && f.parents[0]) };
     if (data.type === 'mosaic') await mosaicEditor(data, existing);
     else if (data.type === 'chart') await chartEditor(data, existing);
+    else if (data.type === 'colors') await colorEditor(data, existing);
     else await writtenEditor(data, existing);
   }
 
