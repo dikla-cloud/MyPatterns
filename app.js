@@ -498,7 +498,7 @@ async function pdfImage(blob) {
 }
 
 /* ---------------- קישורים לדוגמאות מהאינטרנט ---------------- */
-const linkUrl = (f) => (f && f.description && /^https?:\/\//.test(f.description) ? f.description : '');
+const linkUrl = (f) => { const first = ((f && f.description) || '').split('\n')[0].trim(); return /^https?:\/\//.test(first) ? first : ''; };
 const hostOf = (u) => { try { return new URL(u).hostname; } catch { return ''; } };
 
 async function linkUrlFromContent(f) {
@@ -837,6 +837,77 @@ async function grantAccess() {
   dash.load(true);
 }
 
+/* ---------------- הערות לדוגמה (נשמרות בתיאור הקובץ/התיקייה בדרייב) ---------------- */
+function notesOf(f) {
+  const d = (f && f.description) || '';
+  if (kindOf(f) === 'link') return d.split('\n').slice(1).join('\n').trim();
+  return d.trim();
+}
+async function saveNotes(f, text) {
+  text = text.trim();
+  const description = kindOf(f) === 'link' ? (linkUrl(f) + (text ? '\n' + text : '')) : text;
+  await drive.patch(f.id, { description });
+  f.description = description;
+  updateCachedItem(f);
+  folderMetaCache.delete(f.id);
+}
+function openNotes(f, onSaved) {
+  const ta = el('textarea', { class: 'notes-input', rows: '9', placeholder: t('notesPh') });
+  ta.value = notesOf(f);
+  const name = f.name.replace(/\.(pdf|docx?|rtf|odt|xlsx?|ods|csv|url|jpe?g|png|gif|webp|heic)$/i, '');
+  openModal(t('notesTitle', { name }), ta, [
+    el('button', { class: 'btn primary', onclick: async () => {
+      try {
+        await busy(t('saving'), () => saveNotes(f, ta.value));
+        closeModal();
+        toast(t('notesSaved'));
+        if (onSaved) onSaved(); else dash.render();
+      } catch (e) { err(e); }
+    } }, t('save')),
+  ]);
+  setTimeout(() => ta.focus(), 50);
+}
+
+// חלונית צפה עם ההערות (ריחוף במחשב, לחיצה על 📝 בטלפון)
+const notesPop = el('div', { class: 'notes-pop hidden' });
+document.body.append(notesPop);
+function showNotesPop(anchor, f, interactive) {
+  notesPop.innerHTML = '';
+  notesPop.append(el('div', { class: 'notes-pop-title' }, t('notesHeading')), el('div', { class: 'notes-pop-text' }, notesOf(f)));
+  if (interactive) notesPop.append(el('button', { class: 'btn small', onclick: () => { hideNotesPop(); openNotes(f); } }, t('notesEdit')));
+  notesPop.classList.toggle('interactive', !!interactive);
+  notesPop.classList.remove('hidden');
+  const r = anchor.getBoundingClientRect();
+  const w = Math.min(320, innerWidth - 16);
+  notesPop.style.width = w + 'px';
+  notesPop.style.left = clamp(r.left + r.width / 2 - w / 2, 8, innerWidth - w - 8) + 'px';
+  const h = notesPop.offsetHeight;
+  notesPop.style.top = (r.bottom + 6 + h < innerHeight ? r.bottom + 6 : Math.max(8, r.top - h - 6)) + 'px';
+}
+function hideNotesPop() { notesPop.classList.add('hidden'); }
+document.addEventListener('pointerdown', (e) => { if (!e.target.closest('.notes-pop') && !e.target.closest('.notes-badge')) hideNotesPop(); });
+addEventListener('scroll', hideNotesPop, { passive: true });
+
+// הערות התיקייה הפתוחה – מוצגות בראש המסך
+const folderMetaCache = new Map();
+async function renderFolderNotes() {
+  const box = $('#folderNotes');
+  const cur = nav.path[nav.path.length - 1];
+  if (!cur) { box.classList.add('hidden'); return; }
+  let meta = folderMetaCache.get(cur.id);
+  if (!meta) {
+    try { meta = await drive.get(cur.id); folderMetaCache.set(cur.id, meta); } catch { box.classList.add('hidden'); return; }
+  }
+  if (nav.current().id !== cur.id) return;
+  box.innerHTML = '';
+  const text = notesOf(meta);
+  const edit = () => openNotes(meta, renderFolderNotes);
+  if (text) box.append(el('div', { class: 'folder-notes-head' }, el('b', {}, t('notesHeading')), el('button', { class: 'btn small', onclick: edit }, t('notesEdit'))), el('div', { class: 'folder-notes-text' }, text));
+  else box.append(el('button', { class: 'btn link', onclick: edit }, t('notesAdd')));
+  box.classList.toggle('has-notes', !!text);
+  box.classList.remove('hidden');
+}
+
 /* ---------------- דשבורד ---------------- */
 const dash = {
   items: [],
@@ -847,9 +918,11 @@ const dash = {
     if (!cur) {
       $('#grid').innerHTML = ''; $('#emptyNote').classList.add('hidden');
       $('#crumbs').classList.add('hidden'); $('#recentSection').classList.add('hidden');
+      $('#folderNotes').classList.add('hidden');
       return;
     }
     this.renderCrumbs();
+    renderFolderNotes();
     const key = 'list:' + cur.id;
     const cached = await idb.get('lists', key);
     if (cached && !force) { this.items = cached; this.render(); }
@@ -934,12 +1007,23 @@ const dash = {
       if (coverId || (shown && kind !== 'image')) items.push({ label: t('removeImage'), fn: () => removeCover(f).catch(err) });
       if (kind === 'link') items.push({ label: t('openInBrowser'), fn: () => window.open(linkUrl(f), '_blank', 'noopener') });
       if (!isFolder && kind !== 'image' && kind !== 'link') items.push({ label: t('rescanImage'), fn: () => rescanCover(f).catch(err) });
+      items.push({ label: t('notesMenu'), fn: () => openNotes(f) });
       if (!isFolder) items.push({ label: t('deleteFile'), fn: () => deletePattern(f).catch(err) });
       items.push({ label: t('openInDrive'), fn: () => window.open(`https://drive.google.com/${isFolder ? 'drive/folders/' : 'file/d/'}${f.id}`, '_blank') });
       openMenu(anchor, items);
     };
     const more = el('button', { class: 'more', 'aria-label': t('options'), onclick: (e) => { e.stopPropagation(); showMenu(e.currentTarget); } }, '⋯');
     card.append(more);
+    if (notesOf(f)) {
+      const badge = el('button', { class: 'notes-badge', title: t('notesHeading'), 'aria-label': t('notesHeading'), onclick: (e) => {
+        e.stopPropagation();
+        showNotesPop(card, f, true);
+      } }, '📝');
+      card.append(badge);
+      // במחשב – ריחוף מעל הכרטיס מציג את ההערות
+      card.addEventListener('mouseenter', (e) => { if (e.pointerType !== 'touch' && matchMedia('(hover: hover)').matches) showNotesPop(card, f, false); });
+      card.addEventListener('mouseleave', () => { if (!notesPop.classList.contains('interactive')) hideNotesPop(); });
+    }
     // לחיצה ארוכה (בטלפון) או קליק ימני (במחשב) פותחים את אותו תפריט
     card.addEventListener('contextmenu', (e) => { e.preventDefault(); showMenu(more); });
     card.addEventListener('click', () => {
@@ -1051,6 +1135,8 @@ async function openFile(f, localBlob) {
   $('#viewerTitle').textContent = f.name.replace(/\.url$/i, '');
   $('#accurateBtn').classList.toggle('hidden', !(V.kind === 'docx' && !V.local));
   $('#accurateBtn').textContent = t('accurate');
+  $('#notesBtn').classList.toggle('hidden', !!localBlob);
+  $('#notesBtn').classList.toggle('has-notes', !!notesOf(f));
   V.linkUrl = V.kind === 'link' ? linkUrl(f) : '';
   setSync(V.local ? t('localFile') : '');
   content.innerHTML = '';
@@ -1473,6 +1559,7 @@ function closeViewer(fromPop) {
   start();
 }
 $('#closeViewerBtn').onclick = () => closeViewer();
+$('#notesBtn').onclick = () => { if (V.file && !V.local) openNotes(V.file, () => {}); };
 $('#extBtn').onclick = () => { if (V.linkUrl) window.open(V.linkUrl, '_blank', 'noopener'); };
 window.addEventListener('popstate', () => {
   if (!$('#viewerView').classList.contains('hidden')) closeViewer(true);

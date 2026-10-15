@@ -374,3 +374,25 @@ input { font: inherit; }
 .search-row { display: flex; gap: 8px; align-items: center; }
 .search-row input { flex: 1; min-width: 0; }
 .new-folder-btn { flex: 0 0 auto; padding: 10px 12px; white-space: nowrap; }
+
+/* הערות */
+.notes-input { width: 100%; min-height: 180px; padding: 12px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font: inherit; line-height: 1.6; resize: vertical; }
+.notes-badge {
+  position: absolute; bottom: 64px; inset-inline-end: 8px; width: 34px; height: 34px; border-radius: 50%;
+  border: 0; background: var(--accent); box-shadow: var(--shadow); font-size: 16px;
+}
+.card.folder .notes-badge { bottom: 64px; }
+.notes-pop {
+  position: fixed; z-index: 55; background: var(--surface); color: var(--text); border: 1px solid var(--border);
+  border-inline-start: 4px solid var(--accent); border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,.22);
+  padding: 10px 12px; pointer-events: none; max-height: 50vh; overflow: auto;
+}
+.notes-pop.interactive { pointer-events: auto; }
+.notes-pop-title { font-weight: 700; font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+.notes-pop-text { white-space: pre-wrap; line-height: 1.55; font-size: 14px; margin-bottom: 6px; }
+.folder-notes { margin: 8px 16px 0; }
+.folder-notes.has-notes { background: var(--surface); border: 1px solid var(--border); border-inline-start: 4px solid var(--accent); border-radius: 12px; padding: 10px 12px; }
+.folder-notes-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
+.folder-notes-text { white-space: pre-wrap; line-height: 1.55; font-size: 14px; max-height: 9.5em; overflow: auto; }
+.folder-notes .btn.link { margin: 0; padding: 4px 0; color: var(--primary); }
+.notes-btn.has-notes { background: rgba(246, 196, 83, .35); }
