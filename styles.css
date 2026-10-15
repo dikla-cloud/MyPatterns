@@ -345,3 +345,4 @@ input { font: inherit; }
 .counter-val { color: var(--primary); }
 .card .progress-dot { background: var(--accent); color: #10282a; }
 .crumbs .cur { color: var(--primary); }
+.install-wide { margin-top: 10px; border-color: var(--primary); color: var(--primary); }

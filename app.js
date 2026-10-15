@@ -1387,6 +1387,41 @@ document.querySelectorAll('.open-local-btn').forEach((b) => b.addEventListener('
   openFile(meta, f);
 }));
 
+/* ---------------- התקנה כאפליקציה ---------------- */
+let installPrompt = null;
+const isInstalled = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+function updateInstallButtons() {
+  document.querySelectorAll('.install-btn').forEach((b) => b.classList.toggle('hidden', isInstalled()));
+}
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault(); // מציגים את הכפתור שלנו במקום ההודעה של הדפדפן
+  installPrompt = e;
+  updateInstallButtons();
+});
+window.addEventListener('appinstalled', () => {
+  installPrompt = null;
+  document.querySelectorAll('.install-btn').forEach((b) => b.classList.add('hidden'));
+  toast(t('installed'), 4000);
+});
+async function installApp() {
+  if (installPrompt) {
+    installPrompt.prompt();
+    try { await installPrompt.userChoice; } catch { /* ignore */ }
+    installPrompt = null;
+    return;
+  }
+  // הדפדפן לא מאפשר התקנה בלחיצה – מציגים הוראות לפי המכשיר
+  const ua = navigator.userAgent;
+  const ios = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const samsung = /SamsungBrowser/.test(ua);
+  const inApp = /FBAN|FBAV|Instagram|WhatsApp|Line\/|wv\)/.test(ua);
+  const text = ios ? t('installHelpIos') : samsung ? t('installHelpSamsung') : inApp ? t('installHelpInApp')
+    : /Android/.test(ua) ? t('installHelpAndroid') : t('installHelpDesktop');
+  openModal(t('installTitle'), el('div', {}, el('p', { style: 'line-height:1.7;white-space:pre-line' }, text)));
+}
+document.querySelectorAll('.install-btn').forEach((b) => b.addEventListener('click', installApp));
+updateInstallButtons();
+
 /* ---------------- הגדרות ---------------- */
 function openSettings() {
   const root = nav.root();
@@ -1395,6 +1430,8 @@ function openSettings() {
   const row = (title, hint, btn) => el('div', { class: 'row' }, el('div', {}, el('b', {}, title), hint != null ? el('small', {}, hint) : null), btn);
   const body = el('div', { class: 'settings-list' },
     row('🌐 ' + t('language'), null, sel),
+    isInstalled() ? null : row('📲 ' + t('installTitle'), t('installHint'),
+      el('button', { class: 'btn primary', onclick: () => { closeModal(); installApp(); } }, t('install'))),
     row(t('patternsFolder'), root ? root.name : t('notChosen'),
       el('button', { class: 'btn', onclick: () => pickRootFolder().catch(err) }, t('change'))),
     row(t('pickFromDrive'), t('pickFromDriveHint'),
