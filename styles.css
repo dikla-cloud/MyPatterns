@@ -107,7 +107,7 @@ input { font: inherit; }
 .recent-item span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 14px; }
 
 .grid {
-  display: grid; gap: 14px; padding: 4px 16px 90px;
+  display: grid; gap: 14px; padding: 4px 16px 16px;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
 }
 @media (max-width: 420px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
@@ -279,3 +279,9 @@ input { font: inherit; }
 .row-field input[type=color] { width: 46px; height: 32px; border: 1px solid var(--border); border-radius: 8px; padding: 0; background: none; }
 .row-field.check { cursor: pointer; }
 .row-field.check input { width: 20px; height: 20px; accent-color: var(--primary); }
+
+.small-note { max-width: 460px; margin: 8px auto; font-size: 14px; line-height: 1.5; }
+.empty-actions { display: flex; flex-direction: column; gap: 10px; align-items: center; margin-top: 16px; }
+.empty-actions .btn { min-width: 260px; }
+.empty h2 { margin: 6px 0; }
+.grant-row { text-align: center; padding: 0 16px 90px; }

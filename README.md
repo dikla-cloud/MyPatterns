@@ -17,35 +17,44 @@
 - **בלי אינטרנט**: קבצים שכבר נפתחו נשמרים במכשיר, ואפשר לפתוח אותם גם בלי חיבור.
 - העלאת דוגמאות חדשות ויצירת תיקיות ישירות מהאפליקציה (כפתור ＋).
 
+## הרשאות: מה האפליקציה רואה בדרייב
+האפליקציה משתמשת בהרשאה המצומצמת **drive.file**. היא רואה **רק**:
+- את התיקייה שנבחרה בבורר הקבצים של גוגל,
+- קבצים ותיקיות שנבחרו בבורר ("🔓 בחירת קבצים ותיקיות מהדרייב"),
+- קבצים ותיקיות שנוצרו או הועלו דרך האפליקציה עצמה.
+
+שאר הדרייב לא נגיש לה בכלל. אם בתיקייה יש דוגמאות שלא מופיעות, לוחצים ＋ ← "בחירת קבצים ותיקיות קיימים מהדרייב" ומסמנים אותן. זה צריך לקרות רק פעם אחת לכל קובץ.
+
 ## הגדרה חד-פעמית
 
 ### 1. אחסון האתר
-לאפליקציה צריך להיות כתובת https. האפשרות הכי פשוטה והחינמית היא **GitHub Pages**:
-1. ליצור מאגר (repository) חדש ב-GitHub ולהעלות אליו את כל הקבצים שבתיקייה הזו.
-2. במאגר: Settings ← Pages ← Source: `Deploy from a branch`, ולבחור ב-`main` / `root`.
-3. אחרי כדקה האפליקציה תהיה זמינה בכתובת כמו `https://USERNAME.github.io/MyPatterns/`.
+GitHub Pages: מאגר `MyPatterns` ← Settings ← Pages ← Source: `Deploy from a branch`, ולבחור ב-`main` / `/ (root)`.
+הכתובת תהיה `https://USERNAME.github.io/MyPatterns/`.
 
-(אפשר גם Netlify או Cloudflare Pages: פשוט גוררים את התיקייה לאתר שלהם.)
+### 2. הגדרה ב-Google Cloud (כ-10 דקות)
+1. **פרויקט:** https://console.cloud.google.com ← בורר הפרויקטים ← **New Project** ← שם `MyPatterns` ← **Create**. מוודאים שהפרויקט נבחר.
+2. **הפעלת שני APIs:** בחיפוש העליון מחפשים ולוחצים **Enable** על:
+   - **Google Drive API**
+   - **Google Picker API**
+3. **מסך הסכמה:** מחפשים **Google Auth Platform** (או OAuth consent screen) ← **Get started**:
+   - App name: `MyPatterns`, אימייל תמיכה ← Next ← Audience: **External** ← Next ← אימייל ← מסכימים ← **Create**.
+   - **Audience** ← **Test users** ← **Add users** ← הג'ימייל שלך ← Save.
+   - **Data Access** ← **Add or remove scopes** ← מסמנים את `.../auth/drive.file` ← Update ← Save.
+4. **Client ID:** **Clients** ← **Create client** ← Web application ← שם `MyPatterns web`.
+   - **Authorized JavaScript origins** ← Add URI ← `https://USERNAME.github.io` (בלי נתיב ובלי `/` בסוף).
+   - Create ← מעתיקים את ה-**Client ID**.
+5. **מפתח API:** מחפשים **Credentials** ← **Create credentials** ← **API key** ← מעתיקים (מתחיל ב-`AIza`).
+   - מומלץ ללחוץ על המפתח ← **Application restrictions: Websites** ← מוסיפים `https://USERNAME.github.io/*`.
+   - **API restrictions: Restrict key** ← מסמנים **Google Picker API** ← Save.
+6. פותחים את האפליקציה, מדביקים Client ID ו-API key ← מתחברים ← בוחרים תיקייה.
+   אפשר גם לכתוב את שניהם ב-`config.js`, וכך לא צריך להזין אותם בכל מכשיר. שני המזהים אינם סודיים.
 
-### 2. יצירת Client ID בגוגל (כ-5 דקות)
-1. להיכנס ל-https://console.cloud.google.com וליצור פרויקט חדש (למשל "Knitting").
-2. **APIs & Services ← Library**: לחפש **Google Drive API** וללחוץ **Enable**.
-3. **APIs & Services ← OAuth consent screen**, או **Google Auth Platform** בממשק החדש:
-   - User type: **External**. ממלאים שם אפליקציה ואימייל.
-   - בחלק **Audience / Test users** מוסיפים את כתובת הג'ימייל שלך.
-   - אפשר להשאיר את האפליקציה במצב **Testing**, והיא תעבוד לחשבונות שהוספת.
-4. **Credentials ← Create credentials ← OAuth client ID**:
-   - Application type: **Web application**
-   - **Authorized JavaScript origins**: מוסיפים את כתובת האתר **בלי נתיב**, למשל `https://USERNAME.github.io`.
-   - לוחצים Create ומעתיקים את ה-**Client ID**. הוא מסתיים ב-`apps.googleusercontent.com`.
-5. פותחים את האפליקציה, מדביקים את ה-Client ID ומתחברים.
-   אפשר גם להדביק אותו מראש בקובץ `config.js`, וכך לא צריך להזין אותו בכל מכשיר.
+> בהתחברות תופיע האזהרה "Google hasn't verified this app". זה תקין לאפליקציה פרטית: **Advanced ← Go to MyPatterns (unsafe)**.
 
-> בהתחברות הראשונה גוגל תציג אזהרה ש"האפליקציה לא אומתה". זה תקין לאפליקציה פרטית: לוחצים **Advanced ← Go to … (unsafe)**.
-
-### 3. בחירת התיקייה
-אחרי ההתחברות נפתח דפדפן תיקיות. מנווטים לתיקיית הדוגמאות ולוחצים **"בחירת התיקייה הנוכחית"**. כל תת-תיקייה תופיע בדשבורד ככרטיס.
-אפשר להחליף את התיקייה בכל זמן דרך ⚙ הגדרות.
+### שיתוף עם אחרים
+כל מי שמשתמש מתחבר לחשבון הגוגל **שלו** ובוחר תיקייה בדרייב **שלו**. אף אחד לא רואה את הדוגמאות של מישהו אחר.
+- **עד 100 משתמשים:** מוסיפים אותם כ-Test users.
+- **לכולם:** ב-Google Auth Platform ← Audience ← **Publish app**, ואז מגישים לאימות. בהרשאה drive.file מדובר באימות בסיסי (מדיניות פרטיות, דף בית, אימות דומיין) בלי בדיקת אבטחה בתשלום.
 
 ## התקנה באנדרואיד
 פותחים את הכתובת ב-**Chrome** ← תפריט ⋮ ← **"התקנת אפליקציה"** או **"הוספה למסך הבית"**. האפליקציה תיפתח במסך מלא, כמו אפליקציה רגילה.

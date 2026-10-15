@@ -1,7 +1,9 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
 
-const SCOPES = 'https://www.googleapis.com/auth/drive';
+// גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
+const SCOPES = 'https://www.googleapis.com/auth/drive.file';
+const SCOPE_VERSION = 2;
 const DRIVE = 'https://www.googleapis.com/drive/v3';
 const UPLOAD = 'https://www.googleapis.com/upload/drive/v3';
 const FOLDER = 'application/vnd.google-apps.folder';
@@ -71,6 +73,20 @@ class AuthError extends Error {}
 
 function clientId() {
   return (window.KNIT_CONFIG && window.KNIT_CONFIG.clientId) || store.get('clientId', '');
+}
+function apiKey() {
+  return (window.KNIT_CONFIG && window.KNIT_CONFIG.apiKey) || store.get('apiKey', '');
+}
+// מספר הפרויקט (App ID) הוא הספרות שבתחילת ה-Client ID
+function appId() { return (clientId().match(/^(\d+)-/) || [])[1] || ''; }
+
+// מעבר מהגרסה הקודמת (גישה מלאה לדרייב) – צריך להתחבר ולבחור תיקייה מחדש
+if (store.get('scopeV', 0) !== SCOPE_VERSION) {
+  store.set('token', null);
+  store.set('signedIn', false);
+  store.set('root', null);
+  store.set('path', []);
+  store.set('scopeV', SCOPE_VERSION);
 }
 
 function waitForGis(timeout = 10000) {
@@ -333,47 +349,88 @@ function openMenu(anchor, items) {
 function closeMenu() { $('#menu').classList.add('hidden'); }
 document.addEventListener('pointerdown', (e) => { if (!e.target.closest('#menu') && !e.target.closest('.more')) closeMenu(); });
 
-/* ---------------- בחירת תיקיית שורש ---------------- */
-async function pickRootFolder() {
-  const trail = [{ id: 'root', name: 'האחסון שלי' }];
-  const body = el('div');
-  const render = async () => {
-    const cur = trail[trail.length - 1];
-    body.innerHTML = '';
-    const crumbs = el('div', { class: 'crumbs' });
-    trail.forEach((t, i) => {
-      if (i) crumbs.append(el('span', { class: 'sep' }, '›'));
-      crumbs.append(i === trail.length - 1 ? el('span', { class: 'cur' }, t.name)
-        : el('button', { onclick: () => { trail.length = i + 1; render(); } }, t.name));
+/* ---------------- בורר הקבצים של גוגל (Google Picker) ---------------- */
+let pickerReady;
+function loadPicker() {
+  if (!pickerReady) {
+    pickerReady = new Promise((res, rej) => {
+      const go = () => gapi.load('picker', { callback: res, onerror: () => rej(new Error('PICKER_LOAD')) });
+      if (window.gapi) return go();
+      const sc = document.createElement('script');
+      sc.src = 'https://apis.google.com/js/api.js';
+      sc.onload = go;
+      sc.onerror = () => { pickerReady = null; rej(new Error('לא ניתן לטעון את בורר הקבצים של גוגל')); };
+      document.head.append(sc);
     });
-    body.append(crumbs, el('p', { class: 'muted' }, 'טוען תיקיות…'));
-    let folders;
-    try { folders = await drive.list(cur.id, true); } catch (e) { body.lastChild.textContent = 'שגיאה: ' + e.message; return; }
-    body.lastChild.remove();
-    const ul = el('ul', { class: 'folder-list' });
-    if (!folders.length) ul.append(el('li', { class: 'muted' }, 'אין תת-תיקיות'));
-    for (const f of folders) {
-      ul.append(el('li', {}, el('button', { onclick: () => { trail.push({ id: f.id, name: f.name }); render(); } }, '📁', f.name)));
-    }
-    body.append(ul);
-  };
+  }
+  return pickerReady;
+}
+
+// פותח את הבורר ומחזיר את הפריטים שנבחרו (או null אם בוטל)
+async function showPicker({ title, view, multi = false }) {
+  if (!apiKey()) throw new Error('חסר מפתח API – יש להזין אותו בהגדרות');
+  closeModal(); closeMenu();
+  const token = await auth.get();
+  await loadPicker();
   return new Promise((resolve) => {
-    openModal('בחירת תיקיית הדוגמאות בדרייב', body, [
-      el('button', { class: 'btn primary', onclick: () => {
-        const cur = trail[trail.length - 1];
-        store.set('root', { id: cur.id, name: cur.id === 'root' ? 'האחסון שלי' : cur.name });
-        nav.reset(); closeModal(); resolve(true);
-      } }, 'בחירת התיקייה הנוכחית'),
-      el('button', { class: 'btn', onclick: async () => {
-        const name = prompt('שם התיקייה החדשה:', 'דוגמאות סריגה');
-        if (!name) return;
-        const cur = trail[trail.length - 1];
-        const f = await busy('יוצר תיקייה…', () => drive.mkdir(name, cur.id));
-        trail.push({ id: f.id, name: f.name }); render();
-      } }, '+ תיקייה חדשה כאן'),
-    ]);
-    render();
+    const P = google.picker;
+    const b = new P.PickerBuilder()
+      .setOAuthToken(token)
+      .setDeveloperKey(apiKey())
+      .setAppId(appId())
+      .setLocale('iw')
+      .setTitle(title)
+      .setOrigin(location.protocol + '//' + location.host)
+      .setSize(Math.min(innerWidth - 16, 1051), Math.min(innerHeight - 16, 650))
+      .addView(view(P))
+      .setCallback((d) => {
+        const a = d[P.Response.ACTION];
+        if (a === P.Action.PICKED) resolve(d[P.Response.DOCUMENTS] || []);
+        else if (a === P.Action.CANCEL) resolve(null);
+      });
+    if (multi) b.enableFeature(P.Feature.MULTISELECT_ENABLED);
+    b.build().setVisible(true);
   });
+}
+
+async function pickRootFolder() {
+  const docs = await showPicker({
+    title: 'בחירת תיקיית הדוגמאות',
+    view: (P) => new P.DocsView(P.ViewId.FOLDERS)
+      .setIncludeFolders(true).setSelectFolderEnabled(true)
+      .setMimeTypes(FOLDER).setOwnedByMe(true),
+  });
+  if (!docs || !docs.length) return false;
+  setRoot({ id: docs[0].id, name: docs[0].name });
+  return true;
+}
+
+async function createRootFolder() {
+  const f = await busy('יוצר תיקייה…', () => drive.mkdir('MyPatterns', 'root'));
+  setRoot({ id: f.id, name: f.name });
+  toast('התיקייה MyPatterns נוצרה בדרייב');
+}
+
+function setRoot(r) {
+  store.set('root', r);
+  nav.reset();
+  show('#dashView');
+  dash.load(true);
+}
+
+// מתן גישה לקבצים ולתיקיות שכבר קיימים בתיקייה הנוכחית בדרייב
+async function grantAccess() {
+  const cur = nav.current();
+  if (!cur) return;
+  const docs = await showPicker({
+    title: 'סמנו את הדוגמאות והתיקיות שיופיעו באפליקציה',
+    multi: true,
+    view: (P) => new P.DocsView(P.ViewId.DOCS)
+      .setParent(cur.id).setIncludeFolders(true).setSelectFolderEnabled(true).setMode(P.DocsViewMode.LIST),
+  });
+  if (!docs || !docs.length) return;
+  toast(`נוספה גישה ל-${docs.length} פריטים`);
+  dash.load(true);
 }
 
 /* ---------------- דשבורד ---------------- */
@@ -381,7 +438,13 @@ const dash = {
   items: [],
   async load(force = false) {
     const cur = nav.current();
-    if (!cur) return;
+    $('#welcome').classList.toggle('hidden', !!cur);
+    $('.search-row').classList.toggle('hidden', !cur);
+    if (!cur) {
+      $('#grid').innerHTML = ''; $('#emptyNote').classList.add('hidden'); $('#grantRow').classList.add('hidden');
+      $('#crumbs').classList.add('hidden'); $('#recentSection').classList.add('hidden');
+      return;
+    }
     this.renderCrumbs();
     const key = 'list:' + cur.id;
     const cached = await idb.get('lists', key);
@@ -429,6 +492,7 @@ const dash = {
     const q = $('#searchInput').value.trim().toLowerCase();
     const items = this.items.filter((f) => !q || f.name.toLowerCase().includes(q));
     $('#emptyNote').classList.toggle('hidden', items.length > 0);
+    $('#grantRow').classList.toggle('hidden', items.length === 0);
     for (const f of items) grid.append(this.card(f));
   },
   card(f) {
@@ -960,7 +1024,10 @@ function openSettings() {
   const body = el('div', { class: 'settings-list' },
     el('div', { class: 'row' },
       el('div', {}, el('b', {}, 'תיקיית הדוגמאות'), el('small', {}, root ? root.name : 'לא נבחרה')),
-      el('button', { class: 'btn', onclick: async () => { closeModal(); if (await pickRootFolder()) { show('#dashView'); dash.load(true); } } }, 'שינוי')),
+      el('button', { class: 'btn', onclick: () => pickRootFolder().catch(err) }, 'שינוי')),
+    el('div', { class: 'row' },
+      el('div', {}, el('b', {}, 'בחירת קבצים מהדרייב'), el('small', {}, 'מתן גישה לדוגמאות ותיקיות קיימות בתיקייה הפתוחה')),
+      el('button', { class: 'btn', onclick: () => grantAccess().catch(err) }, 'בחירה')),
     el('div', { class: 'row' },
       el('div', {}, el('b', {}, 'פתיחת קובץ מהמכשיר'), el('small', {}, 'צפייה בקובץ שלא נמצא בדרייב')),
       el('button', { class: 'btn', onclick: () => { closeModal(); document.querySelector('.open-local-btn').click(); } }, 'פתיחה')),
@@ -968,8 +1035,8 @@ function openSettings() {
       el('div', {}, el('b', {}, 'ניקוי זיכרון מטמון'), el('small', {}, 'מחיקת קבצים ששמורים לשימוש בלי אינטרנט')),
       el('button', { class: 'btn', onclick: async () => { indexedDB.deleteDatabase('mypatterns'); toast('המטמון נוקה'); setTimeout(() => location.reload(), 600); } }, 'ניקוי')),
     el('div', { class: 'row' },
-      el('div', {}, el('b', {}, 'Client ID'), el('small', { dir: 'ltr' }, clientId() || '—')),
-      el('button', { class: 'btn', onclick: () => { store.set('clientId', ''); auth.signOut(); location.reload(); } }, 'שינוי')),
+      el('div', {}, el('b', {}, 'Client ID / API Key'), el('small', { dir: 'ltr' }, clientId() || '—'), el('small', { dir: 'ltr' }, apiKey() ? apiKey().slice(0, 8) + '…' : '—')),
+      el('button', { class: 'btn', onclick: () => { store.set('clientId', ''); store.set('apiKey', ''); auth.signOut(); location.reload(); } }, 'שינוי')),
     el('div', { class: 'row' },
       el('div', {}, el('b', {}, 'התנתקות מגוגל')),
       el('button', { class: 'btn danger', onclick: () => { auth.signOut(); closeModal(); start(); } }, 'התנתקות')),
@@ -982,6 +1049,7 @@ function openAddMenu(anchor) {
   openMenu(anchor, [
     { label: '⬆️ העלאת דוגמה (PDF / Word / תמונה)', fn: uploadPatterns },
     { label: '📁 תיקייה חדשה', fn: newFolder },
+    { label: '🔓 בחירת קבצים ותיקיות קיימים מהדרייב', fn: () => grantAccess().catch(err) },
   ]);
 }
 async function uploadPatterns() {
@@ -1019,11 +1087,18 @@ $('#reauthBtn').onclick = async () => {
 };
 $('#saveClientIdBtn').onclick = () => {
   const v = $('#clientIdInput').value.trim();
-  if (!/\.apps\.googleusercontent\.com$/.test(v)) { toast('ה-Client ID צריך להסתיים ב-apps.googleusercontent.com'); return; }
+  const k = $('#apiKeyInput').value.trim();
+  if (!/^\d+-.+\.apps\.googleusercontent\.com$/.test(v)) { toast('ה-Client ID צריך להסתיים ב-apps.googleusercontent.com'); return; }
+  if (!/^AIza/.test(k)) { toast('מפתח ה-API מתחיל ב-AIza'); return; }
   store.set('clientId', v);
+  store.set('apiKey', k);
   start();
 };
-$('#resetClientBtn').onclick = () => { store.set('clientId', ''); start(); };
+$('#resetClientBtn').onclick = () => { store.set('clientId', ''); store.set('apiKey', ''); start(); };
+$('#pickExistingBtn').onclick = () => pickRootFolder().catch(err);
+$('#createRootBtn').onclick = () => createRootFolder().catch(err);
+document.querySelectorAll('.grant-btn').forEach((b) => { b.onclick = () => grantAccess().catch(err); });
+document.querySelectorAll('.upload-btn').forEach((b) => { b.onclick = () => uploadPatterns(); });
 $('#loginBtn').onclick = async () => {
   try {
     await auth.request('select_account');
@@ -1036,15 +1111,8 @@ window.addEventListener('online', () => { $('#offlineNote').classList.add('hidde
 
 /* ---------------- הפעלה ---------------- */
 async function start() {
-  if (!clientId()) { show('#setupView'); return; }
+  if (!clientId() || !apiKey()) { show('#setupView'); return; }
   if (!auth.valid() && !store.get('signedIn', false)) { show('#loginView'); return; }
-  if (!nav.root()) {
-    show('#dashView');
-    try {
-      if (!auth.valid()) await auth.request('');
-      if (!(await pickRootFolder())) return;
-    } catch { show('#loginView'); return; }
-  }
   show('#dashView');
   dash.load();
 }

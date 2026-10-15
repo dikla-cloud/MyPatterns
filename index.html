@@ -17,10 +17,14 @@
     <div class="setup-card">
       <div class="logo">🧶</div>
       <h1>MyPatterns</h1>
-      <p class="muted">כדי לחבר את האפליקציה לגוגל דרייב צריך להזין פעם אחת מזהה לקוח (Client ID) של Google. ההוראות המלאות בקובץ README.</p>
+      <p class="muted">כדי לחבר את האפליקציה לגוגל דרייב צריך להזין פעם אחת את שני המזהים מ-Google Cloud. ההוראות המלאות בקובץ README.</p>
       <label class="field">
         <span>Google OAuth Client ID</span>
-        <input id="clientIdInput" type="text" dir="ltr" placeholder="xxxxxxxx.apps.googleusercontent.com" autocomplete="off">
+        <input id="clientIdInput" type="text" dir="ltr" placeholder="123456789012-xxxx.apps.googleusercontent.com" autocomplete="off">
+      </label>
+      <label class="field">
+        <span>Google API Key (מפתח API)</span>
+        <input id="apiKeyInput" type="text" dir="ltr" placeholder="AIza…" autocomplete="off">
       </label>
       <button id="saveClientIdBtn" class="btn primary wide">שמירה והמשך</button>
       <div class="or">או</div>
@@ -62,9 +66,24 @@
       <div id="recentRow" class="recent-row"></div>
     </section>
     <div id="grid" class="grid"></div>
+    <div id="grantRow" class="grant-row hidden"><button class="btn link grant-btn">חסרות כאן דוגמאות מהדרייב? בחירת קבצים ותיקיות</button></div>
     <div id="emptyNote" class="empty hidden">
       <div class="logo">🧶</div>
-      <p>התיקייה ריקה. אפשר להוסיף דוגמאות (PDF / Word / תמונה) בכפתור ＋</p>
+      <p id="emptyText">לא נמצאו כאן דוגמאות.</p>
+      <p class="muted small-note">האפליקציה רואה רק קבצים שניתנה לה גישה אליהם. אם יש בתיקייה הזו בדרייב קבצים או תיקיות שלא מופיעים, צריך לבחור אותם פעם אחת:</p>
+      <div class="empty-actions">
+        <button class="btn primary grant-btn">🔓 בחירת קבצים ותיקיות מהדרייב</button>
+        <button class="btn upload-btn">⬆️ העלאת דוגמה חדשה</button>
+      </div>
+    </div>
+    <div id="welcome" class="empty hidden">
+      <div class="logo">🧶</div>
+      <h2>ברוכים הבאים ל-MyPatterns</h2>
+      <p class="muted small-note">האפליקציה מקבלת גישה רק לתיקייה שתיבחר כאן, ולא לשאר הדרייב.</p>
+      <div class="empty-actions">
+        <button id="pickExistingBtn" class="btn primary">📁 בחירת תיקייה קיימת בדרייב</button>
+        <button id="createRootBtn" class="btn">＋ יצירת תיקייה חדשה בשם MyPatterns</button>
+      </div>
     </div>
   </section>
 
