@@ -9,12 +9,12 @@
   </defs>
   <rect width="512" height="512" rx="112" fill="#0f5e63"/>
 
-  <!-- left: two crossed yellow knitting needles, running diagonally under the knitted square -->
+  <!-- left: two crossed yellow knitting needles, mirroring the angle of the hook, running under the knitted square -->
   <g stroke="#f6c453" stroke-width="17" stroke-linecap="round" fill="#f6c453">
-    <line x1="64" y1="96" x2="272" y2="200"/>
-    <circle cx="58" cy="93" r="22" stroke="none"/>
-    <line x1="96" y1="64" x2="200" y2="272"/>
-    <circle cx="93" cy="58" r="22" stroke="none"/>
+    <line x1="135" y1="50" x2="222" y2="267"/>
+    <circle cx="132" cy="45" r="21" stroke="none"/>
+    <line x1="95" y1="83" x2="293" y2="207"/>
+    <circle cx="90" cy="80" r="21" stroke="none"/>
   </g>
 
   <!-- right: orange crochet hook; the lip at the top points down -->

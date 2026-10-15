@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <pattern id="knit" x="118" y="150" width="46" height="46" patternUnits="userSpaceOnUse">
+      <rect width="46" height="46" fill="#d8c3a1"/>
+      <ellipse cx="13.5" cy="23" rx="9.5" ry="20" transform="rotate(-27 13.5 23)" fill="#fffaf2" stroke="#a88c63" stroke-width="2.5"/>
+      <ellipse cx="32.5" cy="23" rx="9.5" ry="20" transform="rotate(27 32.5 23)" fill="#fffaf2" stroke="#a88c63" stroke-width="2.5"/>
+    </pattern>
+    <clipPath id="sq"><rect x="118" y="150" width="276" height="276" rx="28"/></clipPath>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#0f5e63"/>
+
+  <!-- left: two crossed yellow knitting needles, mirroring the angle of the hook, running under the knitted square -->
+  <g stroke="#f6c453" stroke-width="17" stroke-linecap="round" fill="#f6c453">
+    <line x1="135" y1="50" x2="222" y2="267"/>
+    <circle cx="132" cy="45" r="21" stroke="none"/>
+    <line x1="95" y1="83" x2="293" y2="207"/>
+    <circle cx="90" cy="80" r="21" stroke="none"/>
+  </g>
+
+  <!-- right: orange crochet hook; the lip at the top points down -->
+  <g transform="translate(424 56) rotate(40) scale(1.15)">
+    <path d="M-11 300 L-11 30 Q-11 0 12 0 Q31 0 31 19 L28 46 Q24 52 19 45 L17 27 Q9 22 5 34 L5 50 Q5 58 11 62 L11 300 Z" fill="#ff7a59"/>
+    <rect x="-17" y="150" width="34" height="66" rx="11" fill="#ff7a59"/>
+  </g>
+
+  <!-- knitted square -->
+  <rect x="118" y="150" width="276" height="276" fill="url(#knit)" clip-path="url(#sq)"/>
+  <rect x="118" y="150" width="276" height="276" rx="28" fill="none" stroke="#fffaf2" stroke-width="9"/>
+
+  <!-- yellow ruler over exactly one row of stitches -->
+  <rect x="100" y="242" width="312" height="46" rx="8" fill="#ffd400" opacity=".6"/>
+  <rect x="100" y="242" width="312" height="46" rx="8" fill="none" stroke="#0b4447" stroke-width="5"/>
+</svg>
