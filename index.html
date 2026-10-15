@@ -9,80 +9,82 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=6">
+  <link rel="stylesheet" href="styles.css?v=7">
 </head>
 <body>
   <!-- ===== מסך הגדרה ראשונית ===== -->
   <section id="setupView" class="screen hidden">
     <div class="setup-card">
+      <div class="lang-slot"></div>
       <div class="logo">🧶</div>
       <h1>MyPatterns</h1>
-      <p class="muted">כדי לחבר את האפליקציה לגוגל דרייב צריך להזין פעם אחת את שני המזהים מ-Google Cloud. ההוראות המלאות בקובץ README.</p>
+      <p class="muted" data-i18n="setupText"></p>
       <label class="field">
         <span>Google OAuth Client ID</span>
         <input id="clientIdInput" type="text" dir="ltr" placeholder="123456789012-xxxx.apps.googleusercontent.com" autocomplete="off">
       </label>
       <label class="field">
-        <span>Google API Key (מפתח API)</span>
+        <span data-i18n="apiKeyLabel"></span>
         <input id="apiKeyInput" type="text" dir="ltr" placeholder="AIza…" autocomplete="off">
       </label>
-      <button id="saveClientIdBtn" class="btn primary wide">שמירה והמשך</button>
-      <div class="or">או</div>
-      <button class="btn wide open-local-btn">📂 פתיחת קובץ מהמכשיר (בלי דרייב)</button>
+      <button id="saveClientIdBtn" class="btn primary wide" data-i18n="saveContinue"></button>
+      <div class="or" data-i18n="or"></div>
+      <button class="btn wide open-local-btn" data-i18n="openLocalNoDrive"></button>
     </div>
   </section>
 
   <!-- ===== מסך התחברות ===== -->
   <section id="loginView" class="screen hidden">
     <div class="setup-card">
+      <div class="lang-slot"></div>
       <div class="logo">🧶</div>
       <h1>MyPatterns</h1>
-      <p class="muted">יש להתחבר לחשבון Google כדי לראות את הדוגמאות מהדרייב.</p>
-      <button id="loginBtn" class="btn primary wide">התחברות עם Google</button>
-      <div class="or">או</div>
-      <button class="btn wide open-local-btn">📂 פתיחת קובץ מהמכשיר</button>
-      <button id="resetClientBtn" class="btn link">שינוי Client ID</button>
+      <p class="muted" data-i18n="loginText"></p>
+      <button id="loginBtn" class="btn primary wide" data-i18n="loginBtn"></button>
+      <div class="or" data-i18n="or"></div>
+      <button class="btn wide open-local-btn" data-i18n="openLocal"></button>
+      <button id="resetClientBtn" class="btn link" data-i18n="changeClientId"></button>
     </div>
   </section>
 
   <!-- ===== דשבורד ===== -->
   <section id="dashView" class="screen hidden">
     <header class="topbar">
-      <button id="backBtn" class="icon-btn hidden" title="חזרה" aria-label="חזרה">→</button>
+      <button id="backBtn" class="icon-btn hidden back-arrow" data-i18n-title="back">→</button>
       <h1 id="dashTitle">MyPatterns</h1>
       <div class="spacer"></div>
-      <button id="refreshBtn" class="icon-btn" title="רענון" aria-label="רענון">⟳</button>
-      <button id="addBtn" class="icon-btn" title="הוספה" aria-label="הוספה">＋</button>
-      <button id="settingsBtn" class="icon-btn" title="הגדרות" aria-label="הגדרות">⚙</button>
+      <button id="refreshBtn" class="icon-btn" data-i18n-title="refresh">⟳</button>
+      <button id="addBtn" class="icon-btn" data-i18n-title="add">＋</button>
+      <button id="settingsBtn" class="icon-btn" data-i18n-title="settings">⚙</button>
     </header>
     <nav id="crumbs" class="crumbs"></nav>
     <div class="search-row">
-      <input id="searchInput" type="search" placeholder="חיפוש דוגמה…">
+      <input id="searchInput" type="search" data-i18n-ph="searchPh">
     </div>
-    <div id="offlineNote" class="note hidden">אין חיבור – מוצגת הרשימה השמורה האחרונה.</div>
-    <div id="authNote" class="note hidden">החיבור לגוגל פג. <button id="reauthBtn" class="btn small primary">התחברות מחדש</button></div>
+    <div id="offlineNote" class="note hidden" data-i18n="offline"></div>
+    <div id="authNote" class="note hidden"><span data-i18n="authExpired"></span> <button id="reauthBtn" class="btn small primary" data-i18n="reauth"></button></div>
     <section id="recentSection" class="hidden">
-      <h2 class="section-title">להמשיך לסרוג</h2>
+      <h2 class="section-title" data-i18n="continueKnitting"></h2>
       <div id="recentRow" class="recent-row"></div>
     </section>
     <div id="grid" class="grid"></div>
-    <div id="grantRow" class="grant-row hidden"><button class="btn link grant-btn">חסרות כאן דוגמאות מהדרייב? בחירת קבצים ותיקיות</button></div>
+    <div id="grantRow" class="grant-row hidden"><button class="btn link grant-btn" data-i18n="grantMissing"></button></div>
     <div id="emptyNote" class="empty hidden">
       <div class="logo">🧶</div>
-      <p id="emptyText">לא נמצאו כאן דוגמאות.</p>
-      <p class="muted small-note">האפליקציה רואה רק קבצים שניתנה לה גישה אליהם. אם יש בתיקייה הזו בדרייב קבצים או תיקיות שלא מופיעים, צריך לבחור אותם פעם אחת:</p>
+      <p id="emptyText" data-i18n="emptyText"></p>
+      <p class="muted small-note" data-i18n="emptyHelp"></p>
       <div class="empty-actions">
-        <button class="btn primary grant-btn">🔓 בחירת קבצים ותיקיות מהדרייב</button>
-        <button class="btn upload-btn">⬆️ העלאת דוגמה חדשה</button>
+        <button class="btn primary grant-btn" data-i18n="grantBtn"></button>
+        <button class="btn upload-btn" data-i18n="uploadNew"></button>
       </div>
     </div>
     <div id="welcome" class="empty hidden">
       <div class="logo">🧶</div>
-      <h2>ברוכים הבאים ל-MyPatterns</h2>
-      <p class="muted small-note">האפליקציה מקבלת גישה רק לתיקייה שתיבחר כאן, ולא לשאר הדרייב.</p>
+      <h2 data-i18n="welcome"></h2>
+      <p class="muted small-note" data-i18n="welcomeHelp"></p>
       <div class="empty-actions">
-        <button id="pickExistingBtn" class="btn primary">📁 בחירת תיקייה קיימת בדרייב</button>
-        <button id="createRootBtn" class="btn">＋ יצירת תיקייה חדשה בשם MyPatterns</button>
+        <button id="pickExistingBtn" class="btn primary" data-i18n="pickExisting"></button>
+        <button id="createRootBtn" class="btn" data-i18n="createRoot"></button>
       </div>
     </div>
   </section>
@@ -90,80 +92,80 @@
   <!-- ===== מציג דוגמה ===== -->
   <section id="viewerView" class="screen hidden">
     <header class="topbar viewer-top">
-      <button id="closeViewerBtn" class="icon-btn" title="חזרה" aria-label="חזרה">→</button>
+      <button id="closeViewerBtn" class="icon-btn back-arrow" data-i18n-title="back">→</button>
       <h1 id="viewerTitle" class="ellipsis"></h1>
       <div class="spacer"></div>
-      <span id="syncBadge" class="sync-badge" title="סטטוס סנכרון"></span>
-      <button id="accurateBtn" class="btn small hidden" title="המרה דרך גוגל לתצוגה זהה לוורד">תצוגה מדויקת</button>
+      <span id="syncBadge" class="sync-badge" data-i18n-title="syncStatus"></span>
+      <button id="accurateBtn" class="btn small hidden" data-i18n-title="accurateTitle" data-i18n="accurate"></button>
     </header>
     <div id="stage" class="stage">
       <div id="scroller" class="scroller">
         <div id="content" class="content"></div>
       </div>
       <div id="dimLayer" class="dim-layer hidden"></div>
-      <div id="hRuler" class="ruler h" aria-label="סרגל אופקי">
+      <div id="hRuler" class="ruler h" data-i18n-title="hRuler">
         <div class="band"></div>
         <div class="grip">⇕</div>
       </div>
-      <div id="vRuler" class="ruler v" aria-label="סרגל אנכי">
+      <div id="vRuler" class="ruler v" data-i18n-title="vRuler">
         <div class="band"></div>
         <div class="grip">⇔</div>
       </div>
-      <div id="viewerLoading" class="viewer-loading hidden"><div class="spinner"></div><span>טוען…</span></div>
+      <div id="viewerLoading" class="viewer-loading hidden"><div class="spinner"></div><span data-i18n="loading"></span></div>
     </div>
 
     <!-- פאנל הגדרות סרגלים -->
     <div id="rulerPanel" class="ruler-panel hidden">
       <div class="panel-head">
-        <b>הגדרות סרגלים</b>
-        <button id="panelClose" class="btn small primary">✓ סיום</button>
+        <b data-i18n="rulerSettings"></b>
+        <button id="panelClose" class="btn small primary" data-i18n="done"></button>
       </div>
       <div class="panel-grid">
         <div class="panel-col">
-          <h3>סרגל אופקי (שורות)</h3>
-          <label class="row-field"><span>עובי</span>
+          <h3 data-i18n="hRulerRows"></h3>
+          <label class="row-field"><span data-i18n="thickness"></span>
             <input id="hThick" type="range" min="3" max="250" step="1"><output id="hThickOut"></output></label>
-          <label class="row-field"><span>צבע</span><input id="hColor" type="color"></label>
+          <label class="row-field"><span data-i18n="color"></span><input id="hColor" type="color"></label>
         </div>
         <div class="panel-col">
-          <h3>סרגל אנכי (עמודות)</h3>
-          <label class="row-field"><span>עובי</span>
+          <h3 data-i18n="vRulerCols"></h3>
+          <label class="row-field"><span data-i18n="thickness"></span>
             <input id="vThick" type="range" min="3" max="250" step="1"><output id="vThickOut"></output></label>
-          <label class="row-field"><span>צבע</span><input id="vColor" type="color"></label>
+          <label class="row-field"><span data-i18n="color"></span><input id="vColor" type="color"></label>
         </div>
         <div class="panel-col">
-          <h3>כללי</h3>
-          <label class="row-field"><span>שקיפות</span>
+          <h3 data-i18n="general"></h3>
+          <label class="row-field"><span data-i18n="opacity"></span>
             <input id="opacity" type="range" min="0.08" max="0.8" step="0.02"><output id="opacityOut"></output></label>
-          <label class="row-field check"><input id="dimToggle" type="checkbox"><span>האפלת שאר הדף</span></label>
-          <label class="row-field check"><input id="lockToggle" type="checkbox"><span>נעילת הדוגמה (שלא תזוז)</span></label>
+          <label class="row-field check"><input id="dimToggle" type="checkbox"><span data-i18n="dimRest"></span></label>
+          <label class="row-field check"><input id="lockToggle" type="checkbox"><span data-i18n="lockPattern"></span></label>
         </div>
       </div>
     </div>
 
     <footer class="viewer-bar">
       <div class="bar-group">
-        <button id="hToggle" class="tool on" title="סרגל אופקי">▬</button>
-        <button id="hUp" class="tool" title="סרגל אופקי למעלה">▲</button>
-        <button id="hDown" class="tool" title="סרגל אופקי למטה">▼</button>
+        <button id="hToggle" class="tool on" data-i18n-title="hRuler">▬</button>
+        <button id="hUp" class="tool" data-i18n-title="hUp">▲</button>
+        <button id="hDown" class="tool" data-i18n-title="hDown">▼</button>
       </div>
       <div class="bar-group">
-        <button id="vToggle" class="tool on" title="סרגל אנכי">▮</button>
-        <button id="vRight" class="tool" title="סרגל אנכי ימינה">▶</button>
-        <button id="vLeft" class="tool" title="סרגל אנכי שמאלה">◀</button>
+        <button id="vToggle" class="tool on" data-i18n-title="vRuler">▮</button>
+        <button id="vRight" class="tool" data-i18n-title="vRight">▶</button>
+        <button id="vLeft" class="tool" data-i18n-title="vLeft">◀</button>
       </div>
-      <div class="bar-group counter" title="מונה שורות">
+      <div class="bar-group counter" data-i18n-title="rowCounter">
         <button id="cMinus" class="tool">−</button>
-        <button id="cValue" class="counter-val" title="לחיצה לאיפוס">0</button>
+        <button id="cValue" class="counter-val" data-i18n-title="clickToSet">0</button>
         <button id="cPlus" class="tool">+</button>
       </div>
       <div class="bar-group">
-        <button id="zoomOut" class="tool" title="הקטנה">−🔍</button>
-        <button id="zoomFit" class="tool" title="התאמה לרוחב">⤢</button>
-        <button id="zoomIn" class="tool" title="הגדלה">+🔍</button>
+        <button id="zoomOut" class="tool" data-i18n-title="zoomOut">−🔍</button>
+        <button id="zoomFit" class="tool" data-i18n-title="zoomFit">⤢</button>
+        <button id="zoomIn" class="tool" data-i18n-title="zoomIn">+🔍</button>
       </div>
       <div class="bar-group">
-        <button id="panelToggle" class="tool" title="הגדרות סרגלים">🎨</button>
+        <button id="panelToggle" class="tool" data-i18n-title="rulerSettings">🎨</button>
       </div>
     </footer>
   </section>
@@ -173,7 +175,7 @@
     <div class="modal-box">
       <header class="modal-head">
         <h2 id="modalTitle"></h2>
-        <button id="modalClose" class="icon-btn" aria-label="סגירה">✕</button>
+        <button id="modalClose" class="icon-btn" data-i18n-title="close">✕</button>
       </header>
       <div id="modalBody" class="modal-body"></div>
       <footer id="modalFoot" class="modal-foot"></footer>
@@ -182,16 +184,17 @@
 
   <div id="menu" class="menu hidden"></div>
   <div id="toast" class="toast hidden"></div>
-  <div id="busy" class="busy hidden"><div class="spinner"></div><span id="busyText">רגע…</span></div>
+  <div id="busy" class="busy hidden"><div class="spinner"></div><span id="busyText" data-i18n="wait"></span></div>
 
   <input id="imageInput" type="file" accept="image/*" hidden>
-  <input id="uploadInput" type="file" accept=".pdf,.doc,.docx,.rtf,.odt,image/*,application/pdf" multiple hidden>
+  <input id="uploadInput" type="file" multiple hidden>
   <input id="localInput" type="file" accept=".pdf,.docx,image/*,application/pdf" hidden>
 
-  <script src="config.js?v=6"></script>
+  <script src="config.js?v=7"></script>
+  <script src="i18n.js?v=7"></script>
   <script src="vendor/pdf.min.js"></script>
   <script src="vendor/mammoth.browser.min.js" defer></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="app.js?v=6"></script>
+  <script src="app.js?v=7"></script>
 </body>
 </html>

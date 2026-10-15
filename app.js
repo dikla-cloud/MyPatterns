@@ -159,7 +159,7 @@ async function gfetch(url, opts = {}, retry = true) {
   }
   if (r.status === 401) throw new AuthError('401');
   if (!r.ok) {
-    let msg = 'שגיאה ' + r.status;
+    let msg = t('errorN', { n: r.status });
     try { const j = await r.json(); msg = (j.error && j.error.message) || msg; } catch { /* ignore */ }
     throw new Error(msg);
   }
@@ -217,13 +217,18 @@ function kindOf(f) {
   if (m === 'application/pdf' || n.endsWith('.pdf')) return 'pdf';
   if (m === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || n.endsWith('.docx')) return 'docx';
   if (m === 'application/vnd.google-apps.document') return 'gdoc';
+  if (m === 'application/vnd.google-apps.spreadsheet') return 'gsheet';
+  if (/spreadsheet|ms-excel|text\/csv/.test(m) || /\.(xlsx|xls|ods|csv)$/.test(n)) return 'sheet';
   if (m === 'application/msword' || m === 'application/rtf' || m === 'text/rtf' ||
       m === 'application/vnd.oasis.opendocument.text' || /\.(doc|rtf|odt)$/.test(n)) return 'doc';
   if (m.startsWith('image/')) return 'image';
   return null;
 }
-const KIND_LABEL = { pdf: 'PDF', docx: 'WORD', doc: 'WORD', gdoc: 'DOC', image: 'תמונה' };
-const KIND_ICON = { folder: '🧶', pdf: '📄', docx: '📝', doc: '📝', gdoc: '📝', image: '🖼️' };
+const KIND_LABEL = { pdf: 'PDF', docx: 'WORD', doc: 'WORD', gdoc: 'DOC', sheet: 'EXCEL', gsheet: 'SHEET' };
+const kindLabel = (k) => (k === 'image' ? t('kindImage') : KIND_LABEL[k]);
+// סוגים שמוצגים אחרי המרה ל-PDF דרך גוגל
+const CONVERTED = ['doc', 'gdoc', 'sheet', 'gsheet'];
+const KIND_ICON = { folder: '🧶', pdf: '📄', docx: '📝', doc: '📝', gdoc: '📝', sheet: '📊', gsheet: '📊', image: '🖼️' };
 const isAppImage = (f) => f.appProperties && f.appProperties.kpRole === 'image';
 // מזהה התמונה המייצגת ('none' = הוסרה בכוונה ולא מחפשים אוטומטית)
 const coverOf = (f) => { const c = f && f.appProperties && f.appProperties.kpCover; return c && c !== 'none' ? c : null; };
@@ -286,8 +291,8 @@ function pickFile(input) {
 async function setCover(target) {
   const file = await pickFile($('#imageInput'));
   if (!file) return;
-  await busy('מעלה תמונה…', async () => saveCover(target, await resizeImage(file)));
-  toast('התמונה נשמרה');
+  await busy(t('uploadingImage'), async () => saveCover(target, await resizeImage(file)));
+  toast(t('imageSaved'));
   dash.load(true);
 }
 
@@ -295,7 +300,7 @@ async function setCover(target) {
 async function saveCover(target, blob, extraProps = {}) {
   const parent = target.mimeType === FOLDER ? target.id : ((target.parents && target.parents[0]) || nav.current().id);
   const img = await drive.upload(blob, {
-    name: `_תמונה_${target.name}.jpg`, parents: [parent], mimeType: 'image/jpeg',
+    name: `_cover_${target.name}.jpg`, parents: [parent], mimeType: 'image/jpeg',
     appProperties: { kpRole: 'image', kpFor: target.id },
   });
   await idb.put('blobs', 'img:' + img.id, blob);
@@ -307,19 +312,19 @@ async function saveCover(target, blob, extraProps = {}) {
 }
 
 async function rescanCover(f) {
-  const id = await busy('מחפש תמונה בקובץ…', async () => {
+  const id = await busy(t('searchingImage'), async () => {
     const blob = await findCoverImage(f);
     if (!blob) return null;
     return saveCover(f, blob, { kpAuto: AUTO_V });
   });
-  toast(id ? 'נמצאה תמונה ונשמרה' : 'לא נמצאה תמונה בקובץ');
+  toast(id ? t('imageFound') : t('imageNotFound'));
   dash.load(true);
 }
 
 async function removeCover(target) {
   const old = coverOf(target);
   if (!old) return;
-  await busy('מסיר תמונה…', async () => {
+  await busy(t('removingImage'), async () => {
     await drive.patch(target.id, { appProperties: { kpCover: 'none' } });
     drive.patch(old, { trashed: true }).catch(() => {});
   });
@@ -526,7 +531,7 @@ function loadPicker() {
       const sc = document.createElement('script');
       sc.src = 'https://apis.google.com/js/api.js';
       sc.onload = go;
-      sc.onerror = () => { pickerReady = null; rej(new Error('לא ניתן לטעון את בורר הקבצים של גוגל')); };
+      sc.onerror = () => { pickerReady = null; rej(new Error(t('pickerLoadFail'))); };
       document.head.append(sc);
     });
   }
@@ -535,7 +540,7 @@ function loadPicker() {
 
 // פותח את הבורר ומחזיר את הפריטים שנבחרו (או null אם בוטל)
 async function showPicker({ title, view, multi = false }) {
-  if (!apiKey()) throw new Error('חסר מפתח API – יש להזין אותו בהגדרות');
+  if (!apiKey()) throw new Error(t('missingApiKey'));
   closeModal(); closeMenu();
   const token = await auth.get();
   await loadPicker();
@@ -545,7 +550,7 @@ async function showPicker({ title, view, multi = false }) {
       .setOAuthToken(token)
       .setDeveloperKey(apiKey())
       .setAppId(appId())
-      .setLocale('iw')
+      .setLocale(LANGS[LANG].picker)
       .setTitle(title)
       .setOrigin(location.protocol + '//' + location.host)
       .addView(view(P))
@@ -564,12 +569,12 @@ async function showPicker({ title, view, multi = false }) {
 // חיפוש בתוך האפליקציה לפני פתיחת הבורר (בטלפון לא תמיד אפשר להקליד בחיפוש של גוגל)
 function askSearch(title, hint) {
   return new Promise((resolve) => {
-    const input = el('input', { type: 'text', placeholder: 'שם התיקייה או הקובץ (אפשר להשאיר ריק)', enterkeyhint: 'search' });
+    const input = el('input', { type: 'text', placeholder: t('searchFieldPh'), enterkeyhint: 'search' });
     const done = (v) => { $('#modalClose').onclick = closeModal; closeModal(); resolve(v); };
     input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); done(input.value.trim()); } });
     openModal(title, el('div', {}, el('p', { class: 'muted' }, hint), input), [
-      el('button', { class: 'btn primary', onclick: () => done(input.value.trim()) }, '🔍 חיפוש'),
-      el('button', { class: 'btn', onclick: () => done('') }, '📂 דפדוף בלי חיפוש'),
+      el('button', { class: 'btn primary', onclick: () => done(input.value.trim()) }, t('search')),
+      el('button', { class: 'btn', onclick: () => done('') }, t('browse')),
     ]);
     $('#modalClose').onclick = () => done(null);
     setTimeout(() => input.focus(), 50);
@@ -578,10 +583,10 @@ function askSearch(title, hint) {
 const withQuery = (view, q) => (q && typeof view.setQuery === 'function' ? view.setQuery(q) : view);
 
 async function pickRootFolder() {
-  const q = await askSearch('בחירת תיקיית הדוגמאות', 'אפשר להקליד את שם התיקייה בדרייב, או לדפדף בתיקיות.');
+  const q = await askSearch(t('pickRootTitle'), t('pickRootHint'));
   if (q == null) return false;
   const docs = await showPicker({
-    title: 'בחירת תיקיית הדוגמאות',
+    title: t('pickRootTitle'),
     view: (P) => {
       const v = new P.DocsView(P.ViewId.FOLDERS)
         .setIncludeFolders(true).setSelectFolderEnabled(true).setMimeTypes(FOLDER);
@@ -594,9 +599,9 @@ async function pickRootFolder() {
 }
 
 async function createRootFolder() {
-  const f = await busy('יוצר תיקייה…', () => drive.mkdir('MyPatterns', 'root'));
+  const f = await busy(t('creatingFolder'), () => drive.mkdir('MyPatterns', 'root'));
   setRoot({ id: f.id, name: f.name });
-  toast('התיקייה MyPatterns נוצרה בדרייב');
+  toast(t('rootCreated'));
 }
 
 function setRoot(r) {
@@ -610,11 +615,10 @@ function setRoot(r) {
 async function grantAccess() {
   const cur = nav.current();
   if (!cur) return;
-  const q = await askSearch('בחירת קבצים ותיקיות מהדרייב',
-    'בלי חיפוש ייפתחו הקבצים שבתיקייה הנוכחית. עם חיפוש – נחפש בכל הדרייב.');
+  const q = await askSearch(t('grantTitle'), t('grantHint'));
   if (q == null) return;
   const docs = await showPicker({
-    title: 'סמנו את הדוגמאות והתיקיות שיופיעו באפליקציה',
+    title: t('grantPickerTitle'),
     multi: true,
     view: (P) => {
       const v = new P.DocsView(P.ViewId.DOCS)
@@ -623,7 +627,7 @@ async function grantAccess() {
     },
   });
   if (!docs || !docs.length) return;
-  toast(`נוספה גישה ל-${docs.length} פריטים`);
+  toast(t('accessAdded', { n: docs.length }));
   dash.load(true);
 }
 
@@ -653,7 +657,7 @@ const dash = {
     } catch (e) {
       if (e instanceof AuthError) $('#authNote').classList.remove('hidden');
       else if (!navigator.onLine) $('#offlineNote').classList.remove('hidden');
-      else toast('שגיאה בטעינה: ' + e.message, 4000);
+      else toast(t('loadError', { msg: e.message }), 4000);
       if (!cached) this.render();
     }
   },
@@ -666,7 +670,7 @@ const dash = {
     $('#recentSection').classList.toggle('hidden', !atRoot || !store.get('recent', []).length);
     if (atRoot) { c.classList.add('hidden'); this.renderRecent(); return; }
     c.classList.remove('hidden');
-    c.append(el('button', { onclick: () => { nav.to(0); this.load(); } }, '🏠 ' + (root.name || 'ראשי')));
+    c.append(el('button', { onclick: () => { nav.to(0); this.load(); } }, '🏠 ' + (root.name || t('home'))));
     nav.path.forEach((p, i) => {
       c.append(el('span', { class: 'sep' }, '›'));
       c.append(i === nav.path.length - 1 ? el('span', { class: 'cur' }, p.name)
@@ -699,18 +703,18 @@ const dash = {
     else if (kind === 'image') queueImage(f.id, paint);
     else if (isFolder) folderCover(f).then((id) => id && queueImage(id, paint)).catch(() => {});
     else autoCover(f).then((id) => id && queueImage(id, paint)).catch(() => {});
-    const displayName = isFolder ? f.name : f.name.replace(/\.(pdf|docx?|rtf|odt|jpe?g|png|gif|webp|heic)$/i, '');
+    const displayName = isFolder ? f.name : f.name.replace(/\.(pdf|docx?|rtf|odt|xlsx?|ods|csv|jpe?g|png|gif|webp|heic)$/i, '');
     const meta = el('div', { class: 'meta' }, el('div', { class: 'name' }, displayName),
-      isFolder ? null : el('span', { class: 'badge ' + kind }, KIND_LABEL[kind]));
+      isFolder ? null : el('span', { class: 'badge ' + kind }, kindLabel(kind)));
     const card = el('div', { class: 'card ' + (isFolder ? 'folder' : 'file'), title: f.name }, cover, meta);
     const st = !isFolder && loadLocalState(f.id);
-    if (st && st.c) card.append(el('span', { class: 'progress-dot' }, 'שורה ' + st.c));
-    const more = el('button', { class: 'more', 'aria-label': 'אפשרויות', onclick: (e) => {
+    if (st && st.c) card.append(el('span', { class: 'progress-dot' }, t('rowN', { n: st.c })));
+    const more = el('button', { class: 'more', 'aria-label': t('options'), onclick: (e) => {
       e.stopPropagation();
-      const items = [{ label: coverId ? '🖼️ החלפת תמונה' : '🖼️ הוספת תמונה', fn: () => setCover(f).catch(err) }];
-      if (coverId) items.push({ label: '🗑️ הסרת התמונה', fn: () => removeCover(f).catch(err) });
-      if (!isFolder && kind !== 'image') items.push({ label: '🔍 חיפוש תמונה בתוך הקובץ', fn: () => rescanCover(f).catch(err) });
-      items.push({ label: '↗ פתיחה בגוגל דרייב', fn: () => window.open(`https://drive.google.com/${isFolder ? 'drive/folders/' : 'file/d/'}${f.id}`, '_blank') });
+      const items = [{ label: coverId ? t('replaceImage') : t('addImage'), fn: () => setCover(f).catch(err) }];
+      if (coverId) items.push({ label: t('removeImage'), fn: () => removeCover(f).catch(err) });
+      if (!isFolder && kind !== 'image') items.push({ label: t('rescanImage'), fn: () => rescanCover(f).catch(err) });
+      items.push({ label: t('openInDrive'), fn: () => window.open(`https://drive.google.com/${isFolder ? 'drive/folders/' : 'file/d/'}${f.id}`, '_blank') });
       openMenu(e.currentTarget, items);
     } }, '⋯');
     card.append(more);
@@ -724,8 +728,8 @@ const dash = {
 
 function err(e) {
   console.error(e);
-  if (e instanceof AuthError) { $('#authNote').classList.remove('hidden'); toast('צריך להתחבר מחדש לגוגל'); }
-  else toast('שגיאה: ' + (e.message || e), 4000);
+  if (e instanceof AuthError) { $('#authNote').classList.remove('hidden'); toast(t('needRelogin')); }
+  else toast(t('error', { msg: e.message || e }), 4000);
 }
 
 /* ---------------- מצב לכל קובץ (סרגלים, מונה, זום) ---------------- */
@@ -770,15 +774,15 @@ const stage = $('#stage');
 function setSync(text) { $('#syncBadge').textContent = text; }
 
 const pushRemote = debounce(async () => {
-  if (V.local || !V.file || !navigator.onLine) { if (!V.local) setSync('⏸ לא מסונכרן'); return; }
+  if (V.local || !V.file || !navigator.onLine) { if (!V.local) setSync(t('notSynced')); return; }
   const file = V.file, st = V.st;
   try {
-    setSync('⟳ שומר…');
+    setSync(t('saving'));
     const updated = await drive.patch(file.id, { appProperties: remoteProps(st) });
     file.appProperties = updated.appProperties;
-    if (V.file === file) setSync('✓ נשמר בדרייב');
+    if (V.file === file) setSync(t('savedToDrive'));
   } catch (e) {
-    if (V.file === file) setSync('⚠ לא נשמר');
+    if (V.file === file) setSync(t('notSaved'));
     if (e instanceof AuthError) $('#authNote').classList.remove('hidden');
   }
 }, 2500);
@@ -796,9 +800,9 @@ function saveState() {
 const saveStateSoon = debounce(saveState, 600);
 
 async function openFileById(id, hint) {
-  if (String(id).startsWith('local:')) { toast('קובץ מקומי – יש לפתוח אותו מחדש מהמכשיר'); return; }
+  if (String(id).startsWith('local:')) { toast(t('localReopen')); return; }
   let f;
-  try { f = await busy('פותח…', () => drive.get(id)); } catch (e) {
+  try { f = await busy(t('opening'), () => drive.get(id)); } catch (e) {
     if (hint && !navigator.onLine) f = { id, name: hint.name, mimeType: hint.mime || '', appProperties: {} };
     else return err(e);
   }
@@ -822,8 +826,8 @@ async function openFile(f, localBlob) {
   addRecent(f);
   $('#viewerTitle').textContent = f.name;
   $('#accurateBtn').classList.toggle('hidden', !(V.kind === 'docx' && !V.local));
-  $('#accurateBtn').textContent = 'תצוגה מדויקת';
-  setSync(V.local ? 'קובץ מקומי' : '');
+  $('#accurateBtn').textContent = t('accurate');
+  setSync(V.local ? t('localFile') : '');
   content.innerHTML = '';
   show('#viewerView');
   if (location.hash !== '#view') history.pushState({ view: 1 }, '', '#view');
@@ -833,7 +837,7 @@ async function openFile(f, localBlob) {
   $('#viewerLoading').classList.remove('hidden');
   try {
     let blob = localBlob;
-    if (V.kind === 'doc' || V.kind === 'gdoc') {
+    if (CONVERTED.includes(V.kind)) {
       blob = await convertedPdf(f);
       V.kind = 'pdf';
     } else if (!blob) {
@@ -843,7 +847,7 @@ async function openFile(f, localBlob) {
   } catch (e) {
     err(e);
     content.innerHTML = '';
-    content.append(el('div', { class: 'docx-page', style: 'max-width:520px;margin-top:40px' }, 'לא ניתן לפתוח את הקובץ: ' + (e.message || e)));
+    content.append(el('div', { class: 'docx-page', style: 'max-width:520px;margin-top:40px' }, t('cannotOpen', { msg: e.message || e })));
   } finally {
     $('#viewerLoading').classList.add('hidden');
   }
@@ -866,11 +870,13 @@ async function convertedPdf(f) {
   const key = 'pdf:' + f.id + ':' + (f.modifiedTime || '');
   let blob = await idb.get('blobs', key);
   if (blob) return blob;
-  if (f.mimeType === 'application/vnd.google-apps.document') {
+  const kind = kindOf(f);
+  if (kind === 'gdoc' || kind === 'gsheet') {
     blob = await drive.exportPdf(f.id);
   } else {
-    // המרה זמנית למסמך גוגל, ייצוא ל-PDF ומחיקת העותק
-    const copy = await drive.copyAs(f.id, { name: '_זמני_' + f.name, mimeType: 'application/vnd.google-apps.document', parents: f.parents });
+    // המרה זמנית למסמך/גיליון של גוגל, ייצוא ל-PDF ומחיקת העותק
+    const target = kind === 'sheet' ? 'application/vnd.google-apps.spreadsheet' : 'application/vnd.google-apps.document';
+    const copy = await drive.copyAs(f.id, { name: '_tmp_' + f.name, mimeType: target, parents: f.parents });
     try { blob = await drive.exportPdf(copy.id); } finally { drive.remove(copy.id).catch(() => {}); }
   }
   idb.put('blobs', key, blob);
@@ -895,10 +901,10 @@ async function loadDoc(blob, kind) {
     V.natW = 794; // רוחב A4 בפיקסלים
   } else if (kind === 'image') {
     const url = URL.createObjectURL(blob);
-    V.img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => rej(new Error('תמונה לא תקינה')); i.src = url; });
+    V.img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => rej(new Error(t('invalidImage'))); i.src = url; });
     V.natW = V.img.naturalWidth;
   } else {
-    throw new Error('סוג קובץ לא נתמך');
+    throw new Error(t('unsupported'));
   }
   layout();
   restoreScroll();
@@ -1129,7 +1135,7 @@ function updateCounter() { $('#cValue').textContent = V.st ? V.st.c : 0; }
 $('#cPlus').onclick = () => { V.st.c++; updateCounter(); saveStateSoon(); };
 $('#cMinus').onclick = () => { V.st.c = Math.max(0, V.st.c - 1); updateCounter(); saveStateSoon(); };
 $('#cValue').onclick = () => {
-  const v = prompt('מספר השורה (0 לאיפוס):', V.st.c);
+  const v = prompt(t('rowPrompt'), V.st.c);
   if (v == null) return;
   const n = parseInt(v, 10);
   if (!isNaN(n) && n >= 0) { V.st.c = n; updateCounter(); saveStateSoon(); }
@@ -1221,63 +1227,72 @@ document.querySelectorAll('.open-local-btn').forEach((b) => b.addEventListener('
   const f = await pickFile($('#localInput'));
   if (!f) return;
   const meta = { id: 'local:' + f.name + ':' + f.size, name: f.name, mimeType: f.type, appProperties: {} };
-  if (!kindOf(meta) || kindOf(meta) === 'doc') { toast('אפשר לפתוח מהמכשיר PDF, DOCX או תמונה'); return; }
+  if (!kindOf(meta) || kindOf(meta) === 'doc') { toast(t('localTypes')); return; }
   openFile(meta, f);
 }));
 
 /* ---------------- הגדרות ---------------- */
 function openSettings() {
   const root = nav.root();
+  const sel = langSelect();
+  sel.onchange = () => { setLang(sel.value); closeModal(); refreshLanguage(); openSettings(); };
+  const row = (title, hint, btn) => el('div', { class: 'row' }, el('div', {}, el('b', {}, title), hint != null ? el('small', {}, hint) : null), btn);
   const body = el('div', { class: 'settings-list' },
-    el('div', { class: 'row' },
-      el('div', {}, el('b', {}, 'תיקיית הדוגמאות'), el('small', {}, root ? root.name : 'לא נבחרה')),
-      el('button', { class: 'btn', onclick: () => pickRootFolder().catch(err) }, 'שינוי')),
-    el('div', { class: 'row' },
-      el('div', {}, el('b', {}, 'בחירת קבצים מהדרייב'), el('small', {}, 'מתן גישה לדוגמאות ותיקיות קיימות בתיקייה הפתוחה')),
-      el('button', { class: 'btn', onclick: () => grantAccess().catch(err) }, 'בחירה')),
-    el('div', { class: 'row' },
-      el('div', {}, el('b', {}, 'פתיחת קובץ מהמכשיר'), el('small', {}, 'צפייה בקובץ שלא נמצא בדרייב')),
-      el('button', { class: 'btn', onclick: () => { closeModal(); document.querySelector('.open-local-btn').click(); } }, 'פתיחה')),
-    el('div', { class: 'row' },
-      el('div', {}, el('b', {}, 'ניקוי זיכרון מטמון'), el('small', {}, 'מחיקת קבצים ששמורים לשימוש בלי אינטרנט')),
-      el('button', { class: 'btn', onclick: async () => { indexedDB.deleteDatabase('mypatterns'); toast('המטמון נוקה'); setTimeout(() => location.reload(), 600); } }, 'ניקוי')),
-    el('div', { class: 'row' },
-      el('div', {}, el('b', {}, 'Client ID / API Key'), el('small', { dir: 'ltr' }, clientId() || '—'), el('small', { dir: 'ltr' }, apiKey() ? apiKey().slice(0, 8) + '…' : '—')),
-      el('button', { class: 'btn', onclick: () => { store.set('clientId', ''); store.set('apiKey', ''); auth.signOut(); location.reload(); } }, 'שינוי')),
-    el('div', { class: 'row' },
-      el('div', {}, el('b', {}, 'התנתקות מגוגל')),
-      el('button', { class: 'btn danger', onclick: () => { auth.signOut(); closeModal(); start(); } }, 'התנתקות')),
+    row('🌐 ' + t('language'), null, sel),
+    row(t('patternsFolder'), root ? root.name : t('notChosen'),
+      el('button', { class: 'btn', onclick: () => pickRootFolder().catch(err) }, t('change'))),
+    row(t('pickFromDrive'), t('pickFromDriveHint'),
+      el('button', { class: 'btn', onclick: () => grantAccess().catch(err) }, t('choose'))),
+    row(t('openLocalTitle'), t('openLocalHint'),
+      el('button', { class: 'btn', onclick: () => { closeModal(); document.querySelector('.open-local-btn').click(); } }, t('open'))),
+    row(t('clearCache'), t('clearCacheHint'),
+      el('button', { class: 'btn', onclick: async () => { indexedDB.deleteDatabase('mypatterns'); toast(t('cacheCleared')); setTimeout(() => location.reload(), 600); } }, t('clear'))),
+    // המזהים עצמם לא מוצגים – רק אם הם מוגדרים
+    row(t('googleIds'), clientId() && apiKey() ? t('configured') : t('notConfigured'),
+      el('button', { class: 'btn', onclick: () => { store.set('clientId', ''); store.set('apiKey', ''); auth.signOut(); location.reload(); } }, t('change'))),
+    row(t('signOutGoogle'), null,
+      el('button', { class: 'btn danger', onclick: () => { auth.signOut(); closeModal(); start(); } }, t('signOut'))),
   );
-  openModal('הגדרות', body);
+  openModal(t('settings'), body);
+}
+
+// רענון המסכים אחרי החלפת שפה
+function refreshLanguage() {
+  if (!$('#dashView').classList.contains('hidden')) { dash.renderCrumbs(); dash.render(); }
+  if (V.file) { $('#accurateBtn').textContent = t('accurate'); setSync(''); }
 }
 
 /* ---------------- הוספה (העלאה / תיקייה) ---------------- */
 function openAddMenu(anchor) {
   openMenu(anchor, [
-    { label: '⬆️ העלאת דוגמה (PDF / Word / תמונה)', fn: uploadPatterns },
-    { label: '📁 תיקייה חדשה', fn: newFolder },
-    { label: '🔓 בחירת קבצים ותיקיות קיימים מהדרייב', fn: () => grantAccess().catch(err) },
+    { label: t('uploadPattern'), fn: uploadPatterns },
+    { label: t('newFolder'), fn: newFolder },
+    { label: t('grantExisting'), fn: () => grantAccess().catch(err) },
   ]);
 }
 async function uploadPatterns() {
-  const files = await pickFile($('#uploadInput'));
+  let files = await pickFile($('#uploadInput'));
   if (!files || !files.length) return;
+  const ok = files.filter((f) => { const k = kindOf({ name: f.name, mimeType: f.type }); return k && k !== 'folder'; });
+  if (ok.length < files.length) toast(t('skippedFiles', { n: files.length - ok.length }), 4000);
+  files = ok;
+  if (!files.length) return;
   const cur = nav.current();
-  await busy('מעלה…', async () => {
+  await busy(t('uploading'), async () => {
     for (const [i, f] of files.entries()) {
-      $('#busyText').textContent = `מעלה ${i + 1}/${files.length}: ${f.name}`;
+      $('#busyText').textContent = t('uploadingN', { i: i + 1, n: files.length, name: f.name });
       await drive.upload(f, { name: f.name, parents: [cur.id], mimeType: f.type || undefined });
     }
   }).catch(err);
-  toast('ההעלאה הסתיימה');
+  toast(t('uploadDone'));
   dash.load(true);
 }
 async function newFolder() {
-  const name = prompt('שם התיקייה (למשל: סוודר לחורף):');
+  const name = prompt(t('newFolderPrompt'));
   if (!name) return;
   try {
-    const f = await busy('יוצר תיקייה…', () => drive.mkdir(name, nav.current().id));
-    toast('התיקייה נוצרה – אפשר להוסיף לה תמונה');
+    const f = await busy(t('creatingFolder'), () => drive.mkdir(name, nav.current().id));
+    toast(t('folderCreated'));
     dash.load(true);
     return f;
   } catch (e) { err(e); }
@@ -1295,8 +1310,8 @@ $('#reauthBtn').onclick = async () => {
 $('#saveClientIdBtn').onclick = () => {
   const v = $('#clientIdInput').value.trim();
   const k = $('#apiKeyInput').value.trim();
-  if (!/^\d+-.+\.apps\.googleusercontent\.com$/.test(v)) { toast('ה-Client ID צריך להסתיים ב-apps.googleusercontent.com'); return; }
-  if (!/^AIza/.test(k)) { toast('מפתח ה-API מתחיל ב-AIza'); return; }
+  if (!/^\d+-.+\.apps\.googleusercontent\.com$/.test(v)) { toast(t('clientIdInvalid')); return; }
+  if (!/^AIza/.test(k)) { toast(t('apiKeyInvalid')); return; }
   store.set('clientId', v);
   store.set('apiKey', k);
   start();
@@ -1311,7 +1326,7 @@ $('#loginBtn').onclick = async () => {
     await auth.request('select_account');
     start();
   } catch (e) {
-    toast('ההתחברות נכשלה: ' + e.message, 4000);
+    toast(t('loginFailed', { msg: e.message }), 4000);
   }
 };
 window.addEventListener('online', () => { $('#offlineNote').classList.add('hidden'); if (V.file) pushRemote(); });
@@ -1329,4 +1344,10 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
   navigator.serviceWorker.register('sw.js').catch(() => {});
 }
 if (location.hash === '#view') history.replaceState(null, '', location.pathname);
+applyI18n();
+document.querySelectorAll('.lang-slot').forEach((slot) => {
+  const sel = langSelect();
+  sel.onchange = () => setLang(sel.value);
+  slot.append(sel);
+});
 start();

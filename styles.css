@@ -288,3 +288,11 @@ input { font: inherit; }
 
 .panel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
 .panel-head b { font-size: 15px; }
+
+/* בחירת שפה */
+.lang-slot { display: flex; justify-content: flex-end; }
+.lang-select {
+  font: inherit; font-size: 14px; padding: 6px 8px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text);
+}
+.badge.sheet, .badge.gsheet { background: #def3e4; color: #1e6b3a; }
