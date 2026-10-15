@@ -509,10 +509,24 @@ function frameUrlFor(u) {
   return u;
 }
 
+// קישורי שיתוף של Dropbox – כתובת הורדה ישירה של הקובץ
+function directCloudUrl(u) {
+  try {
+    const x = new URL(u);
+    if (/(^|\.)dropbox\.com$/.test(x.hostname)) {
+      x.hostname = 'dl.dropboxusercontent.com';
+      x.searchParams.delete('dl');
+      return x.href;
+    }
+  } catch { /* ignore */ }
+  return u;
+}
+
 // אם הקישור הוא קובץ PDF שאפשר להוריד – מציגים אותו עם הסרגלים כמו כל דוגמה
 async function tryFetchPdf(url, f) {
   // רוב הקישורים הם דפי אינטרנט – מנסים להוריד רק כשזה נראה כמו קובץ PDF
   if (!url || !/\.pdf($|[?#])/i.test(new URL(url).pathname + new URL(url).search)) return null;
+  url = directCloudUrl(url);
   const key = 'link:' + f.id + ':' + url;
   const cached = await idb.get('blobs', key);
   if (cached) return cached;
@@ -1456,17 +1470,24 @@ function refreshLanguage() {
 }
 
 /* ---------------- הוספה (העלאה / תיקייה) ---------------- */
-function openAddMenu(anchor) {
-  openMenu(anchor, [
-    { label: t('uploadPattern'), fn: uploadPatterns },
-    { label: t('newFolder'), fn: newFolder },
-    { label: t('addLink'), fn: () => openAddLink() },
-    { label: t('imageSearch'), fn: openImageSearch },
-    { label: t('grantExisting'), fn: () => grantAccess().catch(err) },
-  ]);
+// כפתור אחד לכל דרכי ההוספה
+function openAddSheet() {
+  closeMenu();
+  const opt = (icon, title, hint, fn) => el('button', { class: 'sheet-opt', onclick: () => { closeModal(); fn(); } },
+    el('span', { class: 'sheet-icon' }, icon),
+    el('span', { class: 'sheet-text' }, el('b', {}, title), el('small', {}, hint)));
+  const body = el('div', { class: 'add-sheet' },
+    opt('📄', t('addFromDevice'), t('addFromDeviceHint'), () => uploadPatterns($('#uploadInput'))),
+    opt('🖼️', t('addPhoto'), t('addPhotoHint'), () => uploadPatterns($('#photoInput'))),
+    opt('☁️', t('addFromDrive'), t('addFromDriveHint'), () => grantAccess().catch(err)),
+    opt('🗂️', t('addOtherCloud'), t('addOtherCloudHint'), () => { toast(t('otherCloudTip'), 6000); uploadPatterns($('#uploadInput')); }),
+    opt('🔗', t('addLinkTitle'), t('addLinkHint'), () => openAddLink()),
+    opt('📷', t('imageSearchTitle'), t('imageSearchHint'), openImageSearch),
+    opt('📁', t('newFolderTitle'), t('newFolderHint'), newFolder));
+  openModal(t('addSheetTitle'), body);
 }
-async function uploadPatterns() {
-  let files = await pickFile($('#uploadInput'));
+async function uploadPatterns(input = $('#uploadInput')) {
+  let files = await pickFile(input);
   if (!files || !files.length) return;
   const ok = files.filter((f) => { const k = kindOf({ name: f.name, mimeType: f.type }); return k && k !== 'folder'; });
   if (ok.length < files.length) toast(t('skippedFiles', { n: files.length - ok.length }), 4000);
@@ -1496,7 +1517,7 @@ async function newFolder() {
 /* ---------------- אירועי דשבורד ---------------- */
 $('#refreshBtn').onclick = () => dash.load(true);
 $('#settingsBtn').onclick = openSettings;
-$('#addBtn').onclick = (e) => openAddMenu(e.currentTarget);
+$('#addBtn').onclick = openAddSheet;
 $('#backBtn').onclick = () => { nav.to(nav.path.length - 1); dash.load(); };
 $('#searchInput').oninput = () => dash.render();
 $('#reauthBtn').onclick = async () => {
@@ -1515,7 +1536,7 @@ $('#resetClientBtn').onclick = () => { store.set('clientId', ''); store.set('api
 $('#pickExistingBtn').onclick = () => pickRootFolder().catch(err);
 $('#createRootBtn').onclick = () => createRootFolder().catch(err);
 document.querySelectorAll('.grant-btn').forEach((b) => { b.onclick = () => grantAccess().catch(err); });
-document.querySelectorAll('.upload-btn').forEach((b) => { b.onclick = () => uploadPatterns(); });
+document.querySelectorAll('.upload-btn').forEach((b) => { b.onclick = openAddSheet; });
 $('#loginBtn').onclick = async () => {
   try {
     await auth.request('select_account');
