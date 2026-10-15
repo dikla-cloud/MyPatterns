@@ -548,7 +548,6 @@ async function showPicker({ title, view, multi = false }) {
       .setLocale('iw')
       .setTitle(title)
       .setOrigin(location.protocol + '//' + location.host)
-      .setSize(Math.min(innerWidth - 16, 1051), Math.min(innerHeight - 16, 650))
       .addView(view(P))
       .setCallback((d) => {
         const a = d[P.Response.ACTION];
@@ -556,16 +555,38 @@ async function showPicker({ title, view, multi = false }) {
         else if (a === P.Action.CANCEL) resolve(null);
       });
     if (multi) b.enableFeature(P.Feature.MULTISELECT_ENABLED);
+    // בטלפון משאירים לגוגל לקבוע את גודל החלון
+    if (innerWidth > 700) b.setSize(Math.min(innerWidth - 16, 1051), Math.min(innerHeight - 16, 650));
     b.build().setVisible(true);
   });
 }
 
+// חיפוש בתוך האפליקציה לפני פתיחת הבורר (בטלפון לא תמיד אפשר להקליד בחיפוש של גוגל)
+function askSearch(title, hint) {
+  return new Promise((resolve) => {
+    const input = el('input', { type: 'text', placeholder: 'שם התיקייה או הקובץ (אפשר להשאיר ריק)', enterkeyhint: 'search' });
+    const done = (v) => { $('#modalClose').onclick = closeModal; closeModal(); resolve(v); };
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); done(input.value.trim()); } });
+    openModal(title, el('div', {}, el('p', { class: 'muted' }, hint), input), [
+      el('button', { class: 'btn primary', onclick: () => done(input.value.trim()) }, '🔍 חיפוש'),
+      el('button', { class: 'btn', onclick: () => done('') }, '📂 דפדוף בלי חיפוש'),
+    ]);
+    $('#modalClose').onclick = () => done(null);
+    setTimeout(() => input.focus(), 50);
+  });
+}
+const withQuery = (view, q) => (q && typeof view.setQuery === 'function' ? view.setQuery(q) : view);
+
 async function pickRootFolder() {
+  const q = await askSearch('בחירת תיקיית הדוגמאות', 'אפשר להקליד את שם התיקייה בדרייב, או לדפדף בתיקיות.');
+  if (q == null) return false;
   const docs = await showPicker({
     title: 'בחירת תיקיית הדוגמאות',
-    view: (P) => new P.DocsView(P.ViewId.FOLDERS)
-      .setIncludeFolders(true).setSelectFolderEnabled(true)
-      .setMimeTypes(FOLDER).setOwnedByMe(true),
+    view: (P) => {
+      const v = new P.DocsView(P.ViewId.FOLDERS)
+        .setIncludeFolders(true).setSelectFolderEnabled(true).setMimeTypes(FOLDER);
+      return q ? withQuery(v, q) : v.setParent('root');
+    },
   });
   if (!docs || !docs.length) return false;
   setRoot({ id: docs[0].id, name: docs[0].name });
@@ -589,11 +610,17 @@ function setRoot(r) {
 async function grantAccess() {
   const cur = nav.current();
   if (!cur) return;
+  const q = await askSearch('בחירת קבצים ותיקיות מהדרייב',
+    'בלי חיפוש ייפתחו הקבצים שבתיקייה הנוכחית. עם חיפוש – נחפש בכל הדרייב.');
+  if (q == null) return;
   const docs = await showPicker({
     title: 'סמנו את הדוגמאות והתיקיות שיופיעו באפליקציה',
     multi: true,
-    view: (P) => new P.DocsView(P.ViewId.DOCS)
-      .setParent(cur.id).setIncludeFolders(true).setSelectFolderEnabled(true).setMode(P.DocsViewMode.LIST),
+    view: (P) => {
+      const v = new P.DocsView(P.ViewId.DOCS)
+        .setIncludeFolders(true).setSelectFolderEnabled(true).setMode(P.DocsViewMode.LIST);
+      return q && typeof v.setQuery === 'function' ? v.setQuery(q) : v.setParent(cur.id);
+    },
   });
   if (!docs || !docs.length) return;
   toast(`נוספה גישה ל-${docs.length} פריטים`);
