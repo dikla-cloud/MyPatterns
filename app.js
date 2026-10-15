@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 27;
+const APP_V = 28;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -1025,6 +1025,11 @@ const dash = {
     };
     const more = el('button', { class: 'more', 'aria-label': t('options'), onclick: (e) => { e.stopPropagation(); showMenu(e.currentTarget); } }, '⋯');
     card.append(more);
+    // דוגמה שנוצרה באפליקציה – כפתור עריכה ישיר
+    if (f.appProperties && f.appProperties.kpDesign) {
+      card.classList.add('my-design');
+      card.append(el('button', { class: 'edit-pill', title: t('editInStudio'), onclick: (e) => { e.stopPropagation(); loadStudio().then(() => Studio.edit(f)).catch(err); } }, '✏️'));
+    }
     if (notesOf(f)) {
       const badge = el('button', { class: 'notes-badge', title: t('notesHeading'), 'aria-label': t('notesHeading'), onclick: (e) => {
         e.stopPropagation();
@@ -1666,6 +1671,7 @@ function openSettings() {
   const body = el('div', { class: 'settings-list' },
     row('👤 ' + t('account'), accountText(), el('button', { class: 'btn danger', onclick: () => { auth.signOut(); store.set('account', null); closeModal(); start(); } }, t('signOut'))),
     row('🌐 ' + t('language'), null, sel),
+    row('©️ ' + t('defaultsRow'), t('defaultsRowHint'), el('button', { class: 'btn', onclick: () => { closeModal(); loadStudio().then(() => Studio.defaults()).catch(err); } }, t('change'))),
     isInstalled() ? null : row('📲 ' + t('installTitle'), t('installHint'),
       el('button', { class: 'btn primary', onclick: () => { closeModal(); installApp(); } }, t('install'))),
     row(t('patternsFolder'), root ? root.name : t('notChosen'),

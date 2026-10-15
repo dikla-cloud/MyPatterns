@@ -494,3 +494,18 @@ body.studio-open { overflow: hidden; }
 .pal-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; font-size: 13px; }
 .pal-chip { display: inline-flex; align-items: center; gap: 4px; }
 .pal-chip i { width: 14px; height: 14px; border-radius: 4px; border: 1px solid rgba(0,0,0,.2); display: inline-block; }
+
+/* הדוגמאות שיצרתי */
+.my-designs { display: flex; flex-direction: column; gap: 8px; padding: 0 16px; }
+.design-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 8px 10px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); }
+.design-row .thumb { width: 52px; height: 52px; border-radius: 10px; background: var(--surface-2) center/cover no-repeat; display: flex; align-items: center; justify-content: center; font-size: 24px; flex: 0 0 auto; }
+.design-meta { flex: 1; min-width: 140px; display: flex; flex-direction: column; }
+.design-meta small { color: var(--muted); }
+.edit-pill { position: absolute; top: 46px; inset-inline-start: 8px; height: 30px; min-width: 30px; border-radius: 15px; border: 0; background: var(--accent); box-shadow: var(--shadow); font-size: 14px; }
+.card.my-design { border-color: var(--accent); }
+.studio-status { font-size: 12px; opacity: .85; white-space: nowrap; }
+.canvas-tools { margin: 6px 16px 0; }
+.paint-toggle { min-width: 92px; }
+.defaults-link { align-self: flex-start; }
+.rep-info { color: #b3261e; font-weight: 600; }
+.studio-stats .btn { margin-inline-start: 8px; }

@@ -177,6 +177,32 @@
     cpMosaicColors: ['🎨 צבע לכל שורה (תכנון צבעים)', '🎨 Colour per row (colour planner)', '🎨 Цвет каждого ряда', '🎨 لون لكل صف', '🎨 Farbe pro Reihe', '🎨 Color por vuelta', '🎨 Colore per giro', '🎨 Couleur par rang'],
     cpUsePlan: ['צבע נפרד לכל שורה, כולל חוטים מחליפי צבעים', 'A separate yarn for each row, including self-striping yarns', 'Своя пряжа для каждого ряда, включая секционную', 'خيط مختلف لكل صف، بما فيه الخيوط متغيرة الألوان', 'Eigenes Garn je Reihe, auch Farbverlaufsgarn', 'Un hilo para cada vuelta, incluidos multicolor', 'Un filato per ogni giro, anche multicolore', 'Un fil par rang, y compris multicolores'],
     cpPooling: ['בחוטים מחליפי צבעים התוצאה תלויה בכיוון הסריגה ובמספר העיניים בשורה – התצוגה מדמה את מה שצפוי לצאת.', 'With self-striping yarns the result depends on the working direction and stitches per row – the preview simulates the expected outcome.', 'У секционной пряжи результат зависит от направления и числа петель в ряду – превью показывает ожидаемое.', 'مع الخيوط متغيرة الألوان تعتمد النتيجة على اتجاه العمل وعدد الغرز – المعاينة تحاكي النتيجة المتوقعة.', 'Bei Farbverlaufsgarn hängt das Ergebnis von Strickrichtung und Maschenzahl ab – die Vorschau simuliert es.', 'Con hilos multicolor el resultado depende de la dirección y de los puntos por vuelta: la vista previa lo simula.', 'Con i filati multicolore il risultato dipende da direzione e numero di maglie: l\'anteprima lo simula.', 'Avec un fil multicolore, le résultat dépend du sens et du nombre de mailles : l\'aperçu le simule.'],
+    myDesignsFolder: ['הדוגמאות שיצרתי', 'My designs', 'Мои дизайны', 'تصاميمي', 'Meine Designs', 'Mis diseños', 'I miei progetti', 'Mes créations'],
+    myDesigns: ['✏️ הדוגמאות שיצרתי', '✏️ My designs', '✏️ Мои дизайны', '✏️ تصاميمي', '✏️ Meine Designs', '✏️ Mis diseños', '✏️ I miei progetti', '✏️ Mes créations'],
+    myDesignsEmpty: ['עדיין אין כאן דוגמאות שנוצרו באפליקציה.', 'No designs created in the app yet.', 'Пока нет созданных дизайнов.', 'لا توجد تصاميم بعد.', 'Noch keine Designs erstellt.', 'Aún no hay diseños.', 'Ancora nessun progetto.', 'Aucune création pour l\'instant.'],
+    myDesignsWhere: ['כל דוגמה שיוצרים כאן נשמרת בדרייב בתיקייה "{name}" (אפשר לבחור תיקייה אחרת בכפתור 📁 בעורך), ומופיעה גם בלשונית "דוגמאות קיימות" לסריגה עם הסרגלים.', 'Everything you create here is saved in Drive in the folder "{name}" (choose another folder with the 📁 button in the editor), and also appears under "My patterns" for knitting with the rulers.', 'Всё созданное здесь сохраняется на Диске в папке «{name}» (другую папку можно выбрать кнопкой 📁) и появляется в «Мои схемы».', 'كل ما تنشئه هنا يُحفظ في Drive في مجلد «{name}» (يمكن اختيار مجلد آخر بزر 📁) ويظهر أيضًا في «نماذجي».', 'Alles, was du hier erstellst, wird in Drive im Ordner „{name}“ gespeichert (anderer Ordner über 📁 im Editor) und erscheint auch unter „Meine Anleitungen“.', 'Todo lo que creas aquí se guarda en Drive en la carpeta «{name}» (elige otra con 📁 en el editor) y aparece también en «Mis patrones».', 'Tutto ciò che crei qui viene salvato in Drive nella cartella «{name}» (scegline un\'altra con 📁 nell\'editor) e compare anche in «I miei schemi».', 'Tout ce que vous créez ici est enregistré dans Drive, dans le dossier « {name} » (choisissez-en un autre avec 📁 dans l\'éditeur), et apparaît aussi dans « Mes modèles ».'],
+    continueEdit: ['✏️ המשך עריכה', '✏️ Continue editing', '✏️ Продолжить', '✏️ متابعة التعديل', '✏️ Weiter bearbeiten', '✏️ Seguir editando', '✏️ Continua a modificare', '✏️ Continuer'],
+    openView: ['👁️ פתיחה', '👁️ Open', '👁️ Открыть', '👁️ فتح', '👁️ Öffnen', '👁️ Abrir', '👁️ Apri', '👁️ Ouvrir'],
+    newDesign: ['דוגמה חדשה', 'New design', 'Новый дизайн', 'تصميم جديد', 'Neues Design', 'Nuevo diseño', 'Nuovo progetto', 'Nouvelle création'],
+    savedAt: ['✓ נשמר {time}', '✓ Saved {time}', '✓ Сохранено {time}', '✓ حُفظ {time}', '✓ Gespeichert {time}', '✓ Guardado {time}', '✓ Salvato {time}', '✓ Enregistré {time}'],
+    paintOn: ['✏️ ציור', '✏️ Draw', '✏️ Рисовать', '✏️ رسم', '✏️ Malen', '✏️ Dibujar', '✏️ Disegna', '✏️ Dessiner'],
+    paintOff: ['✋ גלילה', '✋ Scroll', '✋ Прокрутка', '✋ تمرير', '✋ Scrollen', '✋ Desplazar', '✋ Scorri', '✋ Défiler'],
+    paintHint: ['במצב ✋ גלילה אפשר לגלול את התרשים בלי לסמן תאים; לוחצים ✏️ ציור כדי לצבוע.', 'In ✋ Scroll mode you can scroll the chart without marking cells; tap ✏️ Draw to paint.', 'В режиме ✋ можно прокручивать схему без отметок; нажмите ✏️, чтобы рисовать.', 'في وضع ✋ يمكن تمرير المخطط دون تلوين؛ اضغط ✏️ للرسم.', 'Im Modus ✋ scrollst du ohne zu malen; tippe ✏️ zum Malen.', 'En modo ✋ puedes desplazar sin marcar celdas; toca ✏️ para pintar.', 'In modalità ✋ scorri senza segnare caselle; tocca ✏️ per disegnare.', 'En mode ✋ vous faites défiler sans marquer de cases ; touchez ✏️ pour dessiner.'],
+    fixRules: ['✨ תיקון לפי הכללים', '✨ Fix by the rules', '✨ Исправить по правилам', '✨ تصحيح وفق القواعد', '✨ Nach Regeln korrigieren', '✨ Corregir según las reglas', '✨ Correggi secondo le regole', '✨ Corriger selon les règles'],
+    fixDone: ['התרשים תוקן לפי כללי המוזאיק – {n} תאים שונו, כל השאר נשמר. אפשר לבטל.', 'Chart fixed by the mosaic rules – {n} cells changed, everything else kept. You can undo.', 'Схема исправлена – изменено клеток: {n}. Можно отменить.', 'تم تصحيح المخطط – تغيّرت {n} خانات. يمكن التراجع.', 'Diagramm korrigiert – {n} Kästchen geändert. Rückgängig möglich.', 'Gráfico corregido – {n} celdas cambiadas. Puedes deshacer.', 'Schema corretto – {n} caselle cambiate. Puoi annullare.', 'Grille corrigée – {n} cases modifiées. Vous pouvez annuler.'],
+    repTitle: ['🔁 אלמנט חוזר (מסגרת אדומה)', '🔁 Repeat (red frame)', '🔁 Раппорт (красная рамка)', '🔁 العنصر المتكرر (إطار أحمر)', '🔁 Rapport (roter Rahmen)', '🔁 Repetición (marco rojo)', '🔁 Ripetizione (cornice rossa)', '🔁 Motif répété (cadre rouge)'],
+    repDetect: ['🔍 זיהוי אוטומטי', '🔍 Detect automatically', '🔍 Найти автоматически', '🔍 اكتشاف تلقائي', '🔍 Automatisch erkennen', '🔍 Detectar', '🔍 Rileva', '🔍 Détecter'],
+    repH: ['מסגרת אופקית – עיניים', 'Horizontal frame – stitches', 'По горизонтали – петли', 'إطار أفقي – غرز', 'Waagrecht – Maschen', 'Horizontal – puntos', 'Orizzontale – maglie', 'Horizontal – mailles'],
+    repV: ['מסגרת אנכית – שורות', 'Vertical frame – rows', 'По вертикали – ряды', 'إطار عمودي – صفوف', 'Senkrecht – Reihen', 'Vertical – vueltas', 'Verticale – ferri', 'Vertical – rangs'],
+    repFrom: ['מ-', 'from', 'с', 'من', 'ab', 'desde', 'da', 'de'],
+    repSize: ['גודל', 'size', 'размер', 'الحجم', 'Größe', 'tamaño', 'dim.', 'taille'],
+    repNone: ['לא נמצא אלמנט חוזר – אפשר לסמן ידנית', 'No repeat found – you can set it manually', 'Раппорт не найден – задайте вручную', 'لم يُعثر على تكرار – يمكن التحديد يدويًا', 'Kein Rapport gefunden – manuell festlegen', 'No se encontró repetición – márcala a mano', 'Nessuna ripetizione – impostala a mano', 'Aucun motif trouvé – réglez-le à la main'],
+    repInfo: ['חזרה של {p} עיניים · מעלים {p} × {n} + 3 = {total} עיניים (2 לשוליים ו-1 לסיום הדוגמה)', 'Repeat of {p} sts · cast on {p} × {n} + 3 = {total} sts (2 for edges and 1 to finish the pattern)', 'Раппорт {p} п. · набрать {p} × {n} + 3 = {total} п. (2 кромочные и 1 для завершения)', 'تكرار {p} غرز · ارفع {p} × {n} + 3 = {total} غرزة (2 للحواف و1 لإنهاء النقش)', 'Rapport {p} M · anschlagen {p} × {n} + 3 = {total} M (2 Rand + 1 zum Abschluss)', 'Repetición de {p} p · montar {p} × {n} + 3 = {total} p (2 de orillo y 1 para terminar)', 'Ripetizione di {p} m · avviare {p} × {n} + 3 = {total} m (2 di vivagno e 1 per chiudere)', 'Motif de {p} m · monter {p} × {n} + 3 = {total} m (2 lisières et 1 pour terminer)'],
+    repLineH: ['חזרה אופקית: עיניים {a}–{b}', 'Horizontal repeat: stitches {a}–{b}', 'Раппорт по горизонтали: петли {a}–{b}', 'تكرار أفقي: الغرز {a}–{b}', 'Waagrechter Rapport: Maschen {a}–{b}', 'Repetición horizontal: puntos {a}–{b}', 'Ripetizione orizzontale: maglie {a}–{b}', 'Motif horizontal : mailles {a}–{b}'],
+    repLineV: ['חזרה אנכית: שורות {c}–{d}', 'Vertical repeat: rows {c}–{d}', 'Раппорт по вертикали: ряды {c}–{d}', 'تكرار عمودي: الصفوف {c}–{d}', 'Senkrechter Rapport: Reihen {c}–{d}', 'Repetición vertical: vueltas {c}–{d}', 'Ripetizione verticale: ferri {c}–{d}', 'Motif vertical : rangs {c}–{d}'],
+    workNotes: ['📝 הערות עבודה', '📝 Work notes', '📝 Рабочие заметки', '📝 ملاحظات العمل', '📝 Arbeitsnotizen', '📝 Notas de trabajo', '📝 Note di lavoro', '📝 Notes de travail'],
+    workNotesPh: ['הערות תוך כדי עבודה על התרשים…', 'Notes while working on the chart…', 'Заметки по ходу работы…', 'ملاحظات أثناء العمل على المخطط…', 'Notizen während der Arbeit…', 'Notas mientras trabajas…', 'Note mentre lavori…', 'Notes pendant le travail…'],
+    editDefaults: ['⚙️ שם המעצבת, זכויות יוצרים והוראות קבועות', '⚙️ Designer name, copyright and fixed texts', '⚙️ Автор, авторские права и постоянные тексты', '⚙️ اسم المصمم وحقوق النشر والنصوص الثابتة', '⚙️ Designname, Urheberrecht und feste Texte', '⚙️ Diseñador, derechos de autor y textos fijos', '⚙️ Designer, copyright e testi fissi', '⚙️ Créateur, droits d\'auteur et textes fixes'],
   };
   ORDER.forEach((l, i) => { for (const [k, arr] of Object.entries(TR)) I18N[l][k] = arr[i]; });
 
@@ -196,6 +222,29 @@
 
   function currentFolder() {
     return nav.current();
+  }
+
+  // תיקיית ברירת המחדל לדוגמאות שיוצרים – "הדוגמאות שיצרתי" בתוך התיקייה הראשית
+  let designsFolderCache = null;
+  async function driveQuery(q) {
+    const r = await gfetch(`${DRIVE}/files?q=${encodeURIComponent(q)}&fields=files(${FIELDS})&pageSize=500&orderBy=modifiedTime desc&supportsAllDrives=true&includeItemsFromAllDrives=true`);
+    return (await r.json()).files || [];
+  }
+  async function designsFolder() {
+    if (designsFolderCache) return designsFolderCache;
+    const found = await driveQuery(`mimeType='${FOLDER}' and trashed=false and appProperties has { key='kpType' and value='designsFolder' }`);
+    let f = found[0];
+    if (!f) {
+      f = await drive.mkdir(t('myDesignsFolder'), nav.root().id);
+      await drive.patch(f.id, { appProperties: { kpType: 'designsFolder' } });
+    }
+    designsFolderCache = { id: f.id, name: f.name };
+    return designsFolderCache;
+  }
+  const DESIGN_TYPES = { mosaic: ['🟪', 'stMosaic'], chart: ['🎨', 'stChart'], written: ['📝', 'stWritten'], colors: ['🌈', 'cpTitle'] };
+  async function listDesigns() {
+    const all = await driveQuery("trashed=false and appProperties has { key='kpRole' and value='design' }");
+    return all.filter((f) => f.appProperties && DESIGN_TYPES[f.appProperties.kpType]);
   }
 
   // בחירת תיקייה לשמירה (התיקייה הראשית ותתי-התיקיות שלה)
@@ -238,20 +287,32 @@
     const wrap = el('section', { class: 'studio-editor' });
     let dirty = false;
     const ed = { wrap, folder: null, setDirty: () => { dirty = true; } };
-    const cur = currentFolder();
-    ed.folder = existing && existing.folderId ? { id: existing.folderId, name: existing.folderName || '…' } : { id: cur.id, name: cur.name };
+    ed.folder = existing && existing.folderId ? { id: existing.folderId, name: existing.folderName || '…' } : { id: null, name: t('myDesignsFolder') };
+    if (!ed.folder.id) designsFolder().then((f) => { if (!ed.folder.id) { ed.folder = f; folderBtn.textContent = t('stFolderBtn', { name: f.name }); } }).catch(() => {});
     const nameIn = el('input', { class: 'studio-name', type: 'text', placeholder: t('stTitlePh'), value: initialName || '' });
     nameIn.addEventListener('input', () => { dirty = true; });
-    const close = () => { wrap.remove(); document.body.classList.remove('studio-open'); };
+    const close = () => {
+      wrap.remove(); document.body.classList.remove('studio-open');
+      if (ed.didSave) { dash.load(true); if (!$('#studioPane').classList.contains('hidden')) home($('#studioPane')); }
+    };
     const back = el('button', { class: 'icon-btn back-arrow', title: t('back'), onclick: () => { if (!dirty || confirm(t('stLeave'))) close(); } }, isRtl() ? '→' : '←');
     const folderBtn = el('button', { class: 'btn small studio-folder-btn', onclick: async () => {
       const f = await chooseFolder(ed.folder); if (f) { ed.folder = f; folderBtn.textContent = t('stFolderBtn', { name: f.name }); dirty = true; }
     } }, t('stFolderBtn', { name: ed.folder.name }));
     if (existing && existing.folderId && !existing.folderName) drive.get(existing.folderId).then((f) => { ed.folder.name = f.name; folderBtn.textContent = t('stFolderBtn', { name: f.name }); }).catch(() => {});
+    const status = el('span', { class: 'studio-status' });
+    // השמירה לא יוצאת מהעורך – ממשיכים לעבוד ושומרים שוב מתי שרוצים
     const saveBtn = el('button', { class: 'btn studio-save', onclick: async () => {
-      try { await onSave(nameIn.value.trim() || t('stUntitled')); dirty = false; close(); } catch (e) { err(e); }
+      try {
+        if (!ed.folder.id) ed.folder = await designsFolder();
+        await onSave(nameIn.value.trim() || t('stUntitled'));
+        dirty = false; ed.didSave = true;
+        const now = new Date();
+        status.textContent = t('savedAt', { time: `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}` });
+        toast(t('stSaved', { name: ed.folder.name }), 3000);
+      } catch (e) { err(e); }
     } }, t('stSave'));
-    const head = el('header', { class: 'topbar studio-top' }, back, el('div', { class: 'studio-kind' }, titleText), nameIn, folderBtn, saveBtn);
+    const head = el('header', { class: 'topbar studio-top' }, back, el('div', { class: 'studio-kind' }, titleText), nameIn, folderBtn, status, saveBtn);
     const body = el('div', { class: 'studio-body' });
     wrap.append(head, body);
     document.body.append(wrap);
@@ -364,6 +425,74 @@
     }
     ctx.restore();
   }
+  // מסגרות אדומות סביב האלמנט החוזר. העיניים ממוספרות מימין, השורות מלמטה.
+  function drawRepeat(ctx, o, rep) {
+    if (!rep) return;
+    const { W, H, cs, x0, y0 } = o;
+    ctx.save(); ctx.strokeStyle = '#e53935'; ctx.lineWidth = 3;
+    if (rep.h && rep.h.on && rep.h.size > 0) {
+      const a = rep.h.start, b = Math.min(W, a + rep.h.size - 1);
+      ctx.strokeRect(x0 + (W - b) * cs + 1.5, y0 + 1.5, (b - a + 1) * cs - 3, H * cs - 3);
+    }
+    if (rep.v && rep.v.on && rep.v.size > 0) {
+      const c = rep.v.start, d = Math.min(H, c + rep.v.size - 1);
+      ctx.strokeRect(x0 + 1.5, y0 + (H - d) * cs + 1.5, W * cs - 3, (d - c + 1) * cs - 3);
+    }
+    ctx.restore();
+  }
+  // הקטן ביותר מבין המחזורים שחוזרים לפחות פעמיים (לפי עמודות או שורות)
+  function findPeriod(get, n, m) {
+    for (let p = 1; p <= Math.floor(n / 2); p++) {
+      let ok = true;
+      for (let i = 0; ok && i + p < n; i++) for (let j = 0; j < m; j++) if (get(i, j) !== get(i + p, j)) { ok = false; break; }
+      if (ok) return p;
+    }
+    return 0;
+  }
+  function repeatText(rep, W, H) {
+    const out = [];
+    if (rep && rep.h && rep.h.on) out.push(t('repLineH', { a: rep.h.start, b: Math.min(W, rep.h.start + rep.h.size - 1) }));
+    if (rep && rep.v && rep.v.on) out.push(t('repLineV', { c: rep.v.start, d: Math.min(H, rep.v.start + rep.v.size - 1) }));
+    return out;
+  }
+  // פאנל האלמנט החוזר: זיהוי אוטומטי, עריכה ידנית וחישוב מספר העיניים להעלאה
+  function repeatPanel(rep, getWH, detect, onChange) {
+    const info = el('div', { class: 'muted small-note rep-info' });
+    const mk = (axis, label) => {
+      const on = el('input', { type: 'checkbox' }); on.checked = !!rep[axis].on;
+      const st = el('input', { type: 'number', min: '1', class: 'num', value: String(rep[axis].start) });
+      const sz = el('input', { type: 'number', min: '1', class: 'num', value: String(rep[axis].size) });
+      const upd = () => { rep[axis].on = on.checked; rep[axis].start = Math.max(1, Number(st.value) | 0); rep[axis].size = Math.max(1, Number(sz.value) | 0); refresh(); onChange(); };
+      on.onchange = upd; st.oninput = upd; sz.oninput = upd;
+      return { row: el('div', { class: 'studio-row' }, el('label', { class: 'chk' }, on, t(label)), el('label', {}, t('repFrom'), st), el('label', {}, t('repSize'), sz)), on, st, sz };
+    };
+    const h = mk('h', 'repH'), v = mk('v', 'repV');
+    const refresh = () => {
+      const { W } = getWH();
+      if (rep.h.on && rep.h.size) {
+        const p = rep.h.size, n = Math.max(1, Math.floor((W - 3) / p));
+        info.textContent = t('repInfo', { p, n, total: p * n + 3 });
+      } else info.textContent = '';
+    };
+    const detectBtn = el('button', { class: 'btn small', onclick: () => {
+      const r = detect();
+      if (!r.p && !r.q) { info.textContent = t('repNone'); return; }
+      if (r.p) { rep.h = { on: true, start: r.hStart, size: r.p }; h.on.checked = true; h.st.value = r.hStart; h.sz.value = r.p; }
+      if (r.q) { rep.v = { on: true, start: r.vStart, size: r.q }; v.on.checked = true; v.st.value = r.vStart; v.sz.value = r.q; }
+      refresh(); onChange();
+    } }, t('repDetect'));
+    refresh();
+    return el('details', { class: 'studio-help', open: rep.h.on || rep.v.on ? '' : null },
+      el('summary', {}, t('repTitle')), el('div', { class: 'studio-row' }, detectBtn), h.row, v.row, info);
+  }
+  const emptyRep = () => ({ h: { on: false, start: 1, size: 4 }, v: { on: false, start: 1, size: 4 } });
+  function workNotesBox(holder, key, ed) {
+    const ta = el('textarea', { rows: '4', placeholder: t('workNotesPh') }); ta.value = holder[key] || '';
+    ta.oninput = () => { holder[key] = ta.value; ed.setDirty(); };
+    return el('details', { class: 'studio-help', open: holder[key] ? '' : null }, el('summary', {}, t('workNotes')), ta);
+  }
+  const fitCellSize = (wrap, W, min, max) => Math.max(min, Math.min(max, Math.floor(((wrap.clientWidth || 600) - 60) / W)));
+
   function cellFromEvent(canvas, e, o) {
     const r = canvas.getBoundingClientRect();
     const sx = canvas.width / r.width, sy = canvas.height / r.height;
@@ -373,10 +502,19 @@
     return { r: row, c };
   }
   // ציור בגרירה על קנבס
-  function paintable(canvas, getO, onCell, onEnd) {
+  // מצב ציור / גלילה – כדי שגלילה בתרשים לא תסמן תאים בטעות
+  function paintToggle(canvas) {
+    let on = !matchMedia('(pointer: coarse)').matches;
+    const btn = el('button', { class: 'btn small paint-toggle' });
+    const upd = () => { btn.textContent = on ? t('paintOn') : t('paintOff'); btn.classList.toggle('primary', on); canvas.style.touchAction = on ? 'none' : 'pan-x pan-y'; canvas.style.cursor = on ? 'crosshair' : 'grab'; };
+    btn.onclick = () => { on = !on; upd(); };
+    upd();
+    return { btn, isOn: () => on };
+  }
+  function paintable(canvas, getO, onCell, onEnd, isOn) {
     let down = false, last = '';
-    canvas.style.touchAction = 'none';
     canvas.addEventListener('pointerdown', (e) => {
+      if (isOn && !isOn()) return;
       down = true; last = ''; canvas.setPointerCapture(e.pointerId);
       const p = cellFromEvent(canvas, e, getO()); if (p) { last = p.r + ',' + p.c; onCell(p, true); }
     });
@@ -521,6 +659,7 @@
         ctx.fillStyle = '#e53935'; ctx.beginPath(); ctx.arc(x + cs * .78, y + cs * .22, Math.max(1.8, cs * .14), 0, 7); ctx.fill();
       }
     } });
+    drawRepeat(ctx, o, m.rep);
     // צבע כל שורה בצד
     for (let r = 0; r < H; r++) {
       const y = y0 + (H - 1 - r) * cs;
@@ -590,8 +729,8 @@
   }
 
   async function mosaicEditor(data, existing) {
-    const { d: defaults } = await busy(t('loading'), loadDefaults);
-    const info = data && data.info ? { ...emptyInfo('crochet'), ...data.info } : { ...emptyInfo('crochet'), designer: defaults.designer || '' };
+    const { d: defaults0 } = await busy(t('loading'), loadDefaults);
+    const info = data && data.info ? { ...emptyInfo('crochet'), ...data.info } : { ...emptyInfo('crochet'), designer: defaults0.designer || '' };
     info.craft = 'crochet';
     const m = data ? {
       W: data.W, H: data.H, start: data.start || 0, edges: !!data.edges, colors: data.colors, userColors: true,
@@ -599,6 +738,10 @@
     } : { W: 40, H: 30, start: 0, edges: true, colors: ['#f4ede1', '#0f5e63'], userColors: false, threshold: 128, invert: false, src: null };
     if (!data) { m.T = new Uint8Array(m.W * m.H); for (let r = 0; r < m.H; r++) for (let c = 0; c < m.W; c++) m.T[r * m.W + c] = (m.start + r) % 2; }
     m.plan = data && data.plan ? data.plan : null;
+    m.rep = data && data.rep ? data.rep : emptyRep();
+    m.workNotes = (data && data.workNotes) || '';
+    const undoT = [];
+    const pushUndo = () => { undoT.push({ T: m.T.slice(), W: m.W, H: m.H }); if (undoT.length > 40) undoT.shift(); };
     const planFit = () => {
       if (!m.plan) return;
       while (m.plan.seq.length < m.H) m.plan.seq.push((m.start + m.plan.seq.length) % 2);
@@ -613,9 +756,26 @@
     const canvas = el('canvas', { class: 'studio-canvas' });
     const stats = el('div', { class: 'studio-stats' });
     let o = null;
+    const fixBtn = el('button', { class: 'btn small primary', onclick: () => {
+      // "פתרון לפי הכללים": התרשים הקרוב ביותר שאפשר לבצע – כל מה שלא ניתן הופך למה שבאמת ייצא
+      pushUndo();
+      let n = 0;
+      for (let r = 2; r < m.H; r++) for (let c = 0; c < m.W; c++) {
+        const i = r * m.W + c;
+        if (m.edges && (c === 0 || c === m.W - 1)) continue;
+        if (m.T[i] !== res.D[i]) { m.T[i] = res.D[i]; n++; }
+      }
+      ed.setDirty(); solve(); toast(t('fixDone', { n }), 5000);
+    } }, t('fixRules'));
+    const undoBtn = el('button', { class: 'btn small', onclick: () => {
+      const u = undoT.pop(); if (!u) return;
+      m.T = u.T; m.W = u.W; m.H = u.H; widthIn.value = m.W; heightIn.value = m.H; ed.setDirty(); solve();
+    } }, t('stUndo'));
     const redraw = () => {
       o = renderMosaic(canvas, m, res, cs, { showErr });
-      stats.textContent = res.errors ? t('mStats', { x: res.xs, e: res.errors }) : t('mStatsOk', { x: res.xs });
+      stats.innerHTML = '';
+      stats.append(el('span', {}, res.errors ? t('mStats', { x: res.xs, e: res.errors }) : t('mStatsOk', { x: res.xs })));
+      if (res.errors) stats.append(' ', fixBtn);
       stats.classList.toggle('ok', !res.errors);
       sizeLbl.textContent = t('mSize', { w: m.W, h: m.H });
     };
@@ -640,7 +800,10 @@
       m.img = img; m.src = sampleImage(img, inner); m.userColors = false;
       m.threshold = otsu(m.src.L); thr.value = String(m.threshold);
       imgRow.classList.remove('hidden');
+      pushUndo();
       rebuild();
+      // התרשים מתאים את עצמו לרוחב המסך
+      cs = fitCellSize(wrapEl, m.W, 6, 34); zoom.value = String(cs); redraw();
     } }, t('mFromImage'));
     const blank = el('button', { class: 'btn', onclick: () => {
       m.src = null; m.img = null; imgRow.classList.add('hidden');
@@ -682,11 +845,23 @@
     zoom.oninput = () => { cs = Number(zoom.value); redraw(); };
     const sizeLbl = el('span', { class: 'muted' });
 
-    paintable(canvas, () => o, (p) => {
+    const pt = paintToggle(canvas);
+    paintable(canvas, () => o, (p, first) => {
       if (p.r < 2 || (m.edges && (p.c === 0 || p.c === m.W - 1))) return;
+      if (first) pushUndo();
       m.T[p.r * m.W + p.c] = brush; ed.setDirty();
       solve();
-    });
+    }, null, pt.isOn);
+    // זיהוי האלמנט החוזר מתוך מה שבאמת ייסרג (בלי השוליים ושורות הבסיס)
+    const repBox = repeatPanel(m.rep, () => ({ W: m.W, H: m.H }), () => {
+      const e = m.edges ? 1 : 0, inner = m.W - 2 * e, rows = m.H - 2;
+      const p = findPeriod((i, j) => m.T[(j + 2) * m.W + (m.W - 1 - e - i)], inner, rows);
+      let q = findPeriod((i, j) => m.T[(i + 2) * m.W + j + e], rows, inner);
+      if (q % 2) q *= 2; // במוזאיק הצבעים מתחלפים כל שורה – החזרה האנכית זוגית
+      if (q > rows / 2) q = 0;
+      return { p, hStart: 1 + e, q, vStart: 3 };
+    }, () => { ed.setDirty(); redraw(); });
+    const wrapEl = el('div', { class: 'studio-canvas-wrap' }, canvas);
 
     // תכנון צבעים לפי שורות (PRO)
     const usePlan = el('input', { type: 'checkbox' }); usePlan.checked = !!m.plan;
@@ -717,25 +892,28 @@
         el('div', { class: 'studio-row' }, el('label', { class: 'chk' }, edges, t('mEdges')), el('label', { class: 'chk' }, errChk, t('mShowErr'))),
         el('div', { class: 'studio-row' }, el('label', {}, t('stCellSize'), zoom), el('label', { class: 'chk' }, docChk, t('exportPdf'))),
         el('details', { class: 'studio-help' }, el('summary', {}, 'ℹ️ ' + t('stMosaic')), el('p', {}, t('mRules'))),
-        planWrap),
+        repBox, planWrap, workNotesBox(m, 'workNotes', ed)),
       stats,
-      el('div', { class: 'studio-canvas-wrap' }, canvas));
+      el('div', { class: 'studio-row canvas-tools' }, pt.btn, undoBtn, el('span', { class: 'muted small-note' }, t('paintHint'))),
+      wrapEl);
     updBrush(); redraw();
+    requestAnimationFrame(() => { cs = fitCellSize(wrapEl, m.W, 6, 34); zoom.value = String(cs); redraw(); });
 
     async function save(name) {
       const png = await exportMosaicPng(m, res, name);
-      const data2 = { type: 'mosaic', v: 2, title: name, W: m.W, H: m.H, start: m.start, edges: m.edges, colors: m.colors, T: toB64(m.T), info, plan: m.plan };
-      await busy(t('stSaving'), async () => {
+      const data2 = { type: 'mosaic', v: 3, title: name, W: m.W, H: m.H, start: m.start, edges: m.edges, colors: m.colors, T: toB64(m.T), info, plan: m.plan, rep: m.rep, workNotes: m.workNotes };
+      const defaults = (await loadDefaults()).d;
+      const r = await busy(t('stSaving'), async () => {
         const outputs = [{ key: 'main', blob: png, name: name + '.png' }];
         if (withPdf) {
           $('#busyText').textContent = t('pdfMaking');
-          const rows = [t('mAbbrLine'), t('mMethod'), ...mosaicInstructions(m, res)];
-          const html = patternHtml({ title: name, w: info, chartUrl: await blobDataUrl(png), rows, defaults, kind: t('stMosaic') });
+          const rows = [t('mAbbrLine'), t('mMethod'), ...repeatText(m.rep, m.W, m.H), ...mosaicInstructions(m, res)];
+          const html = patternHtml({ title: name, w: info, chartUrl: await blobDataUrl(png), rows, defaults, kind: t('stMosaic'), workNotes: m.workNotes });
           outputs.push({ key: 'pdf', blob: await htmlToPdf(html, ed.folder.id), name: name + '.pdf' });
         }
         return saveDesign({ type: 'mosaic', name, data: data2, outputs, existing, folderId: ed.folder.id });
       });
-      afterSave(ed.folder);
+      existing = { jsonId: r.jsonId, ids: r.ids, folderId: ed.folder.id, folderName: ed.folder.name };
     }
   }
 
@@ -798,6 +976,7 @@
       ctx.fillStyle = col; ctx.fillRect(x, y, cs, cs);
       if (ch.S[i]) drawSymbol(ctx, ch.S[i], x, y, cs, ink(col));
     } });
+    drawRepeat(ctx, o, ch.rep);
     return o;
   }
 
@@ -878,10 +1057,12 @@
   }
 
   async function chartEditor(data, existing) {
-    const { d: defaults } = await busy(t('loading'), loadDefaults);
+    const { d: defaults0 } = await busy(t('loading'), loadDefaults);
     const ch = data ? { W: data.W, H: data.H, craft: data.craft || 'knit', S: data.S, Cc: data.Cc, palette: data.palette || [], colorNames: data.colorNames || {}, work: data.work || 'flat' }
       : { W: 20, H: 16, craft: 'knit', S: new Array(320).fill(''), Cc: new Array(320).fill(''), palette: [], colorNames: {}, work: 'flat' };
-    const info = data && data.info ? { ...emptyInfo(ch.craft), ...data.info } : { ...emptyInfo(ch.craft), designer: defaults.designer || '' };
+    const info = data && data.info ? { ...emptyInfo(ch.craft), ...data.info } : { ...emptyInfo(ch.craft), designer: defaults0.designer || '' };
+    ch.rep = data && data.rep ? data.rep : emptyRep();
+    ch.workNotes = (data && data.workNotes) || '';
     let cs = 24, tool = { kind: 'color', c: '#0f5e63' };
     let withPdf = !existing || !!(existing.ids && existing.ids.pdf);
     const undo = [];
@@ -937,6 +1118,7 @@
     zoom.oninput = () => { cs = Number(zoom.value); redraw(); };
     const pdfChk = el('input', { type: 'checkbox' }); pdfChk.checked = withPdf; pdfChk.onchange = () => { withPdf = pdfChk.checked; };
 
+    const pt = paintToggle(canvas);
     paintable(canvas, () => o, (p, first) => {
       if (first) { undo.push({ S: ch.S.slice(), Cc: ch.Cc.slice() }); if (undo.length > 40) undo.shift(); }
       const i = p.r * ch.W + p.c;
@@ -944,7 +1126,13 @@
       else if (tool.kind === 'color') ch.Cc[i] = tool.c === '#ffffff' ? '' : tool.c;
       else { ch.S[i] = ''; ch.Cc[i] = ''; }
       ed.setDirty(); redraw();
-    });
+    }, null, pt.isOn);
+    const key = (r, c) => (ch.S[r * ch.W + c] || '') + '|' + (ch.Cc[r * ch.W + c] || '');
+    const repBox = repeatPanel(ch.rep, () => ({ W: ch.W, H: ch.H }), () => ({
+      p: findPeriod((i, j) => key(j, ch.W - 1 - i), ch.W, ch.H), hStart: 1,
+      q: findPeriod((i, j) => key(i, j), ch.H, ch.W), vStart: 1,
+    }), () => { ed.setDirty(); redraw(); });
+    const wrapEl = el('div', { class: 'studio-canvas-wrap' }, canvas);
 
     const chartPane = el('div', {},
       el('div', { class: 'studio-panel' },
@@ -954,24 +1142,28 @@
         el('div', { class: 'studio-sub' }, t('stSymbols')), palBox,
         el('div', { class: 'studio-row' }, symName, undoBtn, el('label', {}, t('stCellSize'), zoom)),
         el('label', { class: 'chk' }, pdfChk, t('exportPdf')),
-        el('p', { class: 'muted small-note' }, t('stChartTip'))),
-      el('div', { class: 'studio-canvas-wrap' }, canvas));
+        el('p', { class: 'muted small-note' }, t('stChartTip')),
+        repBox, workNotesBox(ch, 'workNotes', ed)),
+      el('div', { class: 'studio-row canvas-tools' }, pt.btn, el('span', { class: 'muted small-note' }, t('paintHint'))),
+      wrapEl);
     editorTabs(ed, [[t('tabChart'), chartPane], [t('tabInfo'), infoForm(info, ed, { onCraft: (c) => setCraft(c) })]]);
     buildPalette(); redraw();
+    requestAnimationFrame(() => { cs = fitCellSize(wrapEl, ch.W, 10, 44); zoom.value = String(cs); redraw(); });
 
     async function save(name) {
       const png = await exportChartPng(ch, name);
-      const data2 = { type: 'chart', v: 2, title: name, W: ch.W, H: ch.H, craft: ch.craft, S: ch.S, Cc: ch.Cc, palette: ch.palette, colorNames: ch.colorNames, work: ch.work, info };
-      await busy(t('stSaving'), async () => {
+      const data2 = { type: 'chart', v: 3, title: name, W: ch.W, H: ch.H, craft: ch.craft, S: ch.S, Cc: ch.Cc, palette: ch.palette, colorNames: ch.colorNames, work: ch.work, info, rep: ch.rep, workNotes: ch.workNotes };
+      const defaults = (await loadDefaults()).d;
+      const r = await busy(t('stSaving'), async () => {
         const outputs = [{ key: 'main', blob: png, name: name + '.png' }];
         if (withPdf) {
           $('#busyText').textContent = t('pdfMaking');
-          const html = patternHtml({ title: name, w: info, chartUrl: await blobDataUrl(png), rows: chartInstructions(ch), defaults, kind: t('stChart') });
+          const html = patternHtml({ title: name, w: info, chartUrl: await blobDataUrl(png), rows: [...repeatText(ch.rep, ch.W, ch.H), ...chartInstructions(ch)], defaults, kind: t('stChart'), workNotes: ch.workNotes });
           outputs.push({ key: 'pdf', blob: await htmlToPdf(html, ed.folder.id), name: name + '.pdf' });
         }
         return saveDesign({ type: 'chart', name, data: data2, outputs, existing, folderId: ed.folder.id });
       });
-      afterSave(ed.folder);
+      existing = { jsonId: r.jsonId, ids: r.ids, folderId: ed.folder.id, folderName: ed.folder.name };
     }
   }
 
@@ -1152,13 +1344,13 @@
   }
 
   async function colorEditor(data, existing) {
-    const { d: defaults } = await busy(t('loading'), loadDefaults);
+    const { d: defaults0 } = await busy(t('loading'), loadDefaults);
     const plan = data ? { ...data.plan } : {
       mode: 'granny', N: 6, W: 40, H: 30, work: 'flat',
       yarns: [newYarn('#0f5e63'), newYarn('#f6c453'), { name: '', kind: 'vari', colors: ['#ff7a59', '#8a4f7d', '#f4ede1'], len: 5 }],
       seq: [],
     };
-    const info = data && data.info ? { ...emptyInfo('crochet'), ...data.info } : { ...emptyInfo('crochet'), designer: defaults.designer || '' };
+    const info = data && data.info ? { ...emptyInfo('crochet'), ...data.info } : { ...emptyInfo('crochet'), designer: defaults0.designer || '' };
     let withPdf = !existing || !!(existing.ids && existing.ids.pdf);
     const fitSeq = () => {
       const n = plan.mode === 'granny' ? plan.N : plan.H;
@@ -1231,7 +1423,8 @@
       const png = await canvasBlob(out);
       const rows = plan.seq.map((yi, r) => `${label(r)}: ${yarnLabel(plan.yarns[yi], yi)}`);
       const data2 = { type: 'colors', v: 1, title: name, plan, info };
-      await busy(t('stSaving'), async () => {
+      const defaults = (await loadDefaults()).d;
+      const r = await busy(t('stSaving'), async () => {
         const outputs = [{ key: 'main', blob: png, name: name + '.png' }];
         if (withPdf) {
           $('#busyText').textContent = t('pdfMaking');
@@ -1240,7 +1433,7 @@
         }
         return saveDesign({ type: 'colors', name, data: data2, outputs, existing, folderId: ed.folder.id });
       });
-      afterSave(ed.folder);
+      existing = { jsonId: r.jsonId, ids: r.ids, folderId: ed.folder.id, folderName: ed.folder.name };
     }
   }
 
@@ -1418,6 +1611,7 @@
 
     renderSections(); renderImgs(); renderLinks(); showCover();
     return el('div', { class: 'studio-panel written' },
+      el('button', { class: 'btn small defaults-link', onclick: () => defaultsEditor().catch(err) }, t('editDefaults')),
       el('div', { class: 'studio-row' }, el('label', {}, t('stCraft'), craft), el('label', {}, t('wLevel'), level)),
       field('designer', 'wDesigner'),
       el('div', { class: 'studio-row' }, coverImg, el('div', { class: 'search-pick-btns' }, el('b', {}, t('wCover')), pickCover, rmCover)),
@@ -1431,7 +1625,7 @@
   }
 
   // מסמך הדוגמה המלא (HTML ← Google Docs ← PDF)
-  function patternHtml({ title, w, chartUrl, rowsTitle, rows, defaults, kind }) {
+  function patternHtml({ title, w, chartUrl, rowsTitle, rows, defaults, kind, workNotes }) {
     const dir = isRtl() ? 'rtl' : 'ltr';
     const br = (v) => esc(v).replace(/\n/g, '<br>');
     const row = (k, v) => (v ? `<p><b>${esc(t(k))}:</b> ${br(v)}</p>` : '');
@@ -1453,6 +1647,7 @@ ${w.cover ? `<p><img src="${w.cover}" style="max-width:440px"></p>` : ''}
 ${row('wTools', w.tools)}${row('wYarn', w.yarn)}${row('wGauge', w.gauge)}${row('wSizes', w.sizes)}${row('wMeasure', w.measure)}${row('wNotions', w.notions)}
 ${w.abbr ? `<h2>${esc(t('wAbbr'))}</h2><p>${br(w.abbr)}</p>` : ''}
 ${w.notes ? `<h2>${esc(t('wGeneralNotes'))}</h2><p>${br(w.notes)}</p>` : ''}
+${workNotes ? `<h2>${esc(t('workNotes').replace(/^\S+\s/, ''))}</h2><p>${br(workNotes)}</p>` : ''}
 ${chartUrl ? `<h2>${esc(t('hChart'))}</h2><p><img src="${chartUrl}" style="max-width:100%"></p>` : ''}
 ${rows && rows.length ? `<h2>${esc(rowsTitle || t('hRows'))}</h2>${rows.map((l) => `<p style="margin:2px 0">${esc(l)}</p>`).join('')}` : ''}
 ${sections ? `<h2>${esc(t('wInstructions'))}</h2>${sections}` : ''}
@@ -1468,8 +1663,8 @@ ${attach ? `<h2>${esc(t('hAttach'))}</h2>${attach}` : ''}
      הוראות כתובות
      ========================================================= */
   async function writtenEditor(data, existing) {
-    const { d: defaults } = await busy(t('loading'), loadDefaults);
-    const w = data ? { ...emptyInfo(), ...data } : { ...emptyInfo(), designer: defaults.designer || '' };
+    const { d: defaults0 } = await busy(t('loading'), loadDefaults);
+    const w = data ? { ...emptyInfo(), ...data } : { ...emptyInfo(), designer: defaults0.designer || '' };
     let withPdf = !existing || !!(existing.ids && existing.ids.pdf);
     const ed = editorShell('📝 ' + t('stWritten'), (data && data.title) || '', existing, save);
     const pdfChk = el('input', { type: 'checkbox' }); pdfChk.checked = withPdf; pdfChk.onchange = () => { withPdf = pdfChk.checked; };
@@ -1478,50 +1673,68 @@ ${attach ? `<h2>${esc(t('hAttach'))}</h2>${attach}` : ''}
 
     async function save(name) {
       w.title = name;
+      const defaults = (await loadDefaults()).d;
       const html = patternHtml({ title: name, w, defaults, kind: t('stWritten') });
       const r = await busy(t('stSaving'), async () => {
         const outputs = [{ key: 'main', blob: new Blob([html], { type: 'text/html' }), name, doc: true }];
         if (withPdf) { $('#busyText').textContent = t('pdfMaking'); outputs.push({ key: 'pdf', blob: await htmlToPdf(html, ed.folder.id), name: name + '.pdf' }); }
         return saveDesign({ type: 'written', name, data: { type: 'written', v: 2, ...w }, outputs, existing, folderId: ed.folder.id });
       });
-      afterSave(ed.folder);
+      existing = { jsonId: r.jsonId, ids: r.ids, folderId: ed.folder.id, folderName: ed.folder.name };
     }
   }
 
   /* ---------------- דף הבית של "יצירת דוגמה" ---------------- */
   function home(container) {
     container.innerHTML = '';
-    const cur = currentFolder();
-    const card = (icon, title, hint, fn) => el('button', { class: 'studio-card', onclick: () => { if (!currentFolder()) { toast(t('stNoFolder')); return; } fn(); } },
+    const card = (icon, title, hint, fn) => el('button', { class: 'studio-card', onclick: () => { if (!nav.root()) { toast(t('stNoFolder')); return; } fn(); } },
       el('span', { class: 'studio-card-icon' }, icon), el('span', { class: 'sheet-text' }, el('b', {}, title), el('small', {}, hint)));
+    const mine = el('div', { class: 'my-designs' }, el('p', { class: 'muted small-note' }, t('loading')));
+    const where = el('p', { class: 'muted small-note studio-folder' }, t('myDesignsWhere', { name: t('myDesignsFolder') }));
     container.append(
-      el('h2', { class: 'section-title' }, t('stHomeTitle')),
+      el('div', { class: 'studio-defaults' }, el('button', { class: 'btn', onclick: () => defaultsEditor().catch(err) }, t('editDefaults'))),
+      el('h2', { class: 'section-title' }, t('myDesigns')), where, mine,
+      el('h2', { class: 'section-title' }, '＋ ' + t('newDesign')),
       el('div', { class: 'studio-cards' },
         card('📝', t('stWritten'), t('stWrittenHint'), () => writtenEditor(null, null).catch(err)),
         card('🎨', t('stChart'), t('stChartHint'), () => chartEditor(null, null).catch(err)),
         card('🟪', t('stMosaic'), t('stMosaicHint'), () => mosaicEditor(null, null).catch(err)),
-        card('🌈', t('cpTitle') + ' · ' + t('cpPro'), t('cpHint'), () => colorEditor(null, null).catch(err))),
-      el('div', { class: 'studio-defaults' }, el('button', { class: 'btn', onclick: () => defaultsEditor().catch(err) }, t('dBtn'))),
-      el('p', { class: 'muted small-note studio-folder' }, cur ? t('stSaveTo', { name: cur.name }) : t('stNoFolder')));
+        card('🌈', t('cpTitle') + ' · ' + t('cpPro'), t('cpHint'), () => colorEditor(null, null).catch(err))));
+    designsFolder().then((f) => { where.textContent = t('myDesignsWhere', { name: f.name }); }).catch(() => {});
+    listDesigns().then((list) => {
+      mine.innerHTML = '';
+      if (!list.length) { mine.append(el('p', { class: 'muted small-note' }, t('myDesignsEmpty'))); return; }
+      for (const f of list) {
+        const ap = f.appProperties, [icon, typeKey] = DESIGN_TYPES[ap.kpType];
+        const th = el('div', { class: 'thumb' }, icon);
+        if (ap.kpMain && ap.kpType !== 'written') queueImage(ap.kpMain, (u) => { th.style.backgroundImage = `url("${u}")`; th.textContent = ''; });
+        const name = f.name.replace(/\.mypattern\.json$/, '');
+        const d = f.modifiedTime ? new Date(f.modifiedTime) : null;
+        mine.append(el('div', { class: 'design-row' }, th,
+          el('div', { class: 'design-meta' }, el('b', {}, name), el('small', {}, `${t(typeKey)}${d ? ' · ' + d.toLocaleDateString() : ''}`)),
+          el('button', { class: 'btn small primary', onclick: () => editJson(f).catch(err) }, t('continueEdit')),
+          ap.kpMain ? el('button', { class: 'btn small', onclick: () => openFileById(ap.kpPdf || ap.kpMain, { name }) }, t('openView')) : null));
+      }
+    }).catch((e) => { mine.innerHTML = ''; mine.append(el('p', { class: 'muted small-note' }, String(e.message || e))); });
   }
 
-  // עריכה חוזרת של עיצוב שנשמר
-  async function edit(f) {
-    const jsonId = f.appProperties.kpDesign;
-    const { data, meta } = await busy(t('stEditLoad'), async () => {
-      const [blob, meta2] = await Promise.all([drive.media(jsonId), drive.get(jsonId)]);
-      return { data: JSON.parse(await blob.text()), meta: meta2 };
-    });
-    const ap = meta.appProperties || {};
+  // פתיחת עיצוב לעריכה מתוך קובץ הנתונים שלו
+  async function editJson(jsonFile) {
+    const data = await busy(t('stEditLoad'), async () => JSON.parse(await (await drive.media(jsonFile.id)).text()));
+    const ap = jsonFile.appProperties || {};
     const ids = {};
     if (ap.kpMain) ids.main = ap.kpMain; if (ap.kpPdf) ids.pdf = ap.kpPdf; if (ap.kpDoc) ids.doc = ap.kpDoc;
-    if (!ids.main) ids.main = f.id;
-    const existing = { jsonId, ids, folderId: (meta.parents && meta.parents[0]) || (f.parents && f.parents[0]) };
+    const existing = { jsonId: jsonFile.id, ids, folderId: jsonFile.parents && jsonFile.parents[0] };
     if (data.type === 'mosaic') await mosaicEditor(data, existing);
     else if (data.type === 'chart') await chartEditor(data, existing);
     else if (data.type === 'colors') await colorEditor(data, existing);
     else await writtenEditor(data, existing);
   }
+  // עריכה מתוך כרטיס של קובץ תוצאה (PNG / PDF / מסמך)
+  async function edit(f) {
+    const meta = await busy(t('stEditLoad'), () => drive.get(f.appProperties.kpDesign));
+    await editJson(meta);
+  }
 
-  window.Studio = { home, edit, _mosaicSolve: mosaicSolve };
+  window.Studio = { home, edit, defaults: () => defaultsEditor().catch(err), _mosaicSolve: mosaicSolve, _findPeriod: findPeriod };
 })();
