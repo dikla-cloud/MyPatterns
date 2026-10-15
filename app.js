@@ -230,7 +230,7 @@ const KIND_LABEL = { link: '🔗', pdf: 'PDF', docx: 'WORD', doc: 'WORD', gdoc: 
 const kindLabel = (k) => (k === 'image' ? t('kindImage') : k === 'link' ? t('kindLink') : KIND_LABEL[k]);
 // סוגים שמוצגים אחרי המרה ל-PDF דרך גוגל
 const CONVERTED = ['doc', 'gdoc', 'sheet', 'gsheet'];
-const KIND_ICON = { folder: '🧶', pdf: '📄', docx: '📝', doc: '📝', gdoc: '📝', sheet: '📊', gsheet: '📊', image: '🖼️', link: '🔗' };
+const KIND_ICON = { folder: '', pdf: '📄', docx: '📝', doc: '📝', gdoc: '📝', sheet: '📊', gsheet: '📊', image: '🖼️', link: '🔗' };
 const isAppImage = (f) => f.appProperties && f.appProperties.kpRole === 'image';
 // מזהה התמונה המייצגת ('none' = הוסרה בכוונה ולא מחפשים אוטומטית)
 const coverOf = (f) => { const c = f && f.appProperties && f.appProperties.kpCover; return c && c !== 'none' ? c : null; };
@@ -828,7 +828,7 @@ const dash = {
   card(f) {
     const kind = kindOf(f);
     const isFolder = kind === 'folder';
-    const cover = el('div', { class: 'cover' }, KIND_ICON[kind] || '📄');
+    const cover = el('div', { class: 'cover' + (isFolder ? ' logo-ph' : '') }, isFolder ? '' : KIND_ICON[kind] || '📄');
     const coverId = coverOf(f);
     const paint = (u) => { cover.style.backgroundImage = `url("${u}")`; cover.classList.add('has-img'); };
     if (coverId) queueImage(coverId, paint);
