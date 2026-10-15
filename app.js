@@ -516,7 +516,27 @@ function normalizeUrl(u) {
 }
 
 // קישור לקובץ בגוגל דרייב של מישהו אחר – תצוגה מקדימה שאפשר להטמיע
+// מזהה סרטון/רשימת השמעה של יוטיוב מתוך קישור
+function youtubeInfo(u) {
+  try {
+    const x = new URL(u);
+    const h = x.hostname.replace(/^(www|m|music)\./, '');
+    let id = '';
+    if (h === 'youtu.be') id = x.pathname.slice(1).split('/')[0];
+    else if (h === 'youtube.com' || h === 'youtube-nocookie.com') {
+      id = x.searchParams.get('v') || (x.pathname.match(/^\/(?:shorts|embed|live|v)\/([\w-]{6,})/) || [])[1] || '';
+      if (!id && x.searchParams.get('list')) return { list: x.searchParams.get('list') };
+    } else return null;
+    return id ? { id, start: parseInt(x.searchParams.get('t') || x.searchParams.get('start') || '0', 10) || 0 } : null;
+  } catch { return null; }
+}
+
 function frameUrlFor(u) {
+  const yt = youtubeInfo(u);
+  if (yt) {
+    return yt.list ? `https://www.youtube.com/embed/videoseries?list=${encodeURIComponent(yt.list)}&rel=0`
+      : `https://www.youtube.com/embed/${yt.id}?rel=0&playsinline=1${yt.start ? '&start=' + yt.start : ''}`;
+  }
   const m = u.match(/drive\.google\.com\/(?:file\/d\/|open\?id=)([\w-]+)/);
   if (m) return `https://drive.google.com/file/d/${m[1]}/preview`;
   return u;
@@ -595,8 +615,11 @@ function openImageSearch() {
   const pick = el('button', { class: 'btn', onclick: async () => {
     const f = await pickFile($('#imageInput'));
     if (!f) return;
-    // מכינים מראש כדי שהשיתוף יקרה מיד בלחיצה
-    file = new File([await resizeImage(f, 1600)], 'pattern.jpg', { type: 'image/jpeg' });
+    // מקטינים את התמונה; אם הפורמט לא נתמך בדפדפן (למשל HEIC) – שולחים את המקור
+    try {
+      const small = await resizeImage(f, 1600);
+      file = small ? new File([small], 'pattern.jpg', { type: 'image/jpeg' }) : f;
+    } catch { file = f; }
     preview.textContent = '';
     preview.style.backgroundImage = `url("${URL.createObjectURL(f)}")`;
     preview.classList.add('has-img');
@@ -605,7 +628,7 @@ function openImageSearch() {
     pick.textContent = t('replaceSearchImage');
     clearBtn.classList.remove('hidden');
     // בטלפון ממשיכים מיד ל-Google Lens
-    if (matchMedia('(pointer: coarse)').matches) { toast(t('openingLens')); setTimeout(() => lensSearch(file, true).catch(err), 300); }
+    if (isMobileDevice()) { toast(t('openingLens')); setTimeout(() => lensSearch(file, true).catch(err), 300); }
   } }, t('chooseImage'));
   const clearBtn = el('button', { class: 'btn danger hidden', onclick: () => {
     file = null;
@@ -638,7 +661,9 @@ function openImageSearch() {
 }
 
 // שליחת התמונה ישר ל-Google Lens – כמו "חיפוש תמונה ב-Google" של Chrome – בלי להעלות אותה שוב
-async function lensSearch(file, sameWindow = matchMedia('(pointer: coarse)').matches) {
+const isMobileDevice = () => matchMedia('(pointer: coarse)').matches || /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+
+async function lensSearch(file, sameWindow = isMobileDevice()) {
   if (!file) { toast(t('needImage')); return; }
   let w = 0, h = 0;
   try { const bmp = await createImageBitmap(file); w = bmp.width; h = bmp.height; } catch { /* ignore */ }
@@ -858,7 +883,14 @@ const dash = {
     for (const r of store.get('recent', [])) {
       const th = el('div', { class: 'thumb' }, r.cover ? '' : KIND_ICON[r.kind] || '📄');
       if (r.cover) queueImage(r.cover, (u) => { th.style.backgroundImage = `url("${u}")`; });
-      row.append(el('button', { class: 'recent-item', onclick: () => openFileById(r.id, r) }, th, el('span', {}, r.name)));
+      const item = el('div', { class: 'recent-item' },
+        el('button', { class: 'recent-open', onclick: () => openFileById(r.id, r) }, th, el('span', {}, r.name)),
+        el('button', { class: 'recent-x', title: t('removeRecent'), 'aria-label': t('removeRecent'), onclick: () => {
+          store.set('recent', store.get('recent', []).filter((x) => x.id !== r.id));
+          item.remove();
+          if (!store.get('recent', []).length) $('#recentSection').classList.add('hidden');
+        } }, '✕'));
+      row.append(item);
     }
   },
   render() {
@@ -876,6 +908,9 @@ const dash = {
     const paint = (u) => { cover.style.backgroundImage = `url("${u}")`; cover.classList.add('has-img'); };
     if (coverId) queueImage(coverId, paint);
     else if (kind === 'image') queueImage(f.id, paint);
+    else if (kind === 'link' && youtubeInfo(linkUrl(f)) && youtubeInfo(linkUrl(f)).id) {
+      paint(`https://img.youtube.com/vi/${youtubeInfo(linkUrl(f)).id}/hqdefault.jpg`);
+    }
     else if (kind === 'link') {
       const host = hostOf(linkUrl(f));
       if (host) { cover.classList.add('favicon'); cover.style.backgroundImage = `url("https://www.google.com/s2/favicons?domain=${encodeURIComponent(host)}&sz=128")`; }
@@ -1026,7 +1061,12 @@ async function openFile(f, localBlob) {
       const url = linkUrl(f) || await linkUrlFromContent(f);
       V.linkUrl = url;
       blob = await tryFetchPdf(url, f);
-      if (!blob) { V.frameUrl = frameUrlFor(url); layout(); V.ready = true; return; }
+      if (!blob) {
+        V.frameUrl = frameUrlFor(url);
+        // בסרטון הסרגלים מסתירים את התמונה – מתחילים בלעדיהם (אפשר להדליק ב-▬)
+        if (youtubeInfo(url) && !V.st.t) { V.st.h.on = 0; V.st.v.on = 0; applyRulers(); }
+        layout(); V.ready = true; return;
+      }
       V.kind = 'pdf';
     } else if (CONVERTED.includes(V.kind)) {
       blob = await convertedPdf(f);
@@ -1115,6 +1155,15 @@ function layout() {
   if (V.observer) V.observer.disconnect();
   content.innerHTML = '';
   content.classList.toggle('frame-mode', !!V.frameUrl);
+  if (V.frameUrl && youtubeInfo(V.linkUrl)) {
+    // סרטון יוטיוב – נגן בתוך האפליקציה, וכפתור ברור למעבר ליוטיוב
+    const note = el('div', { class: 'frame-note' }, el('span', {}, t('ytHint')),
+      el('button', { class: 'btn small primary', onclick: () => window.open(V.linkUrl, '_blank', 'noopener') }, t('openYoutube')));
+    const frame = el('iframe', { src: V.frameUrl, class: 'web-frame video-frame', referrerpolicy: 'strict-origin-when-cross-origin',
+      allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen', allowfullscreen: '' });
+    content.append(note, frame);
+    return;
+  }
   if (V.frameUrl) {
     const tip = el('div', { class: 'frame-tip hidden' }, t('pdfTip'));
     const note = el('div', { class: 'frame-note' }, el('span', {}, t('iframeHint')),
