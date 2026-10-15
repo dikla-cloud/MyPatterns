@@ -371,3 +371,6 @@ input { font: inherit; }
 .recent-x { border: 0; background: none; color: var(--muted); width: 32px; height: 40px; font-size: 14px; border-radius: 10px; flex: 0 0 auto; }
 .recent-x:hover { background: var(--surface-2); color: #c0392b; }
 .video-frame { background: #000; }
+.search-row { display: flex; gap: 8px; align-items: center; }
+.search-row input { flex: 1; min-width: 0; }
+.new-folder-btn { flex: 0 0 auto; padding: 10px 12px; white-space: nowrap; }

@@ -607,15 +607,16 @@ function openAddLink(prefill = {}) {
   setTimeout(() => (prefill.url ? nameIn : urlIn).focus(), 50);
 }
 
-/* ---------------- חיפוש דוגמה לפי תמונה ---------------- */
-function openImageSearch() {
+/* ---------------- חיפוש דוגמה לפי תמונה (Google Lens) ---------------- */
+const isMobileDevice = () => matchMedia('(pointer: coarse)').matches || /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+
+function openLensSearch() {
   let file = null;
   const preview = el('div', { class: 'search-preview' }, '📷');
-  const kw = el('input', { type: 'text', placeholder: t('keywordsPh') });
   const pick = el('button', { class: 'btn', onclick: async () => {
     const f = await pickFile($('#imageInput'));
     if (!f) return;
-    // מקטינים את התמונה; אם הפורמט לא נתמך בדפדפן (למשל HEIC) – שולחים את המקור
+    // מקטינים את התמונה; אם הפורמט לא נתמך בדפדפן (למשל HEIC) – משתמשים במקור
     try {
       const small = await resizeImage(f, 1600);
       file = small ? new File([small], 'pattern.jpg', { type: 'image/jpeg' }) : f;
@@ -627,8 +628,6 @@ function openImageSearch() {
     lensBtn.classList.add('pulse');
     pick.textContent = t('replaceSearchImage');
     clearBtn.classList.remove('hidden');
-    // בטלפון ממשיכים מיד ל-Google Lens
-    if (isMobileDevice()) { toast(t('openingLens')); setTimeout(() => lensSearch(file, true).catch(err), 300); }
   } }, t('chooseImage'));
   const clearBtn = el('button', { class: 'btn danger hidden', onclick: () => {
     file = null;
@@ -640,47 +639,53 @@ function openImageSearch() {
     lensBtn.classList.remove('pulse');
     clearBtn.classList.add('hidden');
   } }, t('removeSearchImage'));
-  const words = () => kw.value.trim();
-  const openSearch = (url) => window.open(url, '_blank', 'noopener');
-  const q = () => encodeURIComponent((words() + ' ' + t('freePatternQuery')).trim());
   // בלי תמונה – הכפתור קודם פותח את בחירת התמונה
   const lensBtn = el('button', { class: 'btn primary wide', onclick: () => (file ? lensSearch(file).catch(err) : pick.click()) }, t('searchLens'));
   const body = el('div', { class: 'img-search' },
-    el('p', { class: 'muted' }, t('imgSearchHint')),
+    el('p', { class: 'muted' }, t('lensHint')),
     el('div', { class: 'search-pick' }, preview, el('div', { class: 'search-pick-btns' }, pick, clearBtn)),
     lensBtn,
-    el('p', { class: 'muted', style: 'margin-top:16px' }, t('searchByWords')),
+    el('p', { class: 'muted small-note' }, t('foundTip')));
+  openModal(t('lensTitle'), body);
+}
+
+function openWebSearch() {
+  const kw = el('input', { type: 'text', placeholder: t('keywordsPh'), enterkeyhint: 'search' });
+  const words = () => kw.value.trim();
+  const openSearch = (url) => window.open(url, '_blank', 'noopener');
+  const q = () => encodeURIComponent((words() + ' ' + t('freePatternQuery')).trim());
+  const body = el('div', { class: 'img-search' },
+    el('p', { class: 'muted' }, t('webSearchHint')),
     kw,
     el('div', { class: 'search-links' },
-      el('button', { class: 'btn', onclick: () => openSearch(`https://www.google.com/search?q=${q()}`) }, 'Google'),
+      el('button', { class: 'btn primary', onclick: () => openSearch(`https://www.google.com/search?q=${q()}`) }, 'Google'),
       el('button', { class: 'btn', onclick: () => openSearch(`https://www.ravelry.com/patterns/search#query=${encodeURIComponent(words())}`) }, t('searchRavelry')),
       el('button', { class: 'btn', onclick: () => openSearch(`https://www.pinterest.com/search/pins/?q=${q()}`) }, 'Pinterest'),
       el('button', { class: 'btn', onclick: () => openSearch(`https://www.etsy.com/search?q=${encodeURIComponent((words() + ' knitting pattern').trim())}`) }, 'Etsy')),
     el('p', { class: 'muted small-note' }, t('foundTip')));
-  openModal(t('imgSearchTitle'), body);
+  openModal(t('webSearchTitle'), body);
+  setTimeout(() => kw.focus(), 50);
 }
 
-// שליחת התמונה ישר ל-Google Lens – כמו "חיפוש תמונה ב-Google" של Chrome – בלי להעלות אותה שוב
-const isMobileDevice = () => matchMedia('(pointer: coarse)').matches || /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
-
-async function lensSearch(file, sameWindow = isMobileDevice()) {
+async function lensSearch(file) {
   if (!file) { toast(t('needImage')); return; }
-  let w = 0, h = 0;
-  try { const bmp = await createImageBitmap(file); w = bmp.width; h = bmp.height; } catch { /* ignore */ }
-  const form = el('form', {
-    // בטלפון נפתח באותו חלון (לא נחסם כחלון קופץ); חוזרים לאפליקציה בכפתור "חזרה"
-    method: 'POST', enctype: 'multipart/form-data', target: sameWindow ? '_self' : '_blank', style: 'display:none',
-    action: `https://lens.google.com/v3/upload?ep=ccm&s=&st=${Date.now()}`,
-  });
-  const input = el('input', { type: 'file', name: 'encoded_image' });
-  const dt = new DataTransfer();
-  dt.items.add(file);
-  input.files = dt.files;
-  form.append(input);
-  if (w && h) form.append(el('input', { type: 'hidden', name: 'processed_image_dimensions', value: `${w},${h}` }));
-  document.body.append(form);
-  form.submit();
-  setTimeout(() => form.remove(), 1000);
+  // בטלפון: שיתוף התמונה ישר ל-Google Lens (דרך אפליקציית Google) – בלי להעלות אותה שוב
+  if (navigator.canShare && navigator.canShare({ files: [file] }) && isMobileDevice()) {
+    toast(t('lensShareTip'), 7000);
+    try { await navigator.share({ files: [file] }); return; } catch (e) { if (e.name === 'AbortError') return; }
+  }
+  // במחשב: העתקת התמונה ופתיחת Google Lens – מדביקים עם Ctrl+V
+  let copied = false;
+  try {
+    const bmp = await createImageBitmap(file);
+    const c = document.createElement('canvas'); c.width = bmp.width; c.height = bmp.height;
+    c.getContext('2d').drawImage(bmp, 0, 0);
+    const png = await new Promise((res) => c.toBlob(res, 'image/png'));
+    await navigator.clipboard.write([new ClipboardItem({ 'image/png': png })]);
+    copied = true;
+  } catch { /* העתקה לא נתמכת */ }
+  toast(copied ? t('imageCopied') : t('lensManual'), 8000);
+  window.open('https://lens.google.com/', '_blank', 'noopener');
 }
 
 /* ---------------- ניווט ---------------- */
@@ -1558,12 +1563,11 @@ function openAddSheet() {
     el('span', { class: 'sheet-text' }, el('b', {}, title), el('small', {}, hint)));
   const body = el('div', { class: 'add-sheet' },
     opt('📄', t('addFromDevice'), t('addFromDeviceHint'), () => uploadPatterns($('#uploadInput'))),
-    opt('🖼️', t('addPhoto'), t('addPhotoHint'), () => uploadPatterns($('#photoInput'))),
     opt('☁️', t('addFromDrive'), t('addFromDriveHint'), () => grantAccess().catch(err)),
     opt('🗂️', t('addOtherCloud'), t('addOtherCloudHint'), () => { toast(t('otherCloudTip'), 6000); uploadPatterns($('#uploadInput')); }),
     opt('🔗', t('addLinkTitle'), t('addLinkHint'), () => openAddLink()),
-    opt('📷', t('imageSearchTitle'), t('imageSearchHint'), openImageSearch),
-    opt('📁', t('newFolderTitle'), t('newFolderHint'), newFolder));
+    opt('📷', t('lensTitle'), t('lensOptHint'), openLensSearch),
+    opt('🌐', t('webSearchTitle'), t('webSearchOptHint'), openWebSearch));
   openModal(t('addSheetTitle'), body);
 }
 async function uploadPatterns(input = $('#uploadInput')) {
@@ -1598,6 +1602,7 @@ async function newFolder() {
 $('#refreshBtn').onclick = () => dash.load(true);
 $('#settingsBtn').onclick = openSettings;
 $('#addBtn').onclick = openAddSheet;
+$('#newFolderBtn').onclick = () => newFolder();
 $('#backBtn').onclick = () => { nav.to(nav.path.length - 1); dash.load(); };
 $('#searchInput').oninput = () => dash.render();
 $('#reauthBtn').onclick = async () => {
