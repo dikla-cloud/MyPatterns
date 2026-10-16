@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 29;
+const APP_V = 30;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -587,34 +587,60 @@ async function tryFetchPdf(url, f) {
   } catch { return null; }
 }
 
-function openAddLink(prefill = {}) {
-  const cur = nav.current();
-  if (!cur) return;
+// טופס שמירת דוגמה מהרשת: כתובת, שם, תיקייה, ועותק PDF כשהקישור הוא קובץ PDF
+function linkSaveForm(prefill = {}, onDone) {
   const urlIn = el('input', { type: 'url', dir: 'ltr', placeholder: 'https://…', value: prefill.url || '' });
   const nameIn = el('input', { type: 'text', placeholder: t('linkNamePh'), value: prefill.title || '' });
   const pasteBtn = el('button', { class: 'btn small', onclick: async () => {
-    try { urlIn.value = await navigator.clipboard.readText(); } catch { urlIn.focus(); }
+    try { urlIn.value = (await navigator.clipboard.readText()).trim(); updPdf(); nameIn.focus(); } catch { urlIn.focus(); }
   } }, t('paste'));
-  const body = el('div', {},
-    el('label', { class: 'field' }, el('span', {}, t('linkUrl')), urlIn),
-    navigator.clipboard && navigator.clipboard.readText ? pasteBtn : null,
-    el('label', { class: 'field' }, el('span', {}, t('linkName')), nameIn));
-  openModal(t('linkTitle'), body, [
-    el('button', { class: 'btn primary', onclick: async () => {
-      const url = normalizeUrl(urlIn.value);
-      if (!url) { toast(t('linkInvalid')); return; }
-      const name = (nameIn.value.trim() || hostOf(url)).replace(/[\\/:*?"<>|]/g, ' ').slice(0, 120);
-      closeModal();
-      try {
+  // תיקייה: הנוכחית או אחת מתתי-התיקיות שלה
+  const cur = nav.current();
+  const folderSel = el('select', {}, el('option', { value: cur.id }, '📁 ' + cur.name));
+  for (const f of dash.items.filter((x) => x.mimeType === FOLDER)) folderSel.append(el('option', { value: f.id }, '📁 ' + cur.name + ' › ' + f.name));
+  const pdfChk = el('input', { type: 'checkbox' }); pdfChk.checked = true;
+  const pdfRow = el('label', { class: 'chk hidden' }, pdfChk, t('pdfCopy'));
+  const isPdfUrl = (u) => { try { const x = new URL(u); return /\.pdf$/i.test(x.pathname) || /dropbox\.com/.test(x.hostname); } catch { return false; } };
+  const updPdf = () => pdfRow.classList.toggle('hidden', !isPdfUrl(normalizeUrl(urlIn.value) || ''));
+  urlIn.addEventListener('input', updPdf); updPdf();
+  const body = el('div', { class: 'link-form' },
+    el('label', { class: 'field' }, el('span', {}, t('linkUrl')), el('div', { class: 'url-row' }, urlIn, navigator.clipboard && navigator.clipboard.readText ? pasteBtn : null)),
+    el('label', { class: 'field' }, el('span', {}, t('linkName')), nameIn),
+    el('label', { class: 'field' }, el('span', {}, t('saveIn')), folderSel),
+    pdfRow);
+  const save = async () => {
+    const url = normalizeUrl(urlIn.value);
+    if (!url) { toast(t('linkInvalid')); urlIn.focus(); return; }
+    const name = (nameIn.value.trim() || prefill.fallbackName || hostOf(url)).replace(/[\\/:*?"<>|]/g, ' ').slice(0, 120);
+    const parent = folderSel.value;
+    onDone && onDone();
+    try {
+      let savedPdf = false;
+      if (!pdfRow.classList.contains('hidden') && pdfChk.checked) {
+        // אתרים רבים חוסמים הורדה מאתר אחר – אז שומרים כקישור
+        const blob = await busy(t('saving'), () => tryFetchPdf(url, { id: 'new' }));
+        if (blob) {
+          await busy(t('saving'), () => drive.upload(new Blob([blob], { type: 'application/pdf' }), { name: name.replace(/\.pdf$/i, '') + '.pdf', parents: [parent], mimeType: 'application/pdf', description: url }));
+          savedPdf = true; toast(t('pdfCopied'));
+        } else toast(t('pdfCopyFail'), 5000);
+      }
+      if (!savedPdf) {
         await busy(t('saving'), () => drive.upload(
           new Blob([`[InternetShortcut]\r\nURL=${url}\r\n`], { type: LINK_MIME }),
-          { name: name + '.url', parents: [cur.id], mimeType: LINK_MIME, description: url, appProperties: { kpRole: 'link' } }));
-        toast(t('linkSaved'));
-        dash.load(true);
-      } catch (e) { err(e); }
-    } }, t('save')),
-  ]);
-  setTimeout(() => (prefill.url ? nameIn : urlIn).focus(), 50);
+          { name: name + '.url', parents: [parent], mimeType: LINK_MIME, description: url, appProperties: { kpRole: 'link' } }));
+        if (!pdfChk.checked || pdfRow.classList.contains('hidden')) toast(t('linkSaved'));
+      }
+      dash.load(true);
+    } catch (e) { err(e); }
+  };
+  return { body, save, urlIn, nameIn, pasteBtn };
+}
+
+function openAddLink(prefill = {}) {
+  if (!nav.current()) return;
+  const form = linkSaveForm(prefill, closeModal);
+  openModal(t('linkTitle'), form.body, [el('button', { class: 'btn primary', onclick: form.save }, t('save'))]);
+  setTimeout(() => (prefill.url ? form.nameIn : form.urlIn).focus(), 50);
 }
 
 /* ---------------- חיפוש דוגמה לפי תמונה (Google Lens) ---------------- */
@@ -659,21 +685,45 @@ function openLensSearch() {
   openModal(t('lensTitle'), body);
 }
 
+// חיפוש דוגמה ברשת ושמירה שלה – באותו חלון
 function openWebSearch() {
-  const kw = el('input', { type: 'text', placeholder: t('keywordsPh'), enterkeyhint: 'search' });
-  const words = () => kw.value.trim();
-  const openSearch = (url) => window.open(url, '_blank', 'noopener');
-  const q = () => encodeURIComponent((words() + ' ' + t('freePatternQuery')).trim());
+  if (!nav.current()) return;
+  const kw = el('input', { type: 'search', placeholder: t('keywordsPh'), enterkeyhint: 'search', value: store.get('lastSearch', '') });
+  const pdfOnly = el('input', { type: 'checkbox' });
+  const words = () => { store.set('lastSearch', kw.value.trim()); return kw.value.trim(); };
+  const form = linkSaveForm({}, closeModal);
+  let searched = false;
+  const openSearch = (url) => {
+    searched = true;
+    if (!form.nameIn.value) form.nameIn.value = kw.value.trim();
+    window.open(url, '_blank', 'noopener');
+  };
+  const q = () => encodeURIComponent((words() + ' ' + t('freePatternQuery') + (pdfOnly.checked ? ' filetype:pdf' : '')).trim());
+  kw.addEventListener('keydown', (e) => { if (e.key === 'Enter') openSearch(`https://www.google.com/search?q=${q()}`); });
+  // כשחוזרים מהדפדפן – מדגישים את שלב השמירה
+  const step2 = el('div', { class: 'web-step' }, el('h3', {}, t('webStep2')), el('p', { class: 'muted small-note' }, t('webSaveHint')), form.body);
+  const onBack = () => {
+    if (document.visibilityState !== 'visible' || !searched || !document.body.contains(step2)) return;
+    step2.classList.add('pulse-once'); step2.scrollIntoView({ block: 'nearest' }); form.pasteBtn.classList.add('pulse');
+    setTimeout(() => step2.classList.remove('pulse-once'), 1600);
+  };
+  document.addEventListener('visibilitychange', onBack);
+  window.addEventListener('focus', onBack);
   const body = el('div', { class: 'img-search' },
-    el('p', { class: 'muted' }, t('webSearchHint')),
-    kw,
-    el('div', { class: 'search-links' },
-      el('button', { class: 'btn primary', onclick: () => openSearch(`https://www.google.com/search?q=${q()}`) }, 'Google'),
-      el('button', { class: 'btn', onclick: () => openSearch(`https://www.ravelry.com/patterns/search#query=${encodeURIComponent(words())}`) }, t('searchRavelry')),
-      el('button', { class: 'btn', onclick: () => openSearch(`https://www.pinterest.com/search/pins/?q=${q()}`) }, 'Pinterest'),
-      el('button', { class: 'btn', onclick: () => openSearch(`https://www.etsy.com/search?q=${encodeURIComponent((words() + ' knitting pattern').trim())}`) }, 'Etsy')),
-    el('p', { class: 'muted small-note' }, t('foundTip')));
-  openModal(t('webSearchTitle'), body);
+    el('div', { class: 'web-step' }, el('h3', {}, t('webStep1')),
+      el('p', { class: 'muted small-note' }, t('webSearchHint')),
+      kw,
+      el('label', { class: 'chk' }, pdfOnly, t('pdfOnly')),
+      el('div', { class: 'search-links' },
+        el('button', { class: 'btn primary', onclick: () => openSearch(`https://www.google.com/search?q=${q()}`) }, 'Google'),
+        el('button', { class: 'btn', onclick: () => openSearch(`https://www.ravelry.com/patterns/search#query=${encodeURIComponent(words())}`) }, t('searchRavelry')),
+        el('button', { class: 'btn', onclick: () => openSearch(`https://www.pinterest.com/search/pins/?q=${q()}`) }, 'Pinterest'),
+        el('button', { class: 'btn', onclick: () => openSearch(`https://www.etsy.com/search?q=${encodeURIComponent((words() + ' knitting pattern').trim())}`) }, 'Etsy'),
+        el('button', { class: 'btn', onclick: () => openSearch(`https://www.youtube.com/results?search_query=${encodeURIComponent((words() + ' ' + t('freePatternQuery')).trim())}`) }, 'YouTube'))),
+    step2);
+  openModal(t('webSearchTitle'), body, [el('button', { class: 'btn primary', onclick: form.save }, t('save'))]);
+  const obs = new MutationObserver(() => { if (!document.body.contains(step2)) { document.removeEventListener('visibilitychange', onBack); window.removeEventListener('focus', onBack); obs.disconnect(); } });
+  obs.observe($('#modalBody'), { childList: true });
   setTimeout(() => kw.focus(), 50);
 }
 
