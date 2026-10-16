@@ -551,3 +551,19 @@ body.studio-open { overflow: hidden; }
 
 .privacy-link { display: block; text-align: center; margin-top: 14px; color: var(--muted); font-size: 14px; }
 a.btn { text-decoration: none; display: inline-block; }
+
+/* לשוניות: הפתוחה בפוקסיה מלאה, הסגורה לבנה עם מסגרת וכיתוב בפוקסיה */
+#dashView > .mode-tabs .mode-tab:not(.on) { background: #fffbf4; color: var(--fuchsia); border-color: var(--fuchsia); box-shadow: none; text-shadow: none; font-weight: 600; }
+#dashView > .mode-tabs .mode-tab:not(.on):hover { background: #fff; filter: none; }
+/* מסכים צרים: הפס העליון לא חורג מרוחב המסך */
+#dashView > .topbar { min-width: 0; }
+#dashView > .topbar h1 { min-width: 0; flex: 0 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 440px) {
+  #dashView > .topbar { gap: 3px; padding-left: 8px; padding-right: 8px; }
+  #dashView > .topbar .icon-btn { width: 36px; height: 36px; font-size: 18px; flex: none; }
+  #dashView > .topbar h1 { font-size: 16px; padding: 2px 10px; margin: 0 2px; }
+  #dashView > .topbar .top-logo { width: 30px; height: 30px; }
+}
+@media (max-width: 360px) {
+  #dashView > .topbar h1 { display: none; }
+}

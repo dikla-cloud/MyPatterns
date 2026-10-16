@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 36;
+const APP_V = 37;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -1851,6 +1851,11 @@ async function newFolder() {
 /* ---------------- אירועי דשבורד ---------------- */
 $('#refreshBtn').onclick = () => dash.load(true);
 $('#settingsBtn').onclick = openSettings;
+// בחירת שפה מהפס העליון
+$('#langBtn').onclick = (e) => openMenu(e.currentTarget, Object.entries(LANGS).map(([code, info]) => ({
+  label: (code === LANG ? '✓ ' : '') + info.name,
+  fn: () => { setLang(code); refreshLanguage(); if (!$('#studioPane').classList.contains('hidden') && window.Studio) Studio.home($('#studioPane')); },
+})));
 $('#addBtn').onclick = openAddSheet;
 $('#newFolderBtn').onclick = () => newFolder();
 function updViewBtn() { const list = store.get('viewMode', 'grid') === 'list'; $('#viewBtn').textContent = list ? '▦' : '☰'; $('#viewBtn').title = list ? t('viewGrid') : t('viewList'); }
