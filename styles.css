@@ -320,7 +320,7 @@ input { font: inherit; }
 
 /* הלוגו במקום כדור הצמר */
 .top-logo { border-radius: 9px; flex: 0 0 auto; }
-.card .cover.logo-ph { background-image: url("icons/icon.svg"); background-size: 46%; background-repeat: no-repeat; background-position: center; }
+.card .cover.logo-ph { background-image: url("icons/icon.svg?v=2"); background-size: 46%; background-repeat: no-repeat; background-position: center; }
 .card .cover.logo-ph.has-img { background-size: cover; }
 
 /* סרגל עליון בצבע הלוגו */
