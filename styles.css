@@ -5,7 +5,7 @@
   --surface-2: #f3e8d6;
   --text: #33403f;
   --muted: #6f7a78;
-  --primary: #2f8f92;
+  --primary: #1bb3bd;
   --primary-ink: #ffffff;
   --accent: #f6c453;
   --accent-2: #ff9f80;
@@ -14,7 +14,8 @@
   --shadow: 0 2px 12px rgba(120, 90, 50, .12);
   --viewer-bg: #e9dfcf;
   --topbar: rgba(255, 251, 244, .94);
-  --topbar-ink: #2f6f72;
+  --topbar-ink: #138a92;
+  --fuchsia: #c2185b;
   --radius: 14px;
   --safe-b: env(safe-area-inset-bottom, 0px);
   color-scheme: light;
@@ -26,7 +27,7 @@ body {
   font-family: "Segoe UI", "Assistant", "Rubik", system-ui, -apple-system, Arial, sans-serif;
   background-color: var(--bg);
   /* רקע של ריבועי סבתא קטנים, מוחלש כדי שהתוכן יישאר קריא */
-  background-image: linear-gradient(rgba(247, 239, 226, .72), rgba(247, 239, 226, .72)), url("icons/granny-bg.svg");
+  background-image: linear-gradient(rgba(170, 224, 222, .78), rgba(170, 224, 222, .78)), url("icons/granny-bg.svg");
   background-size: auto, 210px 210px;
   color: var(--text);
   -webkit-tap-highlight-color: transparent;
@@ -389,12 +390,12 @@ input { font: inherit; }
 
 /* מסך פתיחה */
 .splash {
-  position: fixed; inset: 0; z-index: 100; background: var(--topbar);
+  position: fixed; inset: 0; z-index: 100; background: #fffbf4 url("icons/granny-bg-strong.svg") 0 0 / 210px 210px;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
   transition: opacity .35s ease;
 }
 .splash img { border-radius: 28px; box-shadow: 0 10px 40px rgba(0,0,0,.35); }
-.splash-name { color: var(--topbar-ink); font-size: 26px; font-weight: 800; letter-spacing: .5px; }
+.splash-name { color: #fff; background: var(--fuchsia); border: 3px solid #fff; border-radius: 999px; padding: 4px 20px; box-shadow: 0 2px 8px rgba(0,0,0,.35); font-size: 26px; font-weight: 800; letter-spacing: .5px; }
 .splash.gone { opacity: 0; pointer-events: none; }
 
 /* לשוניות בדף הבית */
@@ -530,3 +531,20 @@ body.studio-open { overflow: hidden; }
 .url-row { display: flex; gap: 6px; align-items: center; }
 .url-row input { flex: 1; min-width: 0; }
 .link-form select { width: 100%; }
+
+/* ===== עיצוב: ריבועי סבתא צבעוניים למעלה, כפתורי פוקסיה, כרטיסים בתכלת ===== */
+#dashView > .topbar, #dashView > .mode-tabs { background: url("icons/granny-bg-strong.svg") 0 0 / 210px 210px fixed; }
+#dashView > .topbar { padding-top: 14px; padding-bottom: 8px; backdrop-filter: none; border-bottom: 0; box-shadow: none; }
+#dashView > .mode-tabs { padding: 8px 16px 14px; border-bottom: 4px solid transparent; border-image: linear-gradient(90deg, #8fd0c8 0 20%, #f6c453 20% 40%, #ff9f80 40% 60%, #c9a7e0 60% 80%, #f6b3c4 80%) 1; box-shadow: 0 3px 8px rgba(120, 90, 50, .15); }
+#dashView > .topbar h1, #dashView > .topbar .icon-btn, #dashView > .mode-tabs .mode-tab {
+  background: var(--fuchsia); color: #fff; border: 3px solid #fff; box-shadow: 0 2px 8px rgba(0, 0, 0, .35); text-shadow: 0 1px 1px rgba(0, 0, 0, .25);
+}
+#dashView > .topbar h1 { border-radius: 999px; padding: 3px 14px; }
+#dashView > .topbar .icon-btn { border-radius: 50%; }
+#dashView > .topbar .icon-btn:hover, #dashView > .mode-tabs .mode-tab:hover { filter: brightness(1.1); background: var(--fuchsia); }
+#dashView > .mode-tabs .mode-tab { font-weight: 700; }
+#dashView > .mode-tabs .mode-tab.on { border-color: #ffd400; box-shadow: 0 0 0 2px var(--fuchsia), 0 2px 8px rgba(0, 0, 0, .35); }
+#dashView > .topbar .top-logo { border: 3px solid #fff; border-radius: 10px; box-shadow: 0 2px 6px rgba(0, 0, 0, .3); }
+.card { border: 2px solid #fff; box-shadow: 0 3px 12px rgba(20, 90, 95, .22); }
+.card .cover { background-color: #d9f2fb; }
+.search-row input, .search-row .btn { box-shadow: 0 2px 6px rgba(20, 90, 95, .15); }

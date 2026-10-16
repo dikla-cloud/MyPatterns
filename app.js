@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 32;
+const APP_V = 33;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
