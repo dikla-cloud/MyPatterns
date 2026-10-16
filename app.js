@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 30;
+const APP_V = 31;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -625,15 +625,47 @@ function linkSaveForm(prefill = {}, onDone) {
         } else toast(t('pdfCopyFail'), 5000);
       }
       if (!savedPdf) {
-        await busy(t('saving'), () => drive.upload(
-          new Blob([`[InternetShortcut]\r\nURL=${url}\r\n`], { type: LINK_MIME }),
-          { name: name + '.url', parents: [parent], mimeType: LINK_MIME, description: url, appProperties: { kpRole: 'link' } }));
+        await busy(t('saving'), () => createLinkDoc(url, name, parent));
         if (!pdfChk.checked || pdfRow.classList.contains('hidden')) toast(t('linkSaved'));
       }
       dash.load(true);
     } catch (e) { err(e); }
   };
   return { body, save, urlIn, nameIn, pasteBtn };
+}
+
+// קישור נשמר בדרייב כמסמך Google קטן עם קישור לחיץ – כך גם מתוך דרייב מגיעים לדוגמה בלחיצה
+const escHtml = (v) => String(v || '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function linkDocHtml(url, name) {
+  const yt = youtubeInfo(url);
+  const thumb = yt && yt.id ? `<p><a href="${escHtml(url)}"><img src="https://img.youtube.com/vi/${yt.id}/hqdefault.jpg" width="420"></a></p>` : '';
+  return `<!doctype html><html><head><meta charset="utf-8"></head><body dir="${LANGS[LANG].dir}" style="font-family:Arial,sans-serif">
+<h1>${escHtml(name)}</h1>${thumb}
+<p style="font-size:16pt"><a href="${escHtml(url)}">${escHtml(t('linkDocOpen'))}</a></p>
+<p><a href="${escHtml(url)}">${escHtml(url)}</a></p>
+<p style="color:#888;font-size:9pt">${escHtml(t('linkDocNote'))}</p></body></html>`;
+}
+function createLinkDoc(url, name, parent, appProps = {}, description = url) {
+  return drive.upload(new Blob([linkDocHtml(url, name)], { type: 'text/html' }), {
+    name, parents: [parent], mimeType: 'application/vnd.google-apps.document', description,
+    appProperties: { ...appProps, kpRole: 'link' },
+  });
+}
+// קישורים ישנים (קובץ ‎.url שבדרייב נראה כמו טקסט) – מומרים פעם אחת למסמך עם קישור לחיץ
+async function migrateLinks(files) {
+  let changed = false;
+  for (const f of files) {
+    if (f.mimeType !== LINK_MIME || kindOf(f) !== 'link' || !f.parents) continue;
+    const url = linkUrl(f);
+    if (!url) continue;
+    try {
+      const doc = await createLinkDoc(url, f.name.replace(/\.url$/i, ''), f.parents[0], f.appProperties || {}, f.description || url);
+      await drive.patch(f.id, { trashed: true });
+      store.set('recent', store.get('recent', []).map((r) => (r.id === f.id ? { ...r, id: doc.id, name: doc.name } : r)));
+      changed = true;
+    } catch (e) { console.warn('link migrate', e); }
+  }
+  return changed;
 }
 
 function openAddLink(prefill = {}) {
@@ -988,7 +1020,8 @@ const dash = {
     const cached = await idb.get('lists', key);
     if (cached && !force) { this.items = cached; this.render(); }
     try {
-      const files = await drive.list(cur.id);
+      let files = await drive.list(cur.id);
+      if (await migrateLinks(files)) files = await drive.list(cur.id);
       this.items = files.filter((f) => !isAppImage(f) && kindOf(f));
       idb.put('lists', key, this.items);
       $('#offlineNote').classList.add('hidden');
