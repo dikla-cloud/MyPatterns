@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 38;
+const APP_V = 39;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -1039,7 +1039,7 @@ const dash = {
     const root = nav.root();
     const atRoot = nav.path.length === 0;
     $('#backBtn').classList.toggle('hidden', atRoot);
-    $('#dashTitle').textContent = atRoot ? 'MyPatterns' : nav.current().name;
+    $('#dashTitle').textContent = 'MyPatterns'; // שם התיקייה מופיע בשורת הניווט שמתחת
     $('#recentSection').classList.toggle('hidden', !atRoot || !store.get('recent', []).length);
     if (atRoot) { c.classList.add('hidden'); this.renderRecent(); return; }
     c.classList.remove('hidden');
@@ -1851,6 +1851,8 @@ async function newFolder() {
 /* ---------------- אירועי דשבורד ---------------- */
 $('#refreshBtn').onclick = () => dash.load(true);
 $('#settingsBtn').onclick = openSettings;
+// הלוגו והשם: חזרה לדף הבית (התיקייה הראשית)
+$('#brandBtn').onclick = () => { setTab('patterns'); if (nav.path.length) { nav.reset(); dash.load(); } };
 // בחירת שפה מהפס העליון
 $('#langBtn').onclick = (e) => openMenu(e.currentTarget, Object.entries(LANGS).map(([code, info]) => ({
   label: (code === LANG ? '✓ ' : '') + info.name,

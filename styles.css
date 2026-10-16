@@ -564,6 +564,29 @@ a.btn { text-decoration: none; display: inline-block; }
   #dashView > .topbar h1 { font-size: 16px; padding: 2px 10px; margin: 0 2px; }
   #dashView > .topbar .top-logo { width: 30px; height: 30px; }
 }
-@media (max-width: 360px) {
-  #dashView > .topbar h1 { display: none; }
+
+
+/* לוגו + שם האפליקציה בכפתור אחד (חזרה לדף הבית) */
+#dashView > .topbar .brand { display: inline-flex; align-items: center; gap: 8px; min-width: 0; padding: 3px 14px 3px 3px; border-radius: 999px; background: var(--fuchsia); color: #fff; border: 3px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.35); cursor: pointer; }
+[dir=rtl] #dashView > .topbar .brand { padding: 3px 3px 3px 14px; }
+#dashView > .topbar .brand h1 { background: none; border: 0; box-shadow: none; padding: 0; margin: 0; color: #fff; font-size: 19px; }
+#dashView > .topbar .brand .top-logo { border: 2px solid #fff; border-radius: 9px; box-shadow: none; width: 32px; height: 32px; flex: none; }
+#dashView > .topbar .icon-btn svg { display: block; }
+@media (max-width: 440px) {
+  #dashView > .topbar .brand h1 { font-size: 15px; display: block; }
+  #dashView > .topbar .brand .top-logo { width: 28px; height: 28px; }
+}
+@media (max-width: 400px) {
+  #dashView > .topbar { gap: 2px; padding-left: 6px; padding-right: 6px; }
+  #dashView > .topbar .icon-btn { width: 32px; height: 32px; font-size: 16px; border-width: 2px; }
+  #dashView > .topbar .icon-btn svg { width: 17px; height: 17px; }
+  #dashView > .topbar .brand { gap: 5px; border-width: 2px; }
+  #dashView > .topbar .brand h1 { font-size: 14px; display: block; }
+  #dashView > .topbar .brand .top-logo { width: 26px; height: 26px; }
+}
+@media (max-width: 340px) {
+  #dashView > .topbar .icon-btn { width: 30px; height: 30px; }
+  #dashView > .topbar .brand h1 { font-size: 13px; }
+  #dashView > .topbar .brand { padding: 2px 8px 2px 2px; }
+  [dir=rtl] #dashView > .topbar .brand { padding: 2px 2px 2px 8px; }
 }
