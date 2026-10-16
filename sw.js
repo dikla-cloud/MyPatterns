@@ -1,9 +1,9 @@
 // Service worker: שמירת קבצי האפליקציה כדי שתיפתח גם בלי אינטרנט
-const CACHE = 'mypatterns-v31';
+const CACHE = 'mypatterns-v32';
 const SHELL = [
   './', 'index.html', 'styles.css', 'app.js', 'config.js', 'manifest.webmanifest',
   'i18n.js', 'studio.js', 'vendor/pdf.min.js', 'vendor/pdf.worker.min.js', 'vendor/mammoth.browser.min.js',
-  'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png',
+  'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/granny-bg.svg',
 ];
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
