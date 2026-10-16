@@ -7,21 +7,22 @@
   <meta name="theme-color" content="#c2185b">
   <meta name="description" content="שמירה ומעקב אחרי דוגמאות סריגה, מסונכרן לגוגל דרייב">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="icons/icon-512.png">
+  <link rel="icon" href="icons/icon.svg?v=2" type="image/svg+xml">
+  <link rel="icon" href="icons/icon-48.png?v=2" type="image/png" sizes="48x48">
+  <link rel="apple-touch-icon" href="icons/icon-512.png?v=2">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="MyPatterns">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <link rel="stylesheet" href="styles.css?v=34">
+  <link rel="stylesheet" href="styles.css?v=35">
 </head>
 <body>
-  <div id="splash" class="splash"><img src="icons/icon.svg" alt="" width="120" height="120"><div class="splash-name">MyPatterns</div></div>
+  <div id="splash" class="splash"><img src="icons/icon.svg?v=2" alt="" width="120" height="120"><div class="splash-name">MyPatterns</div></div>
   <!-- ===== מסך הגדרה ראשונית ===== -->
   <section id="setupView" class="screen hidden">
     <div class="setup-card">
       <div class="lang-slot"></div>
-      <div class="logo"><img src="icons/icon.svg" alt="MyPatterns" width="96" height="96"></div>
+      <div class="logo"><img src="icons/icon.svg?v=2" alt="MyPatterns" width="96" height="96"></div>
       <h1>MyPatterns</h1>
       <p class="muted" data-i18n="setupText"></p>
       <label class="field">
@@ -44,7 +45,7 @@
   <section id="loginView" class="screen hidden">
     <div class="setup-card">
       <div class="lang-slot"></div>
-      <div class="logo"><img src="icons/icon.svg" alt="MyPatterns" width="96" height="96"></div>
+      <div class="logo"><img src="icons/icon.svg?v=2" alt="MyPatterns" width="96" height="96"></div>
       <h1>MyPatterns</h1>
       <p class="muted" data-i18n="loginText"></p>
       <button id="loginBtn" class="btn primary wide" data-i18n="loginBtn"></button>
@@ -60,7 +61,7 @@
   <section id="dashView" class="screen hidden">
     <header class="topbar">
       <button id="backBtn" class="icon-btn hidden back-arrow" data-i18n-title="back">→</button>
-      <img class="top-logo" src="icons/icon.svg" alt="" width="34" height="34">
+      <img class="top-logo" src="icons/icon.svg?v=2" alt="" width="34" height="34">
       <h1 id="dashTitle">MyPatterns</h1>
       <div class="spacer"></div>
       <button id="refreshBtn" class="icon-btn" data-i18n-title="refresh">⟳</button>
@@ -88,7 +89,7 @@
     </section>
     <div id="grid" class="grid"></div>
     <div id="emptyNote" class="empty hidden">
-      <div class="logo"><img src="icons/icon.svg" alt="" width="80" height="80"></div>
+      <div class="logo"><img src="icons/icon.svg?v=2" alt="" width="80" height="80"></div>
       <p id="emptyText" data-i18n="emptyText"></p>
       <p class="muted small-note" data-i18n="emptyHelp"></p>
       <div class="empty-actions">
@@ -96,7 +97,7 @@
       </div>
     </div>
     <div id="welcome" class="empty hidden">
-      <div class="logo"><img src="icons/icon.svg" alt="MyPatterns" width="96" height="96"></div>
+      <div class="logo"><img src="icons/icon.svg?v=2" alt="MyPatterns" width="96" height="96"></div>
       <h2 data-i18n="welcome"></h2>
       <p class="muted small-note" data-i18n="welcomeHelp"></p>
       <div class="empty-actions">
@@ -214,11 +215,11 @@
   <input id="photoInput" type="file" accept="image/*" multiple hidden>
   <input id="localInput" type="file" accept=".pdf,.docx,image/*,application/pdf" hidden>
 
-  <script src="config.js?v=34"></script>
-  <script src="i18n.js?v=34"></script>
+  <script src="config.js?v=35"></script>
+  <script src="i18n.js?v=35"></script>
   <script src="vendor/pdf.min.js"></script>
   <script src="vendor/mammoth.browser.min.js" defer></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="app.js?v=34"></script>
+  <script src="app.js?v=35"></script>
 </body>
 </html>
