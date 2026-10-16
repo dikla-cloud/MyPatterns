@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 37;
+const APP_V = 38;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -1781,7 +1781,7 @@ function openSettings() {
   sel.onchange = () => { setLang(sel.value); closeModal(); refreshLanguage(); openSettings(); };
   const row = (title, hint, btn) => el('div', { class: 'row' }, el('div', {}, el('b', {}, title), hint != null ? el('small', {}, hint) : null), btn);
   const body = el('div', { class: 'settings-list' },
-    row('👤 ' + t('account'), accountText(), el('button', { class: 'btn danger', onclick: () => { auth.signOut(); store.set('account', null); closeModal(); start(); } }, t('signOut'))),
+    row('👤 ' + t('account') + ' · Google Drive', accountText(), el('button', { class: 'btn danger', onclick: () => { auth.signOut(); store.set('account', null); closeModal(); start(); } }, t('signOut'))),
     row('🌐 ' + t('language'), null, sel),
     row('©️ ' + t('defaultsRow'), t('defaultsRowHint'), el('button', { class: 'btn', onclick: () => { closeModal(); loadStudio().then(() => Studio.defaults()).catch(err); } }, t('change'))),
     isInstalled() ? null : row('📲 ' + t('installTitle'), t('installHint'),
@@ -1791,8 +1791,8 @@ function openSettings() {
     row(t('clearCache'), t('clearCacheHint'),
       el('button', { class: 'btn', onclick: async () => { indexedDB.deleteDatabase('mypatterns'); toast(t('cacheCleared')); setTimeout(() => location.reload(), 600); } }, t('clear'))),
     row(t('privacyLink'), t('privacyHint'), el('a', { class: 'btn', href: 'privacy.html', target: '_blank', rel: 'noopener' }, t('open'))),
-    // המזהים עצמם לא מוצגים – רק אם הם מוגדרים
-    row(t('googleIds'), clientId() && apiKey() ? t('configured') : t('notConfigured'),
+    // מזהי Google Cloud של האפליקציה – מוצגים רק כשלא הוגדרו מראש בקובץ config.js
+    window.KNIT_CONFIG && window.KNIT_CONFIG.clientId ? null : row(t('googleIds'), clientId() && apiKey() ? t('configured') : t('notConfigured'),
       el('button', { class: 'btn', onclick: () => { store.set('clientId', ''); store.set('apiKey', ''); auth.signOut(); location.reload(); } }, t('change'))),
   );
   openModal(t('settings'), body);
