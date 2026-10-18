@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 55;
+const APP_V = 56;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -104,7 +104,8 @@ function waitForGis(timeout = 10000) {
 }
 
 // שרת ההתחברות ב-Cloudflare (אם הוגדר ב-config.js) – שומר על החיבור לגוגל לאורך שבועות
-const authServer = () => ((window.KNIT_CONFIG && window.KNIT_CONFIG.authServer) || '').replace(/\/+$/, '');
+// אם ההתחברות דרך השרת נכשלה – בפעם הזו חוזרים להתחברות הרגילה של גוגל
+const authServer = () => (sessionStorage.getItem('kp.noAuthServer') ? '' : ((window.KNIT_CONFIG && window.KNIT_CONFIG.authServer) || '').replace(/\/+$/, ''));
 const auth = {
   token: store.get('token', null),
   rt: store.get('rt', null),
@@ -2281,7 +2282,7 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
   if (!m) return;
   try {
     const p = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(m[1].replace(/-/g, '+').replace(/_/g, '/')), (c) => c.charCodeAt(0))));
-    if (p.error) { setTimeout(() => toast(t('loginFailed', { msg: p.error }), 5000), 800); return; }
+    if (p.error) { try { sessionStorage.setItem('kp.noAuthServer', '1'); } catch { /* ignore */ } setTimeout(() => toast(t('loginFailed', { msg: p.error }), 6000), 800); return; }
     if (p.rt) { auth.rt = p.rt; store.set('rt', p.rt); }
     store.set('account', null);
     auth._done({ access_token: p.at, expires_in: p.exp });
