@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 50;
+const APP_V = 51;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -1146,6 +1146,21 @@ async function renderFolderNotes() {
   box.classList.remove('hidden');
 }
 
+// התיקייה "הדוגמאות שיצרתי" נקראת בשפה של האפליקציה – גם בדרייב.
+// משנים רק אם השם הנוכחי הוא אחד מהשמות שהאפליקציה נתנה (שם שהמשתמשת בחרה בעצמה לא משתנה).
+async function localizeDesignsFolder(files) {
+  const known = Object.values(I18N).map((x) => x.myDesignsFolder);
+  const want = t('myDesignsFolder');
+  for (const f of files) {
+    if (!(f.appProperties && f.appProperties.kpType === 'designsFolder') || f.name === want || !known.includes(f.name)) continue;
+    try {
+      const u = await drive.patch(f.id, { name: want });
+      f.name = u.name || want;
+      nav.path.forEach((x) => { if (x.id === f.id) x.name = f.name; }); store.set('path', nav.path);
+    } catch (e) { console.warn('rename designs folder', e); }
+  }
+}
+
 /* ---------------- דשבורד ---------------- */
 const dash = {
   items: [],
@@ -1166,6 +1181,7 @@ const dash = {
     if (cached && !force) { this.items = cached; this.render(); }
     try {
       let files = await drive.list(cur.id);
+      await localizeDesignsFolder(files);
       if (await migrateLinks(files)) files = await drive.list(cur.id);
       this.items = files.filter((f) => !isAppImage(f) && kindOf(f));
       idb.put('lists', key, this.items);
@@ -1972,7 +1988,7 @@ function openSettings() {
 
 // רענון המסכים אחרי החלפת שפה
 function refreshLanguage() {
-  if (!$('#dashView').classList.contains('hidden')) { dash.renderCrumbs(); dash.render(); }
+  if (!$('#dashView').classList.contains('hidden')) { dash.renderCrumbs(); dash.render(); dash.load(true); }
   if (V.file) { $('#accurateBtn').textContent = t('accurate'); setSync(''); }
 }
 

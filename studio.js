@@ -269,7 +269,7 @@
     return (await r.json()).files || [];
   }
   async function designsFolder() {
-    if (designsFolderCache) return designsFolderCache;
+    if (designsFolderCache) { const known = Object.values(I18N).map((x) => x.myDesignsFolder); if (known.includes(designsFolderCache.name)) designsFolderCache.name = t('myDesignsFolder'); return designsFolderCache; }
     const found = await driveQuery(`mimeType='${FOLDER}' and trashed=false and appProperties has { key='kpType' and value='designsFolder' }`);
     let f = found[0];
     if (!f) {
