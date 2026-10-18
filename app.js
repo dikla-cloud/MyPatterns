@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 57;
+const APP_V = 58;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -389,9 +389,12 @@ async function setCoverFromDrive(target) {
   if (q == null) return;
   const docs = await showPicker({
     title: t('coverFromDrive'),
+    // כל הדרייב: עם חיפוש – כל התמונות שמתאימות לחיפוש; בלי – עיון בתיקיות מ"האחסון שלי"
     view: (P) => {
-      const v = new P.DocsView(P.ViewId.DOCS_IMAGES).setIncludeFolders(true).setMode(P.DocsViewMode.GRID);
-      return q && typeof v.setQuery === 'function' ? v.setQuery(q) : v;
+      const v = new P.DocsView(P.ViewId.DOCS)
+        .setMimeTypes('image/jpeg,image/png,image/webp,image/gif,image/heic,image/heif,image/bmp')
+        .setIncludeFolders(true).setSelectFolderEnabled(false).setMode(P.DocsViewMode.GRID);
+      return q && typeof v.setQuery === 'function' ? v.setQuery(q) : v.setParent('root');
     },
   });
   if (!docs || !docs.length) return;
@@ -422,14 +425,82 @@ async function saveCover(target, blob, extraProps = {}) {
   return img.id;
 }
 
+// חיפוש תמונה בתוך הקובץ: מציגים את כל התמונות שנמצאו (ותצוגות של העמודים) – והמשתמשת בוחרת
 async function rescanCover(f) {
-  const id = await busy(t('searchingImage'), async () => {
-    const blob = await findCoverImage(f);
-    if (!blob) return null;
-    return saveCover(f, blob, { kpAuto: AUTO_V });
-  });
-  toast(id ? t('imageFound') : t('imageNotFound'));
-  dash.load(true);
+  const cands = await busy(t('searchingImage'), () => coverCandidates(f));
+  if (!cands.length) { toast(t('imageNotFound')); return; }
+  const urls = cands.map((b) => URL.createObjectURL(b));
+  const grid = el('div', { class: 'cand-grid' });
+  cands.forEach((b, i) => grid.append(el('button', { class: 'cand', onclick: async () => {
+    closeModal();
+    try {
+      await busy(t('uploadingImage'), () => saveCover(f, b, { kpAuto: 'manual' }));
+      toast(t('imageSaved'));
+      dash.load(true);
+    } catch (e) { err(e); }
+  } }, el('img', { src: urls[i], alt: '' }))));
+  openModal(t('pickFromFile'), el('div', {}, el('p', { class: 'muted small-note' }, t('pickFromFileHint')), grid));
+  setTimeout(() => urls.forEach((u) => URL.revokeObjectURL(u)), 10 * 60000);
+}
+
+// כל התמונות בחמשת העמודים הראשונים + תצוגה של העמודים עצמם
+async function coverCandidates(f) {
+  const kind = kindOf(f);
+  const out = [];
+  if (kind === 'docx') {
+    if (!window.mammoth) await new Promise((r) => window.addEventListener('load', r, { once: true }));
+    await mammoth.convertToHtml({ arrayBuffer: await (await fileBlob(f)).arrayBuffer() }, {
+      convertImage: mammoth.images.imgElement(async (image) => {
+        if (out.length < 16) {
+          const b = new Blob([await image.read()], { type: image.contentType });
+          const bmp = await createImageBitmap(b).catch(() => null);
+          if (bmp && Math.min(bmp.width, bmp.height) >= 80) out.push(await blobToCanvasJpeg(bmp, 0, 0, bmp.width, bmp.height));
+        }
+        return { src: '' };
+      }),
+    });
+  }
+  const pdfBlob = kind === 'pdf' ? await fileBlob(f) : await convertedPdf(f);
+  out.push(...await pdfCandidates(pdfBlob));
+  return out.slice(0, 20);
+}
+async function pdfCandidates(blob, maxPages = 5) {
+  const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await blob.arrayBuffer()) }).promise;
+  const out = [], previews = [];
+  try {
+    const OPS = pdfjsLib.OPS, mul = pdfjsLib.Util.transform;
+    const paintOps = new Set([OPS.paintImageXObject, OPS.paintInlineImageXObject, OPS.paintImageXObjectRepeat, OPS.paintJpegXObject].filter((x) => x != null));
+    for (let n = 1; n <= Math.min(maxPages, pdf.numPages); n++) {
+      const page = await pdf.getPage(n);
+      const base = page.getViewport({ scale: 1 });
+      const vp = page.getViewport({ scale: 900 / base.width });
+      const ops = await page.getOperatorList();
+      let ctm = [1, 0, 0, 1, 0, 0];
+      const stack = [], rects = [];
+      for (let i = 0; i < ops.fnArray.length; i++) {
+        const fn = ops.fnArray[i], args = ops.argsArray[i];
+        if (fn === OPS.save) stack.push(ctm);
+        else if (fn === OPS.restore) ctm = stack.pop() || [1, 0, 0, 1, 0, 0];
+        else if (fn === OPS.transform) ctm = mul(ctm, args);
+        else if (fn === OPS.paintFormXObjectBegin) { stack.push(ctm); if (args && args[0]) ctm = mul(ctm, args[0]); }
+        else if (fn === OPS.paintFormXObjectEnd) ctm = stack.pop() || [1, 0, 0, 1, 0, 0];
+        else if (paintOps.has(fn)) {
+          const pts = [[0, 0], [1, 0], [0, 1], [1, 1]].map(([x, y]) => vp.convertToViewportPoint(ctm[0] * x + ctm[2] * y + ctm[4], ctm[1] * x + ctm[3] * y + ctm[5]));
+          const xs = pts.map((q) => q[0]), ys = pts.map((q) => q[1]);
+          const x0 = Math.max(0, Math.min(...xs)), y0 = Math.max(0, Math.min(...ys));
+          const w = Math.min(vp.width, Math.max(...xs)) - x0, h = Math.min(vp.height, Math.max(...ys)) - y0;
+          if (Math.min(w, h) >= 0.08 * vp.width && !rects.some((r) => Math.abs(r.x - x0) < 4 && Math.abs(r.y - y0) < 4 && Math.abs(r.w - w) < 4)) rects.push({ x: x0, y: y0, w, h });
+        }
+      }
+      const c = document.createElement('canvas');
+      c.width = Math.ceil(vp.width); c.height = Math.ceil(vp.height);
+      await page.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise;
+      rects.sort((a, b) => b.w * b.h - a.w * a.h);
+      for (const r of rects.slice(0, 6)) out.push(await blobToCanvasJpeg(c, r.x, r.y, r.w, r.h));
+      if (n <= 2) previews.push(await blobToCanvasJpeg(c, 0, 0, c.width, Math.min(c.height, Math.round(c.width * 0.75))));
+    }
+  } finally { pdf.destroy(); }
+  return [...out, ...previews];
 }
 
 // שינוי שם – גם בדרייב. הסיומת (‎.pdf, ‎.docx…) נשמרת כדי שהקובץ ימשיך להיפתח

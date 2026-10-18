@@ -639,3 +639,9 @@ html, body { overflow-x: clip; }
 .update-bar .btn { background: #fff; color: var(--fuchsia); border-color: #fff; }
 /* לשוניות בלי סמלים, המלל ממורכז */
 #dashView > .mode-tabs .mode-tab { display: flex; align-items: center; justify-content: center; text-align: center; }
+
+/* בחירת תמונה מתוך הקובץ */
+.cand-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; max-height: 60vh; overflow: auto; }
+.cand { padding: 0; border: 2px solid var(--border); border-radius: 10px; background: #fff; overflow: hidden; aspect-ratio: 1; cursor: pointer; }
+.cand:hover, .cand:focus { border-color: var(--fuchsia); }
+.cand img { width: 100%; height: 100%; object-fit: contain; display: block; }
