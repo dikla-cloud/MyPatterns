@@ -1,5 +1,5 @@
 // Service worker: שמירת קבצי האפליקציה כדי שתיפתח גם בלי אינטרנט
-const CACHE = 'mypatterns-v48';
+const CACHE = 'mypatterns-v49';
 const SHELL = [
   './', 'index.html', 'styles.css', 'app.js', 'config.js', 'manifest.webmanifest',
   'i18n.js', 'studio.js', 'vendor/pdf.min.js', 'vendor/pdf.worker.min.js', 'vendor/mammoth.browser.min.js',
@@ -17,7 +17,8 @@ self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET' || url.origin !== location.origin) return; // גוגל – תמיד מהרשת
   // קודם רשת (כדי לקבל עדכונים), ואם אין חיבור – מהמטמון
   e.respondWith(
-    fetch(e.request).then((r) => {
+    // no-cache: תמיד בודקים מול השרת אם יש גרסה חדשה (אם לא – תשובה קצרה 304)
+    fetch(e.request, { cache: 'no-cache' }).then((r) => {
       if (r.ok) { const copy = r.clone(); caches.open(CACHE).then((c) => c.put(e.request, copy)); }
       return r;
     }).catch(() => caches.match(e.request, { ignoreSearch: true }).then((r) => r || caches.match('index.html')))

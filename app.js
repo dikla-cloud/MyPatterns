@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 48;
+const APP_V = 49;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -1961,7 +1961,7 @@ function openSettings() {
     row('📁 ' + t('rootFolder') + ': ' + (root ? root.name : t('notChosen')), t('rootFolderHint'),
       el('button', { class: 'btn', onclick: () => pickRootFolder().catch(err) }, t('change'))),
     row(t('clearCache'), t('clearCacheHint'),
-      el('button', { class: 'btn', onclick: async () => { indexedDB.deleteDatabase('mypatterns'); toast(t('cacheCleared')); setTimeout(() => location.reload(), 600); } }, t('clear'))),
+      el('button', { class: 'btn', onclick: async () => { indexedDB.deleteDatabase('mypatterns'); toast(t('cacheCleared')); setTimeout(hardRefresh, 600); } }, t('clear'))),
     row(t('privacyLink'), t('privacyHint'), el('a', { class: 'btn', href: 'privacy.html', target: '_blank', rel: 'noopener' }, t('open'))),
     // מזהי Google Cloud של האפליקציה – מוצגים רק כשלא הוגדרו מראש בקובץ config.js
     window.KNIT_CONFIG && window.KNIT_CONFIG.clientId ? null : row(t('googleIds'), clientId() && apiKey() ? t('configured') : t('notConfigured'),
@@ -2127,9 +2127,27 @@ function takeShared() {
   return { url, title: title.slice(0, 120) };
 }
 
+// בדיקת גרסה: אם באתר יש גרסה חדשה יותר מזו שרצה עכשיו – מציעים לעדכן בלחיצה
+async function hardRefresh() {
+  try { const keys = await caches.keys(); await Promise.all(keys.map((k) => caches.delete(k))); } catch { /* ignore */ }
+  try { const regs = await navigator.serviceWorker.getRegistrations(); await Promise.all(regs.map((r) => r.unregister())); } catch { /* ignore */ }
+  location.reload();
+}
+async function checkForUpdate() {
+  try {
+    const html = await (await fetch('index.html?check=' + Date.now(), { cache: 'no-store' })).text();
+    const v = Number((html.match(/app\.js\?v=(\d+)/) || [])[1]);
+    if (!v || v <= APP_V || document.querySelector('.update-bar')) return;
+    document.body.append(el('div', { class: 'update-bar' }, el('span', {}, t('updateAvailable', { v })),
+      el('button', { class: 'btn small', onclick: hardRefresh }, t('updateNow'))));
+  } catch { /* offline */ }
+}
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') checkForUpdate(); });
+
 if (window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc = 'vendor/pdf.worker.min.js';
 if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-  navigator.serviceWorker.register('sw.js').catch(() => {});
+  navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then((reg) => reg.update()).catch(() => {});
+  checkForUpdate();
 }
 // חזרה משרת ההתחברות: ההרשאה ומפתח הרענון מגיעים ב-"#"
 (function takeAuthHash() {
