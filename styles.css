@@ -631,3 +631,4 @@ html, body { overflow-x: clip; }
 /* בכל מסך: לשונית לא רחבה מ-230 פיקסלים (בטלפון זה לא משנה דבר) */
 #dashView > .mode-tabs { justify-content: flex-start; }
 #dashView > .mode-tabs .mode-tab { max-width: 230px; }
+#viewBtn svg { display: block; margin: auto; color: var(--fuchsia); }

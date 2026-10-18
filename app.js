@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 47;
+const APP_V = 48;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -2055,7 +2055,12 @@ $('#langBtn').onclick = (e) => openMenu(e.currentTarget, Object.entries(LANGS).m
 })));
 $('#addBtn').onclick = openAddSheet;
 $('#newFolderBtn').onclick = () => newFolder();
-function updViewBtn() { const list = store.get('viewMode', 'grid') === 'list'; $('#viewBtn').textContent = list ? '▦' : '☰'; $('#viewBtn').title = list ? t('viewGrid') : t('viewList'); }
+// סמלי התצוגה: רשימה = מלבנים מלאים אחד מתחת לשני, כרטיסים = ארבעה ריבועים (שונה מ-☰ של התפריט)
+const VIEW_ICONS = {
+  list: '<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="18" height="5" rx="1.5"/><rect x="3" y="9.5" width="18" height="5" rx="1.5"/><rect x="3" y="16" width="18" height="5" rx="1.5"/></svg>',
+  grid: '<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>',
+};
+function updViewBtn() { const list = store.get('viewMode', 'grid') === 'list'; $('#viewBtn').innerHTML = list ? VIEW_ICONS.grid : VIEW_ICONS.list; $('#viewBtn').title = list ? t('viewGrid') : t('viewList'); }
 $('#viewBtn').onclick = () => { store.set('viewMode', store.get('viewMode', 'grid') === 'list' ? 'grid' : 'list'); updViewBtn(); dash.render(); };
 updViewBtn();
 $('#backBtn').onclick = () => { nav.to(nav.path.length - 1); dash.load(); setTimeout(consumeBackEntry, 0); };
