@@ -637,3 +637,5 @@ html, body { overflow-x: clip; }
 .update-bar { position: fixed; left: 12px; right: 12px; bottom: calc(14px + var(--safe-b)); z-index: 80; display: flex; align-items: center; justify-content: space-between; gap: 10px;
   background: var(--fuchsia); color: #fff; border: 3px solid #fff; border-radius: 14px; padding: 10px 14px; box-shadow: 0 4px 16px rgba(0,0,0,.35); font-weight: 700; }
 .update-bar .btn { background: #fff; color: var(--fuchsia); border-color: #fff; }
+/* לשוניות בלי סמלים, המלל ממורכז */
+#dashView > .mode-tabs .mode-tab { display: flex; align-items: center; justify-content: center; text-align: center; }
