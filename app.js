@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 56;
+const APP_V = 57;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -384,9 +384,15 @@ async function setCoverFromDevice(target) {
   dash.load(true);
 }
 async function setCoverFromDrive(target) {
+  // חיפוש לפי שם בתוך האפליקציה (בטלפון אי אפשר להקליד בחלון של גוגל)
+  const q = await askSearch(t('coverFromDrive'), t('coverSearchHint'));
+  if (q == null) return;
   const docs = await showPicker({
     title: t('coverFromDrive'),
-    view: (P) => new P.DocsView(P.ViewId.DOCS_IMAGES).setIncludeFolders(true).setMode(P.DocsViewMode.GRID),
+    view: (P) => {
+      const v = new P.DocsView(P.ViewId.DOCS_IMAGES).setIncludeFolders(true).setMode(P.DocsViewMode.GRID);
+      return q && typeof v.setQuery === 'function' ? v.setQuery(q) : v;
+    },
   });
   if (!docs || !docs.length) return;
   const d = docs[0];
