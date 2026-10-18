@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 54;
+const APP_V = 55;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -366,10 +366,36 @@ function pickFile(input) {
   });
 }
 
-async function setCover(target) {
+// תמונה לדוגמה או לתיקייה: מהמכשיר (גלריה / מחשב) או מגוגל דרייב
+function setCover(target) {
+  const opt = (icon, title, hint, fn) => el('button', { class: 'sheet-opt', onclick: () => { closeModal(); fn().catch(err); } },
+    el('span', { class: 'sheet-icon' }, icon), el('span', { class: 'sheet-text' }, el('b', {}, title), el('small', {}, hint)));
+  openModal(t('coverFromTitle'), el('div', { class: 'add-sheet' },
+    opt('📱', t('coverFromDevice'), t('coverFromDeviceHint'), () => setCoverFromDevice(target)),
+    opt('☁️', t('coverFromDrive'), t('coverFromDriveHint'), () => setCoverFromDrive(target))));
+  return Promise.resolve();
+}
+async function setCoverFromDevice(target) {
   const file = await pickFile($('#imageInput'));
   if (!file) return;
   await busy(t('uploadingImage'), async () => saveCover(target, await resizeImage(file), { kpAuto: 'manual' }));
+  toast(t('imageSaved'));
+  dash.load(true);
+}
+async function setCoverFromDrive(target) {
+  const docs = await showPicker({
+    title: t('coverFromDrive'),
+    view: (P) => new P.DocsView(P.ViewId.DOCS_IMAGES).setIncludeFolders(true).setMode(P.DocsViewMode.GRID),
+  });
+  if (!docs || !docs.length) return;
+  const d = docs[0];
+  await busy(t('uploadingImage'), async () => {
+    const blob = await drive.media(d.id);
+    const file = new File([blob], d.name || 'image.jpg', { type: d.mimeType || blob.type || 'image/jpeg' });
+    let small = null;
+    try { small = await resizeImage(file); } catch { /* פורמט שהדפדפן לא מכיר */ }
+    return saveCover(target, small || file, { kpAuto: 'manual' });
+  });
   toast(t('imageSaved'));
   dash.load(true);
 }
