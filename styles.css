@@ -623,3 +623,8 @@ html, body { overflow-x: clip; }
 .move-crumbs .sep { color: var(--muted); }
 .move-list { display: flex; flex-direction: column; gap: 6px; max-height: 50vh; overflow: auto; }
 .move-folder { text-align: start; padding: 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); font-weight: 600; }
+/* מחשב / מסך רחב: לשוניות בגודל קבוע ולא על כל הרוחב */
+@media (min-width: 640px) {
+  #dashView > .mode-tabs { justify-content: flex-start; }
+  #dashView > .mode-tabs .mode-tab { flex: 0 1 230px; }
+}
