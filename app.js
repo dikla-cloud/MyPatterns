@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 59;
+const APP_V = 60;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -1284,7 +1284,7 @@ function showNotesPop(anchor, f, interactive) {
 }
 function hideNotesPop() { notesPop.classList.add('hidden'); }
 document.addEventListener('pointerdown', (e) => { if (!e.target.closest('.notes-pop') && !e.target.closest('.notes-badge')) hideNotesPop(); });
-addEventListener('scroll', hideNotesPop, { passive: true });
+addEventListener('scroll', hideNotesPop, { passive: true, capture: true });
 
 // הערות התיקייה הפתוחה – מוצגות בראש המסך
 const folderMetaCache = new Map();
@@ -1339,7 +1339,7 @@ const dash = {
   async load(force = false) {
     const cur = nav.current();
     $('#welcome').classList.toggle('hidden', !!cur);
-    $('.search-row').classList.toggle('hidden', !cur);
+    $('#searchRow').classList.toggle('hidden', !cur || !$('#studioPane').classList.contains('hidden'));
     if (!cur) {
       $('#grid').innerHTML = ''; $('#emptyNote').classList.add('hidden');
       $('#crumbs').classList.add('hidden'); $('#recentSection').classList.add('hidden');
@@ -2165,6 +2165,7 @@ function setTab(tab) {
   $('#tabPatterns').classList.toggle('on', !studio);
   $('#tabStudio').classList.toggle('on', studio);
   $('#patternsPane').classList.toggle('hidden', studio);
+  $('#searchRow').classList.toggle('hidden', studio);
   $('#studioPane').classList.toggle('hidden', !studio);
   $('#addBtn').classList.toggle('hidden', studio);
   if (studio) { ensureBackEntry(); loadStudio().then(() => Studio.home($('#studioPane'))).catch(err); } else setTimeout(consumeBackEntry, 0);
@@ -2273,7 +2274,7 @@ $('#menuBtn').onclick = (e) => {
   openMenu(anchor, items);
 };
 // הלוגו והשם: חזרה לדף הבית (התיקייה הראשית)
-$('#brandBtn').onclick = () => { setTab('patterns'); if (nav.path.length) { nav.reset(); dash.load(); } };
+$('#brandBtn').onclick = () => { setTab('patterns'); if (nav.path.length) { nav.reset(); dash.load(); } $('#patternsPane').scrollTo({ top: 0, behavior: 'smooth' }); };
 // בחירת שפה מהפס העליון
 $('#langBtn').onclick = (e) => openMenu(e.currentTarget, Object.entries(LANGS).map(([code, info]) => ({
   label: (code === LANG ? '✓ ' : '') + info.name,
