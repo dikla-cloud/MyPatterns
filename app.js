@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 39;
+const APP_V = 40;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -123,7 +123,9 @@ const auth = {
     let res, rej;
     const p = new Promise((a, b) => { res = a; rej = b; });
     this.pending = { p, res, rej };
-    this.client.requestAccessToken({ prompt });
+    // רמז לחשבון המחובר – כך גוגל מחדשת את ההרשאה בלי לבקש לבחור חשבון שוב
+    const acc = store.get('account', null);
+    this.client.requestAccessToken(acc && acc.emailAddress && !prompt ? { prompt, login_hint: acc.emailAddress } : { prompt });
     return p;
   },
   _done(r) {
@@ -151,10 +153,24 @@ const auth = {
   },
 };
 
+// ההרשאה של גוגל תקפה לשעה. דפדפנים מאפשרים לחדש אותה רק בעקבות נגיעה של המשתמשת,
+// ולכן בנגיעה הראשונה אחרי שפג תוקפה (או כמה דקות לפני) מחדשים אותה ברקע – בלי לחזור למסך ההתחברות.
+function renewOnGesture() {
+  if (!store.get('signedIn', false) || auth.pending || !auth.client) return;
+  if (auth.token && auth.token.exp > Date.now() + 5 * 60000) return;
+  auth.request('').then(() => {
+    $('#authNote').classList.add('hidden');
+    if (!$('#dashView').classList.contains('hidden')) dash.load(true);
+    if (V.file && !V.local) pushRemote();
+  }).catch(() => {});
+}
+document.addEventListener('pointerdown', renewOnGesture, true);
+document.addEventListener('keydown', renewOnGesture, true);
+
 /* ---------------- Google Drive API ---------------- */
 async function gfetch(url, opts = {}, retry = true) {
-  const t = await auth.get();
-  const r = await fetch(url, { ...opts, headers: { ...(opts.headers || {}), Authorization: 'Bearer ' + t } });
+  const tok = await auth.get();
+  const r = await fetch(url, { ...opts, headers: { ...(opts.headers || {}), Authorization: 'Bearer ' + tok } });
   if (r.status === 401 && retry) {
     auth.token = null; store.set('token', null);
     return gfetch(url, opts, false);
@@ -1155,7 +1171,7 @@ function parseRemoteState(ap) {
     const [z, sx, sy] = (ap.kpV || '1,0,0').split(',').map(Number);
     const [hOn, hp, hth, vOn, vp, vth] = (ap.kpR || '').split(',').map(Number);
     const s = defaultState();
-    Object.assign(s, { t: Number(ap.kpT), z: z || 1, sx: sx || 0, sy: sy || 0, c: Number(ap.kpC) || 0 });
+    Object.assign(s, { t: Number(ap.kpT), z: z || 1, sx: sx || 0, sy: sy || 0, c: Number(ap.kpC) || 0, lock: ap.kpL === '1' ? 1 : 0 });
     if (!isNaN(hp)) s.h = { on: hOn, p: hp, th: hth || 30 };
     if (!isNaN(vp)) s.v = { on: vOn, p: vp, th: vth || 30 };
     return s;
@@ -1168,6 +1184,7 @@ function remoteProps(s) {
     kpV: [r4(s.z), r4(s.sx), r4(s.sy)].join(','),
     kpR: [s.h.on ? 1 : 0, r4(s.h.p), Math.round(s.h.th), s.v.on ? 1 : 0, r4(s.v.p), Math.round(s.v.th)].join(','),
     kpC: String(s.c),
+    kpL: s.lock ? '1' : '0',
   };
 }
 
@@ -1184,6 +1201,8 @@ function setSync(text) { $('#syncBadge').textContent = text; }
 
 const pushRemote = debounce(async () => {
   if (V.local || !V.file || !navigator.onLine) { if (!V.local) setSync(t('notSynced')); return; }
+  // שמירה ברקע לא פותחת חלון התחברות – נשמר במכשיר ויישלח לדרייב אחרי החידוש הבא
+  if (!auth.valid()) { setSync(t('notSynced')); return; }
   const file = V.file, st = V.st;
   try {
     setSync(t('saving'));
@@ -1450,6 +1469,7 @@ scroller.addEventListener('scroll', () => saveStateSoon(), { passive: true });
 scroller.addEventListener('wheel', (e) => {
   if (!e.ctrlKey) return;
   e.preventDefault();
+  if (V.st && V.st.lock) return;
   const r = scroller.getBoundingClientRect();
   setZoom(V.st.z * (e.deltaY < 0 ? 1.12 : 1 / 1.12), e.clientX - r.left, e.clientY - r.top);
 }, { passive: false });
@@ -1484,8 +1504,12 @@ scroller.addEventListener('wheel', (e) => {
   scroller.addEventListener('touchcancel', end);
 })();
 
+let lastW = innerWidth;
 window.addEventListener('resize', debounce(() => {
   if ($('#viewerView').classList.contains('hidden') || !V.file) return;
+  // שינוי גובה בלבד (סרגל הכתובת או המקלדת בטלפון) – לא מסדרים מחדש, כדי שהדוגמה לא תזוז
+  if (innerWidth === lastW) return;
+  lastW = innerWidth;
   const sx = V.st.sx, sy = V.st.sy;
   layout();
   V.st.sx = sx; V.st.sy = sy;
@@ -1585,15 +1609,21 @@ $('#cValue').onclick = () => {
 };
 
 // זום
-$('#zoomIn').onclick = () => setZoom(V.st.z * 1.2);
-$('#zoomOut').onclick = () => setZoom(V.st.z / 1.2);
-$('#zoomFit').onclick = () => setZoom(1);
+const zoomGuard = () => { if (V.st && V.st.lock) { toast(t('unlockFirst'), 2500); return false; } return true; };
+$('#zoomIn').onclick = () => zoomGuard() && setZoom(V.st.z * 1.2);
+$('#zoomOut').onclick = () => zoomGuard() && setZoom(V.st.z / 1.2);
+$('#zoomFit').onclick = () => zoomGuard() && setZoom(1);
 
 // נעילה
 function applyLock() {
   scroller.classList.toggle('locked', !!V.st.lock);
   $('#lockToggle').checked = !!V.st.lock;
+  const b = $('#lockBtn');
+  b.textContent = V.st.lock ? '🔒' : '🔓';
+  b.classList.toggle('on', !!V.st.lock);
+  b.title = t(V.st.lock ? 'unlockPattern' : 'lockPattern');
 }
+$('#lockBtn').onclick = () => { V.st.lock = V.st.lock ? 0 : 1; applyLock(); saveStateSoon(); toast(t(V.st.lock ? 'lockedToast' : 'unlockedToast'), 2500); };
 
 // פאנל הגדרות סרגלים
 function setPanel(open) {
@@ -1906,6 +1936,7 @@ async function start() {
   if (!clientId() || !apiKey()) { show('#setupView'); hideSplash(); return; }
   if (!auth.valid() && !store.get('signedIn', false)) { show('#loginView'); hideSplash(); return; }
   show('#dashView');
+  auth.init().catch(() => {});
   dash.load().finally(hideSplash);
   if (auth.valid() && !store.get('account', null)) refreshAccount();
   if (pendingShare && nav.current()) { openAddLink(pendingShare); pendingShare = null; }
