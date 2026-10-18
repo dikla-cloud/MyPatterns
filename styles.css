@@ -670,3 +670,11 @@ html, body { overflow-x: clip; }
   #dashView > #searchRow input { padding-top: 7px; padding-bottom: 7px; }
   #dashView > #searchRow .btn { padding: 6px 10px; }
 }
+
+/* טלפון וטאבלט (מגע): בלי כפתורי זכוכית מגדלת – מגדילים באצבעות – והסרגל התחתון בשורה אחת */
+@media (pointer: coarse) {
+  .viewer-bar .zoom-group { display: none; }
+  .viewer-bar { flex-wrap: nowrap; gap: 6px; }
+  .viewer-bar .bar-group { flex: none; }
+  .viewer-bar .counter-label { font-size: 12px; padding: 0 4px; }
+}
