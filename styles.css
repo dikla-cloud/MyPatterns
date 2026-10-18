@@ -395,7 +395,7 @@ input { font: inherit; }
   transition: opacity .35s ease;
 }
 .splash img { border-radius: 28px; box-shadow: 0 10px 40px rgba(0,0,0,.35); }
-.splash-name { color: #fff; background: var(--fuchsia); border: 3px solid #fff; border-radius: 999px; padding: 4px 20px; box-shadow: 0 2px 8px rgba(0,0,0,.35); font-size: 26px; font-weight: 800; letter-spacing: .5px; }
+.splash-name { color: #fff; background: var(--fuchsia); border: 3px solid #fff; border-radius: 999px; padding: 6px 26px; box-shadow: 0 2px 8px rgba(0,0,0,.35); font-size: 32px; font-weight: 800; letter-spacing: .5px; }
 .splash.gone { opacity: 0; pointer-events: none; }
 
 /* לשוניות בדף הבית */

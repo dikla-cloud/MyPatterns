@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 49;
+const APP_V = 50;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -2097,13 +2097,17 @@ window.addEventListener('online', () => { $('#offlineNote').classList.add('hidde
 
 /* ---------------- הפעלה ---------------- */
 // מסך פתיחה עם הלוגו – לפחות חצי שנייה, לכל היותר עד שהדוגמאות נטענו
-// אין מסך פתיחה נוסף בתוך האפליקציה – רק מסך הפתיחה של המערכת
+// דף פתיחה עם שם האפליקציה – שנייה וחצי, ואז דף הבית
+const SPLASH_MS = 1500, splashStart = Date.now();
 function hideSplash() {
   const sp = $('#splash');
   if (!sp || sp.classList.contains('gone')) return;
-  sp.remove();
+  const wait = SPLASH_MS - (Date.now() - splashStart);
+  if (wait > 0) { setTimeout(hideSplash, wait); return; }
+  sp.classList.add('gone');
+  setTimeout(() => sp.remove(), 400);
 }
-setTimeout(hideSplash, 2500);
+setTimeout(hideSplash, SPLASH_MS);
 
 async function start() {
   if (!clientId() || !apiKey()) { show('#setupView'); hideSplash(); return; }
