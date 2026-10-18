@@ -613,3 +613,7 @@ html, body { overflow-x: clip; }
 #dashView > .mode-tabs .add-tab:hover { filter: brightness(1.1); }
 #dashView > .mode-tabs .mode-tab { flex: 1 1 0; min-width: 0; padding-left: 6px; padding-right: 6px; }
 #dashView > .topbar .brand, [dir=rtl] #dashView > .topbar .brand { padding: 4px 16px; }
+
+.about { text-align: center; }
+.about img { border-radius: 22px; }
+.about h2 { margin: 6px 0 0; color: var(--fuchsia); }

@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 42;
+const APP_V = 43;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -1915,6 +1915,29 @@ async function newFolder() {
 /* ---------------- אירועי דשבורד ---------------- */
 $('#refreshBtn').onclick = () => dash.load(true);
 $('#settingsBtn').onclick = openSettings;
+// תפריט ☰: הגדרות, שפה, התקנה, רענון, אודות ומדיניות פרטיות
+function openAbout() {
+  const body = el('div', { class: 'about' },
+    el('img', { src: 'icons/icon.svg?v=2', alt: '', width: '96', height: '96' }),
+    el('h2', {}, 'MyPatterns'),
+    el('p', { class: 'muted' }, t('version') + ' ' + APP_V),
+    el('p', {}, t('aboutText')),
+    el('p', {}, el('b', {}, t('contact') + ': '), el('a', { href: 'mailto:MyPatterns007@gmail.com' }, 'MyPatterns007@gmail.com')),
+    el('p', {}, el('a', { href: 'privacy.html', target: '_blank', rel: 'noopener' }, t('privacyLink'))));
+  openModal(t('about').replace(/^\S+\s/, ''), body);
+}
+$('#menuBtn').onclick = (e) => {
+  const anchor = e.currentTarget;
+  const items = [
+    { label: '⚙️ ' + t('settings'), fn: openSettings },
+    { label: '🌐 ' + t('language'), fn: () => $('#langBtn').onclick({ currentTarget: anchor }) },
+  ];
+  if (!$('#installBtn').classList.contains('hidden')) items.push({ label: t('install'), fn: () => $('#installBtn').click() });
+  items.push({ label: '⟳ ' + t('refresh'), fn: () => $('#refreshBtn').click() },
+    { label: t('about'), fn: openAbout },
+    { label: t('privacyLink'), fn: () => window.open('privacy.html', '_blank', 'noopener') });
+  openMenu(anchor, items);
+};
 // הלוגו והשם: חזרה לדף הבית (התיקייה הראשית)
 $('#brandBtn').onclick = () => { setTab('patterns'); if (nav.path.length) { nav.reset(); dash.load(); } };
 // בחירת שפה מהפס העליון

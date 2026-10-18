@@ -14,7 +14,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="MyPatterns">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <link rel="stylesheet" href="styles.css?v=42">
+  <link rel="stylesheet" href="styles.css?v=43">
 </head>
 <body>
   <!-- ===== מסך הגדרה ראשונית ===== -->
@@ -62,10 +62,14 @@
       <button id="backBtn" class="icon-btn hidden back-arrow" data-i18n-title="back">→</button>
       <button id="brandBtn" class="brand" data-i18n-title="home"><h1 id="dashTitle">MyPatterns</h1></button>
       <div class="spacer"></div>
+      <button id="menuBtn" class="icon-btn" data-i18n-title="menu" aria-haspopup="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></svg></button>
+      <!-- הכפתורים עצמם מוסתרים – הפעולות שלהם נמצאות בתפריט ☰ -->
+      <div class="top-actions" hidden>
       <button id="refreshBtn" class="icon-btn" data-i18n-title="refresh">⟳</button>
       <button id="installBtn" class="icon-btn install-btn hidden" data-i18n-title="install"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M12 6.5v8M8.7 11.3 12 14.6l3.3-3.3M10.5 18.5h3"/></svg></button>
       <button id="langBtn" class="icon-btn" data-i18n-title="language"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.6 3.7 5.6 3.7 9s-1.3 6.4-3.7 9M12 3c-2.4 2.6-3.7 5.6-3.7 9s1.3 6.4 3.7 9"/></svg></button>
       <button id="settingsBtn" class="icon-btn" data-i18n-title="settings">⚙</button>
+      </div>
     </header>
     <div class="mode-tabs" role="tablist">
       <button id="addBtn" class="add-tab" data-i18n-title="addSheetTitle"><span class="add-plus">＋</span><small data-i18n="add"></small></button>
@@ -210,11 +214,11 @@
   <input id="photoInput" type="file" accept="image/*" multiple hidden>
   <input id="localInput" type="file" accept=".pdf,.docx,image/*,application/pdf" hidden>
 
-  <script src="config.js?v=42"></script>
-  <script src="i18n.js?v=42"></script>
+  <script src="config.js?v=43"></script>
+  <script src="i18n.js?v=43"></script>
   <script src="vendor/pdf.min.js"></script>
   <script src="vendor/mammoth.browser.min.js" defer></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="app.js?v=42"></script>
+  <script src="app.js?v=43"></script>
 </body>
 </html>
