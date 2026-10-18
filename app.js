@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 61;
+const APP_V = 62;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -2065,7 +2065,7 @@ $('#extBtn').onclick = () => { if (V.linkUrl) window.open(V.linkUrl, '_blank', '
 // וכפתור החזרה סוגר את השכבה העליונה במקום לצאת מהאפליקציה.
 const isOpen = (sel) => { const e = $(sel); return !!e && !e.classList.contains('hidden'); };
 function backable() {
-  return isOpen('#modal') || isOpen('#menu') || !!document.querySelector('.studio-editor') || isOpen('#viewerView') ||
+  return isOpen('#modal') || isOpen('#menu') || !!document.querySelector('.studio-editor:not(.minimized)') || isOpen('#viewerView') ||
     isOpen('#studioPane') || nav.path.length > 0;
 }
 let ignorePop = false;
@@ -2073,13 +2073,15 @@ function ensureBackEntry() {
   if (!(history.state && history.state.mp)) history.pushState({ mp: 1 }, '');
 }
 function consumeBackEntry() {
+  // ignorePop עדיין דלוק = כבר חזרנו אחורה וטרם הגיע האירוע – לא לחזור פעמיים (זה היה יוצא מהאפליקציה)
+  if (ignorePop) return;
   if (!backable() && history.state && history.state.mp) { ignorePop = true; history.back(); }
 }
 function handleBack() {
   if (isOpen('#menu')) { closeMenu(); return; }
   if (isOpen('#modal')) { $('#modalClose').click(); return; }
   if (!notesPop.classList.contains('hidden')) { hideNotesPop(); return; }
-  const eds = document.querySelectorAll('.studio-editor'), editor = eds[eds.length - 1];
+  const eds = document.querySelectorAll('.studio-editor:not(.minimized)'), editor = eds[eds.length - 1];
   if (editor) { editor.querySelector('.studio-top .back-arrow').click(); return; }
   if (isOpen('#viewerView')) { closeViewer(true); return; }
   if (isOpen('#studioPane')) { setTab('patterns'); return; }

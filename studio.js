@@ -19,6 +19,9 @@
     stSaved: ['נשמר בתיקייה "{name}" ✓', 'Saved in "{name}" ✓', 'Сохранено в «{name}» ✓', 'تم الحفظ في «{name}» ✓', 'Gespeichert in „{name}“ ✓', 'Guardado en «{name}» ✓', 'Salvato in «{name}» ✓', 'Enregistré dans « {name} » ✓'],
     stTitlePh: ['שם הדוגמה', 'Pattern name', 'Название схемы', 'اسم النموذج', 'Name der Anleitung', 'Nombre del patrón', 'Nome dello schema', 'Nom du modèle'],
     stUntitled: ['דוגמה חדשה', 'New pattern', 'Новая схема', 'نموذج جديد', 'Neue Anleitung', 'Patrón nuevo', 'Nuovo schema', 'Nouveau modèle'],
+    stHome: ['דף הבית', 'Home', 'Главная', 'الرئيسية', 'Startseite', 'Inicio', 'Home', 'Accueil'],
+    stPeek: ['למסך הקודם (העיצוב נשאר פתוח)', 'Previous screen (the design stays open)', 'Предыдущий экран (дизайн остаётся открытым)', 'الشاشة السابقة (يبقى التصميم مفتوحًا)', 'Vorheriger Bildschirm (Design bleibt offen)', 'Pantalla anterior (el diseño sigue abierto)', 'Schermata precedente (il progetto resta aperto)', 'Écran précédent (le projet reste ouvert)'],
+    stResume: ['✏️ חזרה לעיצוב: {name}', '✏️ Back to design: {name}', '✏️ Назад к дизайну: {name}', '✏️ العودة إلى التصميم: {name}', '✏️ Zurück zum Design: {name}', '✏️ Volver al diseño: {name}', '✏️ Torna al progetto: {name}', '✏️ Retour au projet : {name}'],
     stLeave: ['לצאת בלי לשמור את השינויים?', 'Leave without saving the changes?', 'Выйти без сохранения изменений?', 'الخروج دون حفظ التغييرات؟', 'Ohne Speichern verlassen?', '¿Salir sin guardar los cambios?', 'Uscire senza salvare le modifiche?', 'Quitter sans enregistrer les modifications ?'],
     stNoFolder: ['קודם בוחרים תיקיית דוגמאות', 'Choose a patterns folder first', 'Сначала выберите папку', 'اختر مجلد النماذج أولًا', 'Wähle zuerst einen Ordner', 'Primero elige una carpeta', 'Prima scegli una cartella', 'Choisissez d\'abord un dossier'],
     stEditLoad: ['טוען את העיצוב…', 'Loading the design…', 'Загрузка…', 'جارٍ تحميل التصميم…', 'Design wird geladen…', 'Cargando el diseño…', 'Caricamento del progetto…', 'Chargement du projet…'],
@@ -330,6 +333,7 @@
     const nameIn = el('input', { class: 'studio-name', type: 'text', placeholder: t('stTitlePh'), value: initialName || '' });
     nameIn.addEventListener('input', () => { dirty = true; });
     const close = () => {
+      if (pill) { pill.remove(); pill = null; }
       wrap.remove(); if (!document.querySelector('.studio-editor')) document.body.classList.remove('studio-open');
       setTimeout(consumeBackEntry, 0);
       if (ed.didSave) { dash.load(true); if (!$('#studioPane').classList.contains('hidden')) home($('#studioPane')); }
@@ -351,7 +355,30 @@
         toast(t('stSaved', { name: ed.folder.name }), 3000);
       } catch (e) { err(e); }
     } }, t('stSave'));
-    const head = el('header', { class: 'topbar studio-top' }, back, el('div', { class: 'studio-kind' }, titleText), nameIn, folderBtn, status, saveBtn);
+    // יציאה זמנית מהעיצוב (בלי לסגור אותו): לדף הבית או למסך הקודם – ואז חוזרים בכפתור הצף
+    let pill = null;
+    const minimize = () => {
+      wrap.classList.add('minimized');
+      if (!document.querySelector('.studio-editor:not(.minimized)')) document.body.classList.remove('studio-open');
+      pill = el('button', { class: 'resume-pill', onclick: restore }, t('stResume', { name: nameIn.value.trim() || titleText.replace(/^\S+\s/, '') }));
+      document.body.append(pill);
+      document.querySelectorAll('.resume-pill').forEach((x, i, all) => { x.style.marginBottom = `${(all.length - 1 - i) * 56}px`; });
+      setTimeout(consumeBackEntry, 0);
+    };
+    function restore() {
+      if (pill) { pill.remove(); pill = null; }
+      wrap.classList.remove('minimized');
+      document.body.classList.add('studio-open');
+      document.body.append(wrap); // מעל כל השאר
+      ensureBackEntry();
+    }
+    const homeBtn = el('button', { class: 'icon-btn studio-nav-btn', title: t('stHome'), 'aria-label': t('stHome'), onclick: () => {
+      minimize();
+      if (typeof closeViewer === 'function' && !$('#viewerView').classList.contains('hidden')) closeViewer(true);
+      setTab('patterns'); nav.reset(); dash.load();
+    } }, '🏠');
+    const peekBtn = el('button', { class: 'icon-btn studio-nav-btn', title: t('stPeek'), 'aria-label': t('stPeek'), onclick: minimize }, '↩');
+    const head = el('header', { class: 'topbar studio-top' }, back, homeBtn, peekBtn, el('div', { class: 'studio-kind' }, titleText), nameIn, folderBtn, status, saveBtn);
     const body = el('div', { class: 'studio-body' });
     wrap.append(head, body);
     document.body.append(wrap);
