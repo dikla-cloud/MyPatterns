@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 43;
+const APP_V = 44;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -353,7 +353,7 @@ function pickFile(input) {
 async function setCover(target) {
   const file = await pickFile($('#imageInput'));
   if (!file) return;
-  await busy(t('uploadingImage'), async () => saveCover(target, await resizeImage(file)));
+  await busy(t('uploadingImage'), async () => saveCover(target, await resizeImage(file), { kpAuto: 'manual' }));
   toast(t('imageSaved'));
   dash.load(true);
 }
@@ -407,8 +407,9 @@ async function removeCover(target) {
 }
 
 /* ---------------- תמונה אוטומטית מתוך הקובץ ---------------- */
-const AUTO_V = '1';              // גרסת האלגוריתם – קובץ שנבדק לא נבדק שוב
-const MIN_SIDE = 140;            // מתחת לזה זה כנראה אייקון/לוגו
+const AUTO_V = '2';              // גרסת האלגוריתם – קובץ שנבדק לא נבדק שוב ('manual' = תמונה שנבחרה ידנית)
+const MIN_FRAC = 0.2;            // תמונה צרה מ-20% מרוחב העמוד היא כנראה לוגו או אייקון
+const MAX_RATIO = 3;             // פסים ארוכים וצרים (כותרות, באנרים) – לא תמונת שער
 const autoQueue = [];
 let autoBusy = false;
 const autoPending = new Map();
@@ -417,7 +418,7 @@ function autoCover(f) {
   const kind = kindOf(f);
   if (!['pdf', 'docx', 'doc', 'gdoc'].includes(kind)) return Promise.resolve(null);
   const ap = f.appProperties || {};
-  if (ap.kpCover === 'none' || ap.kpAuto === AUTO_V) return Promise.resolve(coverOf(f));
+  if (ap.kpCover === 'none' || ap.kpAuto === AUTO_V || ap.kpAuto === 'manual') return Promise.resolve(coverOf(f));
   if (autoPending.has(f.id)) return autoPending.get(f.id);
   const p = new Promise((resolve) => autoQueue.push({ f, resolve }));
   autoPending.set(f.id, p);
@@ -480,7 +481,8 @@ async function findCoverImage(f) {
   if (kind === 'docx') {
     const fromDocx = await docxImage(await fileBlob(f));
     if (fromDocx) return fromDocx;
-    return null;
+    // אין תמונה מתאימה – תצוגה של העמוד הראשון (דרך המרה זמנית ל-PDF)
+    return pdfImage(await convertedPdf(f));
   }
   const blob = kind === 'pdf' ? await fileBlob(f) : await convertedPdf(f);
   return pdfImage(blob);
@@ -506,27 +508,33 @@ async function docxImage(blob) {
       return { src: '' };
     }),
   });
+  // התמונה הגדולה ביותר שאינה לוגו (קטנה) או פס צר
+  let best = null;
   for (const b of imgs) {
     const bmp = await createImageBitmap(b).catch(() => null);
-    if (bmp && Math.min(bmp.width, bmp.height) >= MIN_SIDE) return blobToCanvasJpeg(bmp, 0, 0, bmp.width, bmp.height);
+    if (!bmp) continue;
+    const mn = Math.min(bmp.width, bmp.height), mx = Math.max(bmp.width, bmp.height);
+    if (mn < 180 || mx / mn > MAX_RATIO) continue;
+    if (!best || bmp.width * bmp.height > best.width * best.height) best = bmp;
   }
-  return null;
+  return best ? blobToCanvasJpeg(best, 0, 0, best.width, best.height) : null;
 }
 
-// התמונה הגדולה ביותר בעמוד הראשון (או השני) של PDF
+// תמונת השער של PDF: התמונה הגדולה ביותר בשלושת העמודים הראשונים, בלי לוגואים, אייקונים ופסים צרים.
+// אם אין תמונה כזו – תצוגה של החלק העליון של העמוד הראשון.
 async function pdfImage(blob) {
   const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await blob.arrayBuffer()) }).promise;
   try {
     const OPS = pdfjsLib.OPS, mul = pdfjsLib.Util.transform;
     const paintOps = new Set([OPS.paintImageXObject, OPS.paintInlineImageXObject, OPS.paintImageXObjectRepeat, OPS.paintJpegXObject].filter((x) => x != null));
-    for (let n = 1; n <= Math.min(2, pdf.numPages); n++) {
+    let best = null;
+    for (let n = 1; n <= Math.min(3, pdf.numPages); n++) {
       const page = await pdf.getPage(n);
       const base = page.getViewport({ scale: 1 });
       const vp = page.getViewport({ scale: 900 / base.width });
       const ops = await page.getOperatorList();
       let ctm = [1, 0, 0, 1, 0, 0];
       const stack = [];
-      let best = null;
       for (let i = 0; i < ops.fnArray.length; i++) {
         const fn = ops.fnArray[i], args = ops.argsArray[i];
         if (fn === OPS.save) stack.push(ctm);
@@ -537,24 +545,47 @@ async function pdfImage(blob) {
         else if (paintOps.has(fn)) {
           const pts = [[0, 0], [1, 0], [0, 1], [1, 1]].map(([x, y]) =>
             vp.convertToViewportPoint(ctm[0] * x + ctm[2] * y + ctm[4], ctm[1] * x + ctm[3] * y + ctm[5]));
-          const xs = pts.map((p) => p[0]), ys = pts.map((p) => p[1]);
+          const xs = pts.map((q) => q[0]), ys = pts.map((q) => q[1]);
           const x0 = Math.max(0, Math.min(...xs)), y0 = Math.max(0, Math.min(...ys));
           const x1 = Math.min(vp.width, Math.max(...xs)), y1 = Math.min(vp.height, Math.max(...ys));
           const w = x1 - x0, h = y1 - y0;
-          if (Math.min(w, h) >= MIN_SIDE && (!best || w * h > best.w * best.h)) best = { x: x0, y: y0, w, h };
+          if (w <= 0 || h <= 0) continue;
+          const mn = Math.min(w, h), mx = Math.max(w, h);
+          if (mn < MIN_FRAC * vp.width || mx / mn > MAX_RATIO) continue; // לוגו, אייקון או פס
+          const score = w * h * (n === 1 ? 1.3 : 1); // עדיפות קלה לעמוד הראשון
+          if (!best || score > best.score) best = { n, x: x0, y: y0, w, h, score };
         }
       }
-      if (best) {
-        const c = document.createElement('canvas');
-        c.width = Math.ceil(vp.width); c.height = Math.ceil(vp.height);
-        await page.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise;
-        return blobToCanvasJpeg(c, best.x, best.y, best.w, best.h);
-      }
     }
-    return null;
+    const n = best ? best.n : 1;
+    const page = await pdf.getPage(n);
+    const base = page.getViewport({ scale: 1 });
+    const vp = page.getViewport({ scale: 900 / base.width });
+    const c = document.createElement('canvas');
+    c.width = Math.ceil(vp.width); c.height = Math.ceil(vp.height);
+    await page.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise;
+    if (best) return blobToCanvasJpeg(c, best.x, best.y, best.w, best.h);
+    return blobToCanvasJpeg(c, 0, 0, c.width, Math.min(c.height, Math.round(c.width * 0.75)));
   } finally {
     pdf.destroy();
   }
+}
+
+// בחירה מחדש של כל התמונות האוטומטיות בתיקייה (תמונות שנבחרו ידנית לא משתנות)
+async function rescanFolder(folder) {
+  if (!confirm(t('rescanFolderConfirm', { name: folder.name }))) return;
+  const list = (await drive.list(folder.id)).filter((x) => ['pdf', 'docx', 'doc', 'gdoc'].includes(kindOf(x)) && !isAppImage(x));
+  let done = 0;
+  await busy(t('searchingImage'), async () => {
+    for (const [i, f] of list.entries()) {
+      const ap = f.appProperties || {};
+      if (ap.kpAuto === 'manual' || ap.kpCover === 'none') continue;
+      $('#busyText').textContent = t('rescanProgress', { i: i + 1, n: list.length });
+      try { const blob = await findCoverImage(f); if (blob) { await saveCover(f, blob, { kpAuto: AUTO_V }); done++; } } catch (e) { console.warn('rescan', f.name, e); }
+    }
+  });
+  toast(t('rescanDone', { n: done }), 4000);
+  dash.load(true);
 }
 
 /* ---------------- קישורים לדוגמאות מהאינטרנט ---------------- */
@@ -1135,8 +1166,18 @@ const dash = {
       paint(`https://img.youtube.com/vi/${youtubeInfo(linkUrl(f)).id}/hqdefault.jpg`);
     }
     else if (kind === 'link') {
-      const host = hostOf(linkUrl(f));
-      if (host) { cover.classList.add('favicon'); cover.style.backgroundImage = `url("https://www.google.com/s2/favicons?domain=${encodeURIComponent(host)}&sz=128")`; }
+      // צילום של דף הדוגמה (שירות mShots של WordPress); בפעם הראשונה הוא עוד מכין את הצילום – מנסים שוב אחרי רגע
+      const url = linkUrl(f);
+      if (/^https?:/.test(url)) {
+        const shot = (n) => `https://s.wordpress.com/mshots/v1/${encodeURIComponent(url)}?w=600&h=450${n ? '&r=' + n : ''}`;
+        const img = new Image();
+        let tries = 0;
+        img.onload = () => {
+          if (img.naturalWidth === 400 && img.naturalHeight === 300 && tries < 3) { tries++; setTimeout(() => { img.src = shot(tries); }, 4000); return; }
+          paint(img.src);
+        };
+        img.src = shot(0);
+      }
     }
     else if (isFolder && !(f.appProperties && f.appProperties.kpCover === 'none')) folderCover(f).then((id) => id && queueImage(id, paint)).catch(() => {});
     else if (kind !== 'link') autoCover(f).then((id) => id && queueImage(id, paint)).catch(() => {});
@@ -1152,6 +1193,7 @@ const dash = {
       if (coverId || (shown && kind !== 'image')) items.push({ label: t('removeImage'), fn: () => removeCover(f).catch(err) });
       if (kind === 'link') items.push({ label: t('openInBrowser'), fn: () => window.open(linkUrl(f), '_blank', 'noopener') });
       if (!isFolder && kind !== 'image' && kind !== 'link') items.push({ label: t('rescanImage'), fn: () => rescanCover(f).catch(err) });
+      if (isFolder) items.push({ label: t('rescanFolder'), fn: () => rescanFolder(f).catch(err) });
       items.push({ label: t('notesMenu'), fn: () => openNotes(f) });
       if (f.appProperties && f.appProperties.kpDesign) items.push({ label: t('editInStudio'), fn: () => loadStudio().then(() => Studio.edit(f)).catch(err) });
       if (!isFolder) items.push({ label: t('deleteFile'), fn: () => deletePattern(f).catch(err) });
