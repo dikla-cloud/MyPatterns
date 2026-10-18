@@ -35,6 +35,8 @@
     edgeBad: ['זו עמודת שוליים – היא נשארת עם עיגול ריק', 'This is an edge column – it stays as an empty circle', 'Это кромка – она остаётся пустым кружком', 'هذا عمود حافة – يبقى دائرة فارغة', 'Das ist eine Randspalte – sie bleibt ein leerer Kreis', 'Es una columna de orillo: queda como círculo vacío', 'È una colonna di bordo: resta un cerchio vuoto', 'C\'est une colonne de bord – elle reste un cercle vide'],
     tapHint: ['לחיצה על משבצת צובעת אותה; לחיצה נוספת מחזירה אותה לבן. אפשר גם לגרור.', 'Tap a cell to colour it; tap again to make it white. You can also drag.', 'Нажмите на клетку – она закрасится; ещё раз – станет белой. Можно вести пальцем.', 'اضغط على خانة لتلوينها؛ اضغط مرة أخرى لتعود بيضاء. يمكن السحب أيضًا.', 'Kästchen antippen färbt es; nochmal antippen macht es weiß. Ziehen geht auch.', 'Toca una celda para colorearla; otra vez para dejarla blanca. También puedes arrastrar.', 'Tocca una casella per colorarla; di nuovo per renderla bianca. Puoi anche trascinare.', 'Touchez une case pour la colorier ; encore une fois pour la remettre en blanc. Vous pouvez aussi glisser.'],
     chartTapHint: ['לחיצה על משבצת מסמנת אותה בסמל/בצבע שבחרת; לחיצה נוספת באותו סמל/צבע מוחקת.', 'Tap a cell to mark it with the chosen symbol/colour; tap again with the same one to clear it.', 'Нажмите на клетку – поставится выбранный символ/цвет; повторное нажатие стирает.', 'اضغط على خانة لوضع الرمز/اللون المختار؛ الضغط مرة أخرى يمسحه.', 'Kästchen antippen setzt Symbol/Farbe; nochmal antippen löscht.', 'Toca una celda para poner el símbolo/color elegido; otra vez lo borra.', 'Tocca una casella per il simbolo/colore scelto; di nuovo per cancellarlo.', 'Touchez une case pour y mettre le symbole/la couleur ; encore une fois pour l\'effacer.'],
+    dInline: ['נכתב פעם אחת ועובר אוטומטית לכל הדוגמאות הבאות. אפשר לעדכן כאן בכל רגע – השינוי נשמר לכולן.', 'Written once and carried over to every new pattern. You can update it here at any time – the change applies to all.', 'Заполняется один раз и переносится во все новые схемы. Можно изменить здесь в любой момент.', 'يُكتب مرة واحدة ويُنقل تلقائيًا إلى كل النماذج التالية. يمكن التحديث هنا في أي وقت.', 'Einmal eintragen – gilt automatisch für alle weiteren Anleitungen. Jederzeit hier änderbar.', 'Se escribe una vez y pasa a todos los patrones siguientes. Puedes cambiarlo aquí cuando quieras.', 'Si scrive una volta e vale per tutti gli schemi successivi. Puoi aggiornarlo qui in qualsiasi momento.', 'Saisi une fois et repris dans tous les modèles suivants. Modifiable ici à tout moment.'],
+    dAutoSaved: ['✓ נשמר לכל הדוגמאות', '✓ Saved for all patterns', '✓ Сохранено для всех схем', '✓ حُفظ لكل النماذج', '✓ Für alle Anleitungen gespeichert', '✓ Guardado para todos los patrones', '✓ Salvato per tutti gli schemi', '✓ Enregistré pour tous les modèles'],
     stLeave: ['לצאת בלי לשמור את השינויים?', 'Leave without saving the changes?', 'Выйти без сохранения изменений?', 'الخروج دون حفظ التغييرات؟', 'Ohne Speichern verlassen?', '¿Salir sin guardar los cambios?', 'Uscire senza salvare le modifiche?', 'Quitter sans enregistrer les modifications ?'],
     stNoFolder: ['קודם בוחרים תיקיית דוגמאות', 'Choose a patterns folder first', 'Сначала выберите папку', 'اختر مجلد النماذج أولًا', 'Wähle zuerst einen Ordner', 'Primero elige una carpeta', 'Prima scegli una cartella', 'Choisissez d\'abord un dossier'],
     stEditLoad: ['טוען את העיצוב…', 'Loading the design…', 'Загрузка…', 'جارٍ تحميل التصميم…', 'Design wird geladen…', 'Cargando el diseño…', 'Caricamento del progetto…', 'Chargement du projet…'],
@@ -1891,9 +1893,8 @@
     renderSections(); renderImgs(); showCover(); renderNeedles(); renderCF(); renderLinked(); renderAbbr();
     // שלושה חלקים ללשוניות: כללי / תרשים / הוראות כתובות
     const general = el('div', { class: 'studio-panel written' },
-      el('button', { class: 'btn small defaults-link', onclick: () => defaultsEditor().catch(err) }, t('editDefaults')),
       el('div', { class: 'studio-row' }, coverImg, el('div', { class: 'search-pick-btns' }, el('b', {}, t('wCover')), pickCover, rmCover)),
-      field('designer', 'dDesigner'),
+      fixedDetails(w),
       el('div', { class: 'studio-row' }, el('label', {}, t('stCraft'), craft), el('label', {}, t('wLevel'), level)),
       field('description', 'wDescription', true),
       el('div', { class: 'studio-sub' }, t('wNeedles')), ndBox, addNeedle,
@@ -1914,6 +1915,48 @@
       el('div', { class: 'studio-sub' }, t('wImages')), imgsBox, addImgs, multiImg,
       el('div', { class: 'studio-sub' }, t('wInstrLinks')), wlinksBox, addWLink);
     return { general, chart, written };
+  }
+
+  // פרטים קבועים (שם המעצבת, זכויות יוצרים, הוראות וקבצים כלליים) – נכתבים פעם אחת ונשמרים לכל הדוגמאות
+  function fixedDetails(w) {
+    const c = defaultsCache || { d: { designer: '', copyright: '', general: '', files: [] } };
+    const d = c.d; d.files = d.files || [];
+    const status = el('span', { class: 'studio-status' });
+    let timer = 0;
+    const save = () => {
+      clearTimeout(timer);
+      timer = setTimeout(async () => {
+        try { await saveDefaults(d); status.textContent = t('dAutoSaved'); setTimeout(() => { status.textContent = ''; }, 3000); } catch (e) { err(e); }
+      }, 1200);
+    };
+    const inp = (key, rows, fallback) => {
+      const x = rows ? el('textarea', { rows: String(rows) }) : el('input', { type: 'text' });
+      x.value = d[key] || fallback || '';
+      x.addEventListener('input', () => { d[key] = x.value; if (key === 'designer') w.designer = x.value; save(); });
+      return x;
+    };
+    w.designer = d.designer || w.designer || '';
+    const filesBox = el('div', { class: 'files-list' });
+    const fileInput = el('input', { type: 'file', multiple: '', accept: 'image/*,.pdf,application/pdf', hidden: '' });
+    const renderFiles = () => {
+      filesBox.innerHTML = '';
+      d.files.forEach((f, i) => filesBox.append(el('div', { class: 'file-chip' },
+        el('span', {}, (f.pages.length > 1 ? '📄 ' : '🖼️ ') + f.name),
+        el('button', { class: 'btn small danger', onclick: () => { d.files.splice(i, 1); renderFiles(); save(); } }, '✕'))));
+    };
+    const add = el('button', { class: 'btn small', onclick: async () => {
+      const files = await pickFile(fileInput); if (!files || !files.length) return;
+      d.files.push(...await busy(t('loading'), () => filesToImages(files))); renderFiles(); save();
+    } }, t('dAddFiles'));
+    renderFiles();
+    const hasAny = d.designer || d.copyright || d.general || d.files.length;
+    return el('details', { class: 'studio-help fixed-details', open: hasAny ? null : '' },
+      el('summary', {}, t('dBtn'), ' ', status),
+      el('p', { class: 'muted small-note' }, t('dInline')),
+      el('label', { class: 'w-field' }, el('span', {}, t('dDesigner')), inp('designer')),
+      el('label', { class: 'w-field' }, el('span', {}, t('dCopyright')), inp('copyright', 3, t('dCopyrightDefault'))),
+      el('label', { class: 'w-field' }, el('span', {}, t('dGeneral')), inp('general', 4)),
+      el('div', { class: 'studio-sub' }, t('dFiles')), filesBox, add, fileInput);
   }
 
   // מסמך הדוגמה המלא (HTML ← Google Docs ← PDF)
@@ -2000,7 +2043,6 @@ ${opt.fixed ? `<hr><p style="font-size:9pt;color:#555">${br(copyrightText(defaul
     const mine = el('div', { class: 'my-designs' }, el('p', { class: 'muted small-note' }, t('loading')));
     const where = el('p', { class: 'muted small-note studio-folder' }, t('myDesignsWhere', { name: t('myDesignsFolder') }));
     container.append(
-      el('div', { class: 'studio-defaults' }, el('button', { class: 'btn', onclick: () => defaultsEditor().catch(err) }, t('editDefaults'))),
       el('h2', { class: 'section-title' }, t('myDesigns')), where, mine,
       el('h2', { class: 'section-title' }, '＋ ' + t('newDesign')),
       el('div', { class: 'studio-cards' },

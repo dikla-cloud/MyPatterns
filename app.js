@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 64;
+const APP_V = 65;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -2184,7 +2184,6 @@ function openSettings() {
   const body = el('div', { class: 'settings-list' },
     row('👤 ' + t('account') + ' · Google Drive', accountText(), el('button', { class: 'btn danger', onclick: () => { auth.signOut(); store.set('account', null); closeModal(); start(); } }, t('signOut'))),
     row('🌐 ' + t('language'), null, sel),
-    row('©️ ' + t('defaultsRow'), t('defaultsRowHint'), el('button', { class: 'btn', onclick: () => { closeModal(); loadStudio().then(() => Studio.defaults()).catch(err); } }, t('change'))),
     isInstalled() ? null : row('📲 ' + t('installTitle'), t('installHint'),
       el('button', { class: 'btn primary', onclick: () => { closeModal(); installApp(); } }, t('install'))),
     row('📁 ' + t('rootFolder') + ': ' + (root ? root.name : t('notChosen')), t('rootFolderHint'),
