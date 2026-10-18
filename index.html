@@ -14,7 +14,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="MyPatterns">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <link rel="stylesheet" href="styles.css?v=40">
+  <link rel="stylesheet" href="styles.css?v=41">
 </head>
 <body>
   <div id="splash" class="splash"><img src="icons/icon.svg?v=2" alt="" width="120" height="120"><div class="splash-name">MyPatterns</div></div>
@@ -146,12 +146,16 @@
       <div class="panel-grid">
         <div class="panel-col">
           <h3 data-i18n="hRulerRows"></h3>
+          <div class="row-field"><button id="hToggle" class="tool on" data-i18n-title="hRuler">▬</button><span data-i18n="showRuler"></span>
+            <button id="hUp" class="tool" data-i18n-title="hUp">▲</button><button id="hDown" class="tool" data-i18n-title="hDown">▼</button></div>
           <label class="row-field"><span data-i18n="thickness"></span>
             <input id="hThick" type="range" min="3" max="250" step="1"><output id="hThickOut"></output></label>
           <label class="row-field"><span data-i18n="color"></span><input id="hColor" type="color"></label>
         </div>
         <div class="panel-col">
           <h3 data-i18n="vRulerCols"></h3>
+          <div class="row-field"><button id="vToggle" class="tool on" data-i18n-title="vRuler">▮</button><span data-i18n="showRuler"></span>
+            <button id="vRight" class="tool" data-i18n-title="vRight">▶</button><button id="vLeft" class="tool" data-i18n-title="vLeft">◀</button></div>
           <label class="row-field"><span data-i18n="thickness"></span>
             <input id="vThick" type="range" min="3" max="250" step="1"><output id="vThickOut"></output></label>
           <label class="row-field"><span data-i18n="color"></span><input id="vColor" type="color"></label>
@@ -167,17 +171,8 @@
     </div>
 
     <footer class="viewer-bar">
-      <div class="bar-group">
-        <button id="hToggle" class="tool on" data-i18n-title="hRuler">▬</button>
-        <button id="hUp" class="tool" data-i18n-title="hUp">▲</button>
-        <button id="hDown" class="tool" data-i18n-title="hDown">▼</button>
-      </div>
-      <div class="bar-group">
-        <button id="vToggle" class="tool on" data-i18n-title="vRuler">▮</button>
-        <button id="vRight" class="tool" data-i18n-title="vRight">▶</button>
-        <button id="vLeft" class="tool" data-i18n-title="vLeft">◀</button>
-      </div>
       <div class="bar-group counter" data-i18n-title="rowCounter">
+        <span class="counter-label" data-i18n="rowCounter"></span>
         <button id="cMinus" class="tool">−</button>
         <button id="cValue" class="counter-val" data-i18n-title="clickToSet">0</button>
         <button id="cPlus" class="tool">+</button>
@@ -189,7 +184,7 @@
       </div>
       <div class="bar-group">
         <button id="lockBtn" class="tool lock-btn">🔓</button>
-        <button id="panelToggle" class="tool" data-i18n-title="rulerSettings">🎨</button>
+        <button id="panelToggle" class="tool" data-i18n-title="rulerSettings">📏</button>
       </div>
     </footer>
   </section>
@@ -216,11 +211,11 @@
   <input id="photoInput" type="file" accept="image/*" multiple hidden>
   <input id="localInput" type="file" accept=".pdf,.docx,image/*,application/pdf" hidden>
 
-  <script src="config.js?v=40"></script>
-  <script src="i18n.js?v=40"></script>
+  <script src="config.js?v=41"></script>
+  <script src="i18n.js?v=41"></script>
   <script src="vendor/pdf.min.js"></script>
   <script src="vendor/mammoth.browser.min.js" defer></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="app.js?v=40"></script>
+  <script src="app.js?v=41"></script>
 </body>
 </html>

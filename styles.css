@@ -596,3 +596,7 @@ html, body { overflow-x: clip; }
 #dashView { overflow-x: clip; max-width: 100vw; }
 /* כפתור הנעילה בסרגל התחתון */
 .tool.lock-btn.on { background: var(--fuchsia); color: #fff; border-color: var(--fuchsia); }
+
+/* מונה השורות עם כיתוב ברור */
+.counter-label { font-size: 13px; font-weight: 700; color: var(--fuchsia); padding: 0 6px; white-space: nowrap; }
+.ruler-panel .row-field .tool { min-width: 38px; }
