@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 63;
+const APP_V = 64;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -2201,6 +2201,7 @@ function openSettings() {
 
 // רענון המסכים אחרי החלפת שפה
 function refreshLanguage() {
+  requestAnimationFrame(syncSearchWidth);
   if (!$('#dashView').classList.contains('hidden')) { dash.renderCrumbs(); dash.render(); dash.load(true); }
   if (V.file) { $('#accurateBtn').textContent = t('accurate'); setSync(''); }
 }
@@ -2252,6 +2253,15 @@ async function newFolder() {
 /* ---------------- אירועי דשבורד ---------------- */
 $('#refreshBtn').onclick = () => dash.load(true);
 $('#settingsBtn').onclick = openSettings;
+// במסך רחב: שדה החיפוש מתחיל מתחת ל"הוספה" ונגמר מתחת ל"יצירת דוגמה"
+function syncSearchWidth() {
+  const inp = $('#searchInput'), add = $('#addBtn'), st = $('#tabStudio');
+  if (innerWidth < 640 || add.classList.contains('hidden') || !add.offsetWidth) { inp.style.width = ''; inp.style.flex = ''; return; }
+  const a = add.getBoundingClientRect(), b = st.getBoundingClientRect();
+  const w = Math.round(Math.max(a.right, b.right) - Math.min(a.left, b.left));
+  if (w > 100) { inp.style.flex = '0 0 auto'; inp.style.width = w + 'px'; }
+}
+addEventListener('resize', debounce(syncSearchWidth, 150));
 // תפריט ☰: הגדרות, שפה, התקנה, רענון, אודות ומדיניות פרטיות
 function openAbout() {
   const body = el('div', { class: 'about' },
@@ -2344,6 +2354,7 @@ async function start() {
   show('#dashView');
   auth.init().catch(() => {});
   dash.load().finally(hideSplash);
+  requestAnimationFrame(syncSearchWidth);
   if (auth.valid() && !store.get('account', null)) refreshAccount();
   if (pendingShare && nav.current()) { openAddLink(pendingShare); pendingShare = null; }
 }

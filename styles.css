@@ -698,4 +698,4 @@ html, body { overflow-x: clip; }
 .abbr-row input { flex: 1; min-width: 0; }
 .abbr-row input.abba, .abbr-row .abbr-a { flex: 0 0 30%; }
 /* מחשב: שורת החיפוש בחצי מסך */
-@media (min-width: 900px) { #dashView > #searchRow input { flex: 0 1 50vw; } }
+
