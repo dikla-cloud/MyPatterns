@@ -22,6 +22,19 @@
     stHome: ['דף הבית', 'Home', 'Главная', 'الرئيسية', 'Startseite', 'Inicio', 'Home', 'Accueil'],
     stPeek: ['למסך הקודם (העיצוב נשאר פתוח)', 'Previous screen (the design stays open)', 'Предыдущий экран (дизайн остаётся открытым)', 'الشاشة السابقة (يبقى التصميم مفتوحًا)', 'Vorheriger Bildschirm (Design bleibt offen)', 'Pantalla anterior (el diseño sigue abierto)', 'Schermata precedente (il progetto resta aperto)', 'Écran précédent (le projet reste ouvert)'],
     stResume: ['✏️ חזרה לעיצוב: {name}', '✏️ Back to design: {name}', '✏️ Назад к дизайну: {name}', '✏️ العودة إلى التصميم: {name}', '✏️ Zurück zum Design: {name}', '✏️ Volver al diseño: {name}', '✏️ Torna al progetto: {name}', '✏️ Retour au projet : {name}'],
+    tabGeneral: ['📋 כללי', '📋 General', '📋 Общее', '📋 عام', '📋 Allgemein', '📋 General', '📋 Generale', '📋 Général'],
+    tabWritten: ['📝 הוראות כתובות', '📝 Written instructions', '📝 Текст', '📝 تعليمات مكتوبة', '📝 Anleitungstext', '📝 Instrucciones', '📝 Istruzioni', '📝 Explications'],
+    wVideos: ['סרטוני הדרכה כלליים', 'General tutorial videos', 'Общие видеоуроки', 'فيديوهات تعليمية عامة', 'Allgemeine Videoanleitungen', 'Vídeos tutoriales generales', 'Video tutorial generali', 'Vidéos tutoriels générales'],
+    wInstrLinks: ['קישורים לסרטונים להוראות', 'Video links for the instructions', 'Ссылки на видео к описанию', 'روابط فيديو للتعليمات', 'Video-Links zur Anleitung', 'Enlaces a vídeos de las instrucciones', 'Link ai video delle istruzioni', 'Liens vidéo pour les explications'],
+    abbrShort: ['קיצור', 'Abbr.', 'Сокр.', 'اختصار', 'Abk.', 'Abrev.', 'Abbr.', 'Abrév.'],
+    abbrMeaning: ['פירוש', 'Meaning', 'Значение', 'المعنى', 'Bedeutung', 'Significado', 'Significato', 'Signification'],
+    abbrAdd: ['＋ הוספת קיצור', '＋ Add abbreviation', '＋ Добавить сокращение', '＋ إضافة اختصار', '＋ Abkürzung hinzufügen', '＋ Añadir abreviatura', '＋ Aggiungi abbreviazione', '＋ Ajouter une abréviation'],
+    stClose: ['סגירה', 'Close', 'Закрыть', 'إغلاق', 'Schließen', 'Cerrar', 'Chiudi', 'Fermer'],
+    stPrev: ['מסך קודם', 'Back', 'Назад', 'السابق', 'Zurück', 'Atrás', 'Indietro', 'Retour'],
+    paintBad: ['אי אפשר לצבוע כאן: שתי השורות הראשונות ועמודות השוליים נקבעות לפי כללי המוזאיק', 'You can\'t paint here: the first two rows and the edge columns follow the mosaic rules', 'Здесь нельзя рисовать: первые два ряда и кромки задаются правилами мозаики', 'لا يمكن التلوين هنا: الصفان الأولان وأعمدة الحافة تحددها قواعد الموزاييك', 'Hier kann nicht gemalt werden: die ersten zwei Reihen und die Randspalten folgen den Mosaikregeln', 'Aquí no se puede pintar: las dos primeras vueltas y las columnas de orillo siguen las reglas del mosaico', 'Qui non si può colorare: i primi due giri e le colonne di bordo seguono le regole del mosaico', 'Impossible de colorier ici : les deux premiers rangs et les colonnes de bord suivent les règles de la mosaïque'],
+    edgeBad: ['זו עמודת שוליים – היא נשארת עם עיגול ריק', 'This is an edge column – it stays as an empty circle', 'Это кромка – она остаётся пустым кружком', 'هذا عمود حافة – يبقى دائرة فارغة', 'Das ist eine Randspalte – sie bleibt ein leerer Kreis', 'Es una columna de orillo: queda como círculo vacío', 'È una colonna di bordo: resta un cerchio vuoto', 'C\'est une colonne de bord – elle reste un cercle vide'],
+    tapHint: ['לחיצה על משבצת צובעת אותה; לחיצה נוספת מחזירה אותה לבן. אפשר גם לגרור.', 'Tap a cell to colour it; tap again to make it white. You can also drag.', 'Нажмите на клетку – она закрасится; ещё раз – станет белой. Можно вести пальцем.', 'اضغط على خانة لتلوينها؛ اضغط مرة أخرى لتعود بيضاء. يمكن السحب أيضًا.', 'Kästchen antippen färbt es; nochmal antippen macht es weiß. Ziehen geht auch.', 'Toca una celda para colorearla; otra vez para dejarla blanca. También puedes arrastrar.', 'Tocca una casella per colorarla; di nuovo per renderla bianca. Puoi anche trascinare.', 'Touchez une case pour la colorier ; encore une fois pour la remettre en blanc. Vous pouvez aussi glisser.'],
+    chartTapHint: ['לחיצה על משבצת מסמנת אותה בסמל/בצבע שבחרת; לחיצה נוספת באותו סמל/צבע מוחקת.', 'Tap a cell to mark it with the chosen symbol/colour; tap again with the same one to clear it.', 'Нажмите на клетку – поставится выбранный символ/цвет; повторное нажатие стирает.', 'اضغط على خانة لوضع الرمز/اللون المختار؛ الضغط مرة أخرى يمسحه.', 'Kästchen antippen setzt Symbol/Farbe; nochmal antippen löscht.', 'Toca una celda para poner el símbolo/color elegido; otra vez lo borra.', 'Tocca una casella per il simbolo/colore scelto; di nuovo per cancellarlo.', 'Touchez une case pour y mettre le symbole/la couleur ; encore une fois pour l\'effacer.'],
     stLeave: ['לצאת בלי לשמור את השינויים?', 'Leave without saving the changes?', 'Выйти без сохранения изменений?', 'الخروج دون حفظ التغييرات؟', 'Ohne Speichern verlassen?', '¿Salir sin guardar los cambios?', 'Uscire senza salvare le modifiche?', 'Quitter sans enregistrer les modifications ?'],
     stNoFolder: ['קודם בוחרים תיקיית דוגמאות', 'Choose a patterns folder first', 'Сначала выберите папку', 'اختر مجلد النماذج أولًا', 'Wähle zuerst einen Ordner', 'Primero elige una carpeta', 'Prima scegli una cartella', 'Choisissez d\'abord un dossier'],
     stEditLoad: ['טוען את העיצוב…', 'Loading the design…', 'Загрузка…', 'جارٍ تحميل التصميم…', 'Design wird geladen…', 'Cargando el diseño…', 'Caricamento del progetto…', 'Chargement du projet…'],
@@ -338,7 +351,8 @@
       setTimeout(consumeBackEntry, 0);
       if (ed.didSave) { dash.load(true); if (!$('#studioPane').classList.contains('hidden')) home($('#studioPane')); }
     };
-    const back = el('button', { class: 'icon-btn back-arrow', title: t('back'), onclick: () => { if (!dirty || confirm(t('stLeave'))) close(); } }, isRtl() ? '→' : '←');
+    const navBtn = (icon, label, cls, fn) => el('button', { class: 'studio-nav-btn ' + cls, title: label, 'aria-label': label, onclick: fn }, el('span', { class: 'nb-icon' }, icon), el('small', {}, label));
+    const back = navBtn('✕', t('stClose'), 'studio-close', () => { if (!dirty || confirm(t('stLeave'))) close(); });
     const folderBtn = el('button', { class: 'btn small studio-folder-btn', onclick: async () => {
       const f = await chooseFolder(ed.folder); if (f) { ed.folder = f; folderBtn.textContent = t('stFolderBtn', { name: f.name }); dirty = true; }
     } }, t('stFolderBtn', { name: ed.folder.name }));
@@ -372,12 +386,13 @@
       document.body.append(wrap); // מעל כל השאר
       ensureBackEntry();
     }
-    const homeBtn = el('button', { class: 'icon-btn studio-nav-btn', title: t('stHome'), 'aria-label': t('stHome'), onclick: () => {
+    const homeBtn = navBtn('🏠', t('stHome'), 'studio-home', () => {
       minimize();
       if (typeof closeViewer === 'function' && !$('#viewerView').classList.contains('hidden')) closeViewer(true);
       setTab('patterns'); nav.reset(); dash.load();
-    } }, '🏠');
-    const peekBtn = el('button', { class: 'icon-btn studio-nav-btn', title: t('stPeek'), 'aria-label': t('stPeek'), onclick: minimize }, '↩');
+    });
+    const peekBtn = navBtn('↩', t('stPrev'), 'studio-prev', minimize);
+    peekBtn.title = t('stPeek');
     const head = el('header', { class: 'topbar studio-top' }, back, homeBtn, peekBtn, el('div', { class: 'studio-kind' }, titleText), nameIn, folderBtn, status, saveBtn);
     const body = el('div', { class: 'studio-body' });
     wrap.append(head, body);
@@ -389,14 +404,14 @@
   }
 
   // לשוניות בתוך עורך: תרשים / פרטים והוראות
-  function editorTabs(ed, panes) {
+  function editorTabs(ed, panes, active = 0) {
     const bar = el('div', { class: 'mode-tabs studio-tabs' });
     const btns = panes.map(([label, pane], i) => {
-      const b = el('button', { class: 'mode-tab' + (i ? '' : ' on'), onclick: () => {
+      const b = el('button', { class: 'mode-tab' + (i === active ? ' on' : ''), onclick: () => {
         btns.forEach((x) => x.classList.remove('on')); b.classList.add('on');
         panes.forEach(([, p2]) => p2.classList.add('hidden')); pane.classList.remove('hidden');
       } }, label);
-      if (i) pane.classList.add('hidden');
+      if (i !== active) pane.classList.add('hidden');
       return b;
     });
     bar.append(...btns);
@@ -605,6 +620,17 @@
       chk(t('pdfFixed'), () => state.opt.fixed, (v) => { state.opt.fixed = v; }),
       chk(t('pdfImgs'), () => state.opt.imgs, (v) => { state.opt.imgs = v; }),
       el('div', { class: 'studio-row' }, dl));
+  }
+  // X אדום על משבצת שאי אפשר לצבוע
+  function flashBad(canvas, o, p) {
+    const ctx = canvas.getContext('2d');
+    const x = o.x0 + (p.c) * o.cs, y = o.y0 + (o.H - 1 - p.r) * o.cs, cs = o.cs;
+    ctx.save(); ctx.setTransform(o.dpr, 0, 0, o.dpr, 0, 0);
+    ctx.strokeStyle = '#e53935'; ctx.lineWidth = Math.max(2, cs * .18); ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(x + cs * .18, y + cs * .18); ctx.lineTo(x + cs * .82, y + cs * .82); ctx.moveTo(x + cs * .82, y + cs * .18); ctx.lineTo(x + cs * .18, y + cs * .82); ctx.stroke();
+    ctx.restore();
+    if (navigator.vibrate) try { navigator.vibrate(60); } catch { /* ignore */ }
+    setTimeout(() => canvas.dispatchEvent(new Event('mp-redraw')), 900);
   }
   function paintable(canvas, getO, onCell, onEnd, isOn) {
     let down = false, last = '';
@@ -943,10 +969,15 @@
     const sizeLbl = el('span', { class: 'muted' });
 
     const pt = paintToggle(canvas);
+    let dragVal = 1;
+    canvas.addEventListener('mp-redraw', () => redraw());
     paintable(canvas, () => o, (p, first) => {
-      if (p.r < 2 || (m.edges && (p.c === 0 || p.c === m.W - 1))) return;
-      if (first) pushUndo();
-      m.T[p.r * m.W + p.c] = brush; ed.setDirty();
+      const edge = m.edges && (p.c === 0 || p.c === m.W - 1);
+      if (p.r < 2 || edge) { if (first) { flashBad(canvas, o, p); toast(t(edge ? 'edgeBad' : 'paintBad'), 3500); } return; }
+      const i = p.r * m.W + p.c;
+      // לחיצה הופכת את המשבצת (צבועה ↔ לבנה); בגרירה ממשיכים באותו ערך
+      if (first) { pushUndo(); dragVal = 1 - m.T[i]; }
+      m.T[i] = dragVal; ed.setDirty();
       solve();
     }, null, pt.isOn);
     // זיהוי האלמנט החוזר מתוך מה שבאמת ייסרג (בלי השוליים ושורות הבסיס)
@@ -977,7 +1008,9 @@
       el('label', { class: 'chk' }, usePlan, t('cpUsePlan')), planHolder);
     buildPlan();
     const chartPane = el('div', {});
-    editorTabs(ed, [[t('tabChart'), chartPane], [t('tabInfo'), infoForm(info, ed, { fixedCraft: true })]]);
+    const parts = infoForm(info, ed, { fixedCraft: true });
+    chartPane.append(parts.chart);
+    editorTabs(ed, [[t('tabGeneral'), parts.general], [t('tabChart'), chartPane], [t('tabWritten'), parts.written]], 1);
     chartPane.append(
       el('div', { class: 'studio-panel' },
         el('div', { class: 'studio-row' }, fromImage, blank),
@@ -985,7 +1018,8 @@
         el('div', { class: 'studio-row' }, el('label', {}, t('stWidth'), widthIn), el('label', {}, t('stHeight'), heightIn), applySize, sizeLbl),
         imgRow,
         el('div', { class: 'studio-row' }, el('label', {}, t('mColorA'), colorA), el('label', {}, t('mColorB'), colorB),
-          el('span', {}, t('mPaint')), bA, bB),
+          ),
+        el('p', { class: 'muted small-note' }, t('tapHint')),
         el('div', { class: 'studio-row' }, el('label', { class: 'chk' }, edges, t('mEdges')), el('label', { class: 'chk' }, errChk, t('mShowErr'))),
         el('details', { class: 'studio-help' }, el('summary', {}, 'ℹ️ ' + t('stMosaic')), el('p', {}, t('mRules'))),
         repBox, planWrap, workNotesBox(m, 'workNotes', ed), pdfPanel(ed, pdf, mosaicHtml, true)),
@@ -1265,12 +1299,18 @@
     zoom.oninput = () => { cs = Number(zoom.value); redraw(); };
 
     const pt = paintToggle(canvas);
+    let clearing = false;
+    canvas.addEventListener('mp-redraw', () => redraw());
     paintable(canvas, () => o, (p, first) => {
-      if (ch.edges && (p.c === 0 || p.c === ch.W - 1)) return;
-      if (first) { undo.push({ S: ch.S.slice(), Cc: ch.Cc.slice() }); if (undo.length > 40) undo.shift(); }
+      if (ch.edges && (p.c === 0 || p.c === ch.W - 1)) { if (first) { flashBad(canvas, o, p); toast(t('edgeBad'), 3000); } return; }
       const i = p.r * ch.W + p.c;
-      if (tool.kind === 'sym') ch.S[i] = tool.id;
-      else if (tool.kind === 'color') ch.Cc[i] = tool.c === '#ffffff' ? '' : tool.c;
+      if (first) {
+        undo.push({ S: ch.S.slice(), Cc: ch.Cc.slice() }); if (undo.length > 40) undo.shift();
+        // לחיצה על משבצת שכבר יש בה אותו סמל/צבע – מוחקת אותו
+        clearing = (tool.kind === 'sym' && ch.S[i] === tool.id) || (tool.kind === 'color' && tool.c !== '#ffffff' && ch.Cc[i] === tool.c);
+      }
+      if (tool.kind === 'sym') ch.S[i] = clearing ? '' : tool.id;
+      else if (tool.kind === 'color') ch.Cc[i] = clearing || tool.c === '#ffffff' ? '' : tool.c;
       else { ch.S[i] = ''; ch.Cc[i] = ''; }
       ed.setDirty(); redraw();
     }, null, pt.isOn);
@@ -1292,12 +1332,14 @@
         el('div', { class: 'studio-sub' }, t('stColors')), colBox, nameIn, el('p', { class: 'muted small-note' }, t('colorCodeHint')),
         el('div', { class: 'studio-sub' }, t('stSymbols')), palBox,
         el('details', { class: 'studio-help' }, el('summary', {}, t('symLegend')), legendBox),
-        el('p', { class: 'muted small-note' }, t('stChartTip')),
+        el('p', { class: 'muted small-note' }, t('chartTapHint')),
         repBox, workNotesBox(ch, 'workNotes', ed), pdfPanel(ed, pdf, chartHtml, true)),
       el('div', { class: 'studio-row canvas-tools' }, pt.btn, undoBtn, symName, el('label', { class: 'zoom-lbl' }, '🔍', zoom)),
       el('p', { class: 'muted small-note canvas-hint' }, t('paintHint')),
       wrapEl);
-    editorTabs(ed, [[t('tabChart'), chartPane], [t('tabInfo'), infoForm(info, ed, { onCraft: (c) => setCraft(c) })]]);
+    const parts = infoForm(info, ed, { onCraft: (c) => setCraft(c) });
+    chartPane.append(parts.chart);
+    editorTabs(ed, [[t('tabGeneral'), parts.general], [t('tabChart'), chartPane], [t('tabWritten'), parts.written]], 1);
     buildPalette(); redraw();
     requestAnimationFrame(() => { cs = fitCellSize(wrapEl, ch.W, 10, 44); zoom.value = String(cs); redraw(); });
 
@@ -1688,7 +1730,7 @@
       en: 'ch = chain\nsl st = slip stitch\nsc = single crochet\nhdc = half double crochet\ndc = double crochet\ntr = treble\ninc = increase\ndec = decrease\nrep = repeat\nst(s) = stitch(es)',
     },
   };
-  const emptyInfo = (craft) => ({ craft: craft || 'knit', level: '', description: '', sizes: '', yarn: '', needles: [], g: { sts: '', rows: '', unit: 'cm' }, notions: '', abbr: '', notes: '', sections: [{ title: '', text: '' }], cover: '', images: [], links: [], chartFiles: [], linked: [] });
+  const emptyInfo = (craft) => ({ craft: craft || 'knit', level: '', description: '', sizes: '', yarn: '', needles: [], g: { sts: '', rows: '', unit: 'cm' }, notions: '', abbr: '', notes: '', sections: [{ title: '', text: '' }], cover: '', images: [], links: [], wlinks: [], chartFiles: [], linked: [] });
   const ND_TYPES = { pair: 'ndPair', circ: 'ndCirc', dpn: 'ndDpn', hook: 'ndHook' };
   const needlesText = (w) => (w.needles || []).filter((n) => n.size || n.type).map((n) => `${t(ND_TYPES[n.type] || 'ndPair')}${n.size ? ` ${n.size} mm` : ''}`).join(' · ');
   const gaugeText = (w) => (w.g && (w.g.sts || w.g.rows) ? t('gLine', { s: w.g.sts || '–', r: w.g.rows || '–' }) : '');
@@ -1696,7 +1738,7 @@
   function infoForm(w, ed, opts = {}) {
     w.sections = w.sections && w.sections.length ? w.sections : [{ title: '', text: '' }];
     w.images = w.images || []; w.links = w.links || []; w.needles = w.needles || []; w.g = w.g || { sts: '', rows: '', unit: 'cm' };
-    w.chartFiles = w.chartFiles || []; w.linked = w.linked || [];
+    w.chartFiles = w.chartFiles || []; w.linked = w.linked || []; w.wlinks = w.wlinks || [];
     if (!w.needles.length) w.needles.push({ type: w.craft === 'crochet' ? 'hook' : 'pair', size: '' });
     const field = (key, label, multi) => {
       const inp = multi ? el('textarea', { rows: '3' }) : el('input', { type: 'text' });
@@ -1709,11 +1751,27 @@
     if (opts.fixedCraft) craft.disabled = true;
     const level = el('select', {}, el('option', { value: '' }, '—'), ...[1, 2, 3, 4].map((n) => el('option', { value: String(n) }, t('lvl' + n))));
     level.value = String(w.level || ''); level.onchange = () => { w.level = level.value; ed.setDirty(); };
-    const abbrField = field('abbr', 'wAbbr', true);
+    // קיצורים: שורה לכל קיצור (קיצור = פירוש), אפשר להוסיף, לשנות ולמחוק
+    const abbrBox = el('div', { class: 'abbr-list' });
+    const parseAbbr = () => (w.abbr || '').split('\n').map((l) => l.trim()).filter(Boolean).map((l) => {
+      const m = l.match(/^(.+?)\s*[=–:]\s*(.*)$/); return m ? { a: m[1], m: m[2] } : { a: l, m: '' };
+    });
+    let abbrs = parseAbbr();
+    const saveAbbr = () => { w.abbr = abbrs.filter((x) => x.a || x.m).map((x) => (x.m ? `${x.a} = ${x.m}` : x.a)).join('\n'); ed.setDirty(); };
+    const renderAbbr = () => {
+      abbrBox.innerHTML = '';
+      abbrs.forEach((x, i) => {
+        const a = el('input', { type: 'text', class: 'abbr-a', placeholder: t('abbrShort') }); a.value = x.a;
+        const mm = el('input', { type: 'text', placeholder: t('abbrMeaning') }); mm.value = x.m;
+        a.oninput = () => { x.a = a.value; saveAbbr(); }; mm.oninput = () => { x.m = mm.value; saveAbbr(); };
+        abbrBox.append(el('div', { class: 'abbr-row' }, a, el('span', {}, '='), mm,
+          el('button', { class: 'btn small danger', onclick: () => { abbrs.splice(i, 1); saveAbbr(); renderAbbr(); } }, '✕')));
+      });
+    };
+    const abbrAdd = el('button', { class: 'btn small', onclick: () => { abbrs.push({ a: '', m: '' }); renderAbbr(); abbrBox.lastChild.querySelector('input').focus(); } }, t('abbrAdd'));
     const abbrBtn = el('button', { class: 'btn small', onclick: () => {
-      const ta = abbrField.querySelector('textarea');
       const std = ABBR[w.craft][LANG === 'he' ? 'he' : 'en'];
-      ta.value = ta.value ? ta.value + '\n' + std : std; w.abbr = ta.value; ed.setDirty();
+      w.abbr = w.abbr ? w.abbr + '\n' + std : std; abbrs = parseAbbr(); ed.setDirty(); renderAbbr();
     } }, t('wAbbrStd'));
 
     // מסרגות: סוג (1, 2 או יותר) ומספר המסרגה
@@ -1797,18 +1855,23 @@
     } }, t('wAddImages'));
 
     // קישורים
-    const linksBox = el('div', { class: 'w-links' });
-    const renderLinks = () => {
-      linksBox.innerHTML = '';
-      w.links.forEach((l, i) => {
-        const ti = el('input', { type: 'text', placeholder: t('wLinkTitle') }); ti.value = l.title || '';
-        const ur = el('input', { type: 'url', dir: 'ltr', placeholder: 'https://youtu.be/…' }); ur.value = l.url || '';
-        ti.oninput = () => { l.title = ti.value; ed.setDirty(); };
-        ur.oninput = () => { l.url = ur.value; ed.setDirty(); };
-        linksBox.append(el('div', { class: 'w-link' }, ti, ur, el('button', { class: 'btn small danger', onclick: () => { w.links.splice(i, 1); ed.setDirty(); renderLinks(); } }, '✕')));
-      });
+    const linkList = (key) => {
+      const box = el('div', { class: 'w-links' });
+      const render = () => {
+        box.innerHTML = '';
+        w[key].forEach((l, i) => {
+          const ti = el('input', { type: 'text', placeholder: t('wLinkTitle') }); ti.value = l.title || '';
+          const ur = el('input', { type: 'url', dir: 'ltr', placeholder: 'https://youtu.be/…' }); ur.value = l.url || '';
+          ti.oninput = () => { l.title = ti.value; ed.setDirty(); };
+          ur.oninput = () => { l.url = ur.value; ed.setDirty(); };
+          box.append(el('div', { class: 'w-link' }, ti, ur, el('button', { class: 'btn small danger', onclick: () => { w[key].splice(i, 1); ed.setDirty(); render(); } }, '✕')));
+        });
+      };
+      render();
+      return [box, el('button', { class: 'btn small', onclick: () => { w[key].push({ title: '', url: '' }); render(); } }, t('wAddLink'))];
     };
-    const addLink = el('button', { class: 'btn small', onclick: () => { w.links.push({ title: '', url: '' }); renderLinks(); } }, t('wAddLink'));
+    const [linksBox, addLink] = linkList('links');
+    const [wlinksBox, addWLink] = linkList('wlinks');
 
     // שלבי הוראות
     const secBox = el('div', { class: 'w-sections' });
@@ -1825,26 +1888,32 @@
     };
     const addSec = el('button', { class: 'btn small', onclick: () => { w.sections.push({ title: '', text: '' }); renderSections(); } }, t('wAddSection'));
 
-    renderSections(); renderImgs(); renderLinks(); showCover(); renderNeedles(); renderCF(); renderLinked();
-    return el('div', { class: 'studio-panel written' },
+    renderSections(); renderImgs(); showCover(); renderNeedles(); renderCF(); renderLinked(); renderAbbr();
+    // שלושה חלקים ללשוניות: כללי / תרשים / הוראות כתובות
+    const general = el('div', { class: 'studio-panel written' },
       el('button', { class: 'btn small defaults-link', onclick: () => defaultsEditor().catch(err) }, t('editDefaults')),
+      el('div', { class: 'studio-row' }, coverImg, el('div', { class: 'search-pick-btns' }, el('b', {}, t('wCover')), pickCover, rmCover)),
+      field('designer', 'dDesigner'),
       el('div', { class: 'studio-row' }, el('label', {}, t('stCraft'), craft), el('label', {}, t('wLevel'), level)),
       field('description', 'wDescription', true),
-      el('div', { class: 'studio-row' }, coverImg, el('div', { class: 'search-pick-btns' }, el('b', {}, t('wCover')), pickCover, rmCover)),
       el('div', { class: 'studio-sub' }, t('wNeedles')), ndBox, addNeedle,
       field('yarn', 'wYarn', true),
       el('div', { class: 'studio-sub' }, gTitle), el('div', { class: 'studio-row' }, gS, el('span', {}, t('gSts')), '×', gR, el('span', {}, t('gRows')), gUnit),
       field('sizes', 'wFinished'), field('notions', 'wNotions'),
+      el('div', { class: 'studio-sub' }, t('wAbbr')), abbrBox, el('div', { class: 'studio-row' }, abbrAdd, abbrBtn),
+      el('div', { class: 'studio-sub' }, t('wVideos')), linksBox, addLink,
+      field('notes', 'wGeneralNotes', true));
+    const chart = el('div', { class: 'studio-panel written' },
       opts.linkCharts ? el('div', { class: 'studio-sub' }, t('wLinked')) : null,
       opts.linkCharts ? el('div', { class: 'studio-row' }, el('button', { class: 'btn small primary', onclick: () => makeLinked('chart') }, t('wMakeChart')), el('button', { class: 'btn small', onclick: () => makeLinked('mosaic') }, t('wMakeMosaic'))) : null,
       opts.linkCharts ? lkBox : null,
       opts.linkCharts ? el('p', { class: 'muted small-note' }, t('wLinkedHint')) : null,
-      el('div', { class: 'studio-sub' }, t('wChartFiles')), cfBox, addCF, cfInput,
-      abbrField, abbrBtn,
-      field('notes', 'wGeneralNotes', true),
+      el('div', { class: 'studio-sub' }, t('wChartFiles')), cfBox, addCF, cfInput);
+    const written = el('div', { class: 'studio-panel written' },
       el('div', { class: 'studio-sub' }, t('wInstructions')), secBox, addSec,
       el('div', { class: 'studio-sub' }, t('wImages')), imgsBox, addImgs, multiImg,
-      el('div', { class: 'studio-sub' }, t('wLinks')), linksBox, addLink);
+      el('div', { class: 'studio-sub' }, t('wInstrLinks')), wlinksBox, addWLink);
+    return { general, chart, written };
   }
 
   // מסמך הדוגמה המלא (HTML ← Google Docs ← PDF)
@@ -1856,7 +1925,7 @@
     const row = (k, v) => (v ? `<p><b>${esc(t(k))}:</b> ${br(v)}</p>` : '');
     const designer = (defaults && defaults.designer) || w.designer || '';
     const sections = (w.sections || []).filter((x) => x.title || x.text).map((x) => `${x.title ? `<h3>${esc(x.title)}</h3>` : ''}<p>${br(x.text)}</p>`).join('');
-    const links = (w.links || []).filter((l) => /^https?:\/\//.test((l.url || '').trim())).map((l) => {
+    const links = [...(w.links || []), ...(w.wlinks || [])].filter((l) => /^https?:\/\//.test((l.url || '').trim())).map((l) => {
       const url = l.url.trim(), yt = youtubeInfo(url);
       const thumb = yt && yt.id ? `<a href="${esc(url)}"><img src="https://img.youtube.com/vi/${yt.id}/mqdefault.jpg" width="240"></a><br>` : '';
       return `<p>${thumb}▶ <a href="${esc(url)}">${esc(l.title || url)}</a></p>`;
@@ -1894,8 +1963,9 @@ ${opt.fixed ? `<hr><p style="font-size:9pt;color:#555">${br(copyrightText(defaul
     const pdf = { on: !existing || !!(existing.ids && existing.ids.pdf), opt: { ...PDF_OPT0(), ...(w.pdfOpt || {}) } };
     w.pdfOpt = pdf.opt;
     const ed = editorShell('📝 ' + t('stWritten'), (data && data.title) || '', existing, save);
-    ed.body.append(infoForm(w, ed, { linkCharts: true }), el('div', { class: 'studio-panel' },
-      pdfPanel(ed, pdf, writtenHtml, false), el('p', { class: 'muted small-note' }, t('wDocNote'))));
+    const parts = infoForm(w, ed, { linkCharts: true });
+    parts.written.append(el('div', { class: 'studio-panel' }, pdfPanel(ed, pdf, writtenHtml, false), el('p', { class: 'muted small-note' }, t('wDocNote'))));
+    editorTabs(ed, [[t('tabGeneral'), parts.general], [t('tabChart'), parts.chart], [t('tabWritten'), parts.written]], 0);
 
     // תמונות התרשימים המקושרים (נוצרו מתוך הדוגמה הזו)
     async function linkedCharts() {

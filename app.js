@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 62;
+const APP_V = 63;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -2082,7 +2082,7 @@ function handleBack() {
   if (isOpen('#modal')) { $('#modalClose').click(); return; }
   if (!notesPop.classList.contains('hidden')) { hideNotesPop(); return; }
   const eds = document.querySelectorAll('.studio-editor:not(.minimized)'), editor = eds[eds.length - 1];
-  if (editor) { editor.querySelector('.studio-top .back-arrow').click(); return; }
+  if (editor) { editor.querySelector('.studio-top .studio-close').click(); return; }
   if (isOpen('#viewerView')) { closeViewer(true); return; }
   if (isOpen('#studioPane')) { setTab('patterns'); return; }
   if (nav.path.length) { nav.to(nav.path.length - 1); dash.load(); }

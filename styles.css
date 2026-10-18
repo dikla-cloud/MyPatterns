@@ -685,3 +685,17 @@ html, body { overflow-x: clip; }
 .resume-pill { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 70; max-width: calc(100vw - 32px);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: var(--fuchsia); color: #fff; border: 3px solid #fff; border-radius: 999px; padding: 10px 18px; font-weight: 800; box-shadow: 0 4px 14px rgba(0,0,0,.35); cursor: pointer; }
 #viewerView:not(.hidden) ~ .resume-pill, body:has(#viewerView:not(.hidden)) .resume-pill { bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+
+/* כפתורי ניווט בעורך – סמל עם כיתוב קטן */
+.studio-top .studio-nav-btn { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; min-width: 48px; height: 44px; padding: 2px 6px;
+  border: 1px solid var(--border); border-radius: 10px; background: var(--surface); color: var(--text); cursor: pointer; flex: none; }
+.studio-top .studio-nav-btn .nb-icon { font-size: 17px; line-height: 1.1; }
+.studio-top .studio-nav-btn small { font-size: 10px; font-weight: 700; line-height: 1.1; white-space: nowrap; }
+.studio-top .studio-close { color: #b3261e; }
+/* הקיצורים: שורה לכל קיצור */
+.abbr-list { display: flex; flex-direction: column; gap: 6px; }
+.abbr-row { display: flex; gap: 6px; align-items: center; }
+.abbr-row input { flex: 1; min-width: 0; }
+.abbr-row input.abba, .abbr-row .abbr-a { flex: 0 0 30%; }
+/* מחשב: שורת החיפוש בחצי מסך */
+@media (min-width: 900px) { #dashView > #searchRow input { flex: 0 1 50vw; } }
