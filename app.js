@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 52;
+const APP_V = 53;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -233,6 +233,11 @@ const drive = {
       pageToken = j.nextPageToken;
     } while (pageToken);
     return files;
+  },
+  // חיפוש לפי שאילתה (למשל לפי סימון שהאפליקציה שמה על קבצים)
+  async query(q) {
+    const r = await gfetch(`${DRIVE}/files?q=${encodeURIComponent(q + ' and trashed=false')}&fields=files(${FIELDS})&pageSize=200&supportsAllDrives=true&includeItemsFromAllDrives=true`);
+    return (await r.json()).files || [];
   },
   async get(id) { return (await gfetch(`${DRIVE}/files/${id}?fields=${FIELDS}&supportsAllDrives=true`)).json(); },
   async media(id) { return (await gfetch(`${DRIVE}/files/${id}?alt=media&supportsAllDrives=true`)).blob(); },
@@ -1183,6 +1188,15 @@ const dash = {
       let files = await drive.list(cur.id);
       await localizeDesignsFolder(files);
       if (await migrateLinks(files)) files = await drive.list(cur.id);
+      if (!nav.path.length) {
+        if (!files.some((f) => f.appProperties && f.appProperties.kpType === 'designsFolder')) {
+          try { files.unshift(...(await drive.query(`mimeType='${FOLDER}' and appProperties has { key='kpType' and value='designsFolder' }`)).slice(0, 1)); } catch { /* ignore */ }
+          await localizeDesignsFolder(files);
+        }
+        // "הדוגמאות שיצרתי" תמיד ראשונה
+        files.sort((a, b) => (b.appProperties?.kpType === 'designsFolder') - (a.appProperties?.kpType === 'designsFolder'));
+        syncRecent();
+      }
       this.items = files.filter((f) => !isAppImage(f) && kindOf(f));
       idb.put('lists', key, this.items);
       $('#offlineNote').classList.add('hidden');
@@ -1219,7 +1233,7 @@ const dash = {
       const item = el('div', { class: 'recent-item' },
         el('button', { class: 'recent-open', onclick: () => openFileById(r.id, r) }, th, el('span', {}, r.name)),
         el('button', { class: 'recent-x', title: t('removeRecent'), 'aria-label': t('removeRecent'), onclick: () => {
-          store.set('recent', store.get('recent', []).filter((x) => x.id !== r.id));
+          removeRecent(r.id);
           item.remove();
           if (!store.get('recent', []).length) $('#recentSection').classList.add('hidden');
         } }, '✕'));
@@ -1395,11 +1409,40 @@ async function openFileById(id, hint) {
   openFile(f);
 }
 
+// "נפתחו לאחרונה" משותף לכל המכשירים: כל קובץ שנפתח מסומן בדרייב (kpRec + זמן הפתיחה kpO)
+const recentEntry = (f) => ({ id: f.id, name: f.name.replace(/\.[a-z0-9]+$/i, ''), kind: kindOf(f), mime: f.mimeType, cover: coverOf(f), at: Number((f.appProperties || {}).kpO) || 0 });
 function addRecent(f) {
   if (V.local) return;
   const rec = store.get('recent', []).filter((r) => r.id !== f.id);
-  rec.unshift({ id: f.id, name: f.name.replace(/\.[a-z0-9]+$/i, ''), kind: kindOf(f), mime: f.mimeType, cover: coverOf(f) });
+  rec.unshift({ ...recentEntry(f), at: Date.now() });
   store.set('recent', rec.slice(0, 8));
+  drive.patch(f.id, { appProperties: { kpRec: '1', kpO: String(Date.now()) } }).then((u) => { f.appProperties = u.appProperties; }).catch(() => {});
+}
+function removeRecent(id) {
+  store.set('recent', store.get('recent', []).filter((x) => x.id !== id));
+  drive.patch(id, { appProperties: { kpRec: '0' } }).catch(() => {});
+}
+async function syncRecent() {
+  try {
+    // פעם ראשונה: הרשימה שהייתה שמורה רק במכשיר הזה עוברת לדרייב
+    if (!store.get('recentMig', false)) {
+      const old = store.get('recent', []);
+      await Promise.all(old.map((r, i) => drive.patch(r.id, { appProperties: { kpRec: '1', kpO: String(r.at || Date.now() - (i + 1) * 60000) } }).catch(() => {})));
+      store.set('recentMig', true);
+    }
+    const list = await drive.query("appProperties has { key='kpRec' and value='1' }");
+    const remote = list.filter((f) => !isAppImage(f) && kindOf(f)).map(recentEntry).sort((a, b) => b.at - a.at);
+    // מצטרפים גם פתיחות מהמכשיר הזה שעוד לא הגיעו לדרייב
+    const local = store.get('recent', []).filter((r) => !remote.some((x) => x.id === r.id) && r.at && Date.now() - r.at < 60000);
+    const merged = [...local, ...remote].sort((a, b) => (b.at || 0) - (a.at || 0)).slice(0, 8);
+    store.set('recent', merged);
+    // ישנים מעבר ל-30 מורדים מהרשימה בדרייב
+    remote.slice(30).forEach((r) => drive.patch(r.id, { appProperties: { kpRec: '0' } }).catch(() => {}));
+    if (!nav.path.length && !$('#dashView').classList.contains('hidden')) {
+      $('#recentSection').classList.toggle('hidden', !merged.length);
+      dash.renderRecent();
+    }
+  } catch (e) { console.warn('recent sync', e); }
 }
 
 async function openFile(f, localBlob) {
