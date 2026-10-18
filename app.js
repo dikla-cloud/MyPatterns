@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 53;
+const APP_V = 54;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -8,7 +8,8 @@ const SCOPE_VERSION = 2;
 const DRIVE = 'https://www.googleapis.com/drive/v3';
 const UPLOAD = 'https://www.googleapis.com/upload/drive/v3';
 const FOLDER = 'application/vnd.google-apps.folder';
-const FIELDS = 'id,name,mimeType,modifiedTime,appProperties,size,parents,description';
+const FIELDS = 'id,name,mimeType,modifiedTime,appProperties,size,parents,description,shortcutDetails';
+const SHORTCUT = 'application/vnd.google-apps.shortcut';
 const LINK_MIME = 'application/x-mswinurl';
 
 const $ = (s) => document.querySelector(s);
@@ -274,6 +275,11 @@ const drive = {
   async about() {
     return (await gfetch(`${DRIVE}/about?fields=user(displayName,emailAddress,photoLink)`)).json();
   },
+  // קיצור דרך בתיקייה לקובץ שנמצא במקום אחר בדרייב (בלי להעתיק ובלי להזיז)
+  async shortcut(target, parent) {
+    return (await gfetch(`${DRIVE}/files?fields=${FIELDS}&supportsAllDrives=true`,
+      { method: 'POST', headers: jsonHeaders, body: JSON.stringify({ name: target.name, mimeType: SHORTCUT, shortcutDetails: { targetId: target.id }, parents: [parent] }) })).json();
+  },
   async mkdir(name, parent) {
     return (await gfetch(`${DRIVE}/files?fields=${FIELDS}&supportsAllDrives=true`,
       { method: 'POST', headers: jsonHeaders, body: JSON.stringify({ name, mimeType: FOLDER, parents: [parent] }) })).json();
@@ -414,7 +420,7 @@ async function renameItem(f) {
 // העברה לתיקייה אחרת – בוחרים תיקייה מתוך התיקייה הראשית ותתי-התיקיות שלה
 async function moveItem(f) {
   const root = nav.root();
-  const from = (f.parents && f.parents[0]) || nav.current().id;
+  const from = f._shortcut ? (f._scParent || nav.current().id) : ((f.parents && f.parents[0]) || nav.current().id);
   const trail = [{ id: root.id, name: root.name }];
   const list = el('div', { class: 'move-list' });
   const crumbs = el('div', { class: 'move-crumbs' });
@@ -424,6 +430,7 @@ async function moveItem(f) {
     closeModal();
     try {
       await busy(t('moving'), async () => {
+        if (f._shortcut) { await drive.move(f._shortcut, f._scParent || from, to.id); return; }
         await drive.move(f.id, from, to.id);
         const c = coverOf(f);
         if (c) drive.move(c, from, to.id).catch(() => {}); // תמונת השער עוברת יחד איתה
@@ -454,6 +461,12 @@ async function moveItem(f) {
 
 // מחיקת דוגמה (גם תמונה שהועלתה כדוגמה) – מעבר לאשפה של הדרייב, אפשר לשחזר משם
 async function deletePattern(f) {
+  if (f._shortcut) {
+    // דוגמה שנוספה מתיקייה אחרת – מסירים רק אותה מכאן, המקור נשאר בדרייב
+    if (!confirm(t('removeShortcutConfirm', { name: f.name }))) return;
+    await busy(t('deleting'), () => drive.patch(f._shortcut, { trashed: true }));
+    toast(t('deleted'), 3000); dash.load(true); return;
+  }
   if (!confirm(t('deleteConfirm', { name: f.name }))) return;
   await busy(t('deleting'), async () => {
     await drive.patch(f.id, { trashed: true });
@@ -1076,8 +1089,20 @@ async function grantAccess() {
     },
   });
   if (!docs || !docs.length) return;
-  toast(t('accessAdded', { n: docs.length }));
-  dash.load(true);
+  // קבצים שנמצאים מחוץ לתיקייה הנוכחית – מוסיפים לכאן קיצור דרך (המקור לא זז ולא מועתק)
+  let added = 0;
+  await busy(t('saving'), async () => {
+    for (const d of docs) {
+      try {
+        const meta = await drive.get(d.id);
+        if ((meta.parents || []).includes(cur.id)) continue;
+        await drive.shortcut(meta, cur.id); added++;
+      } catch (e) { console.warn('shortcut', e); }
+    }
+  }).catch(err);
+  toast(added ? t('addedHere', { n: added, name: cur.name }) : t('accessAdded', { n: docs.length }), 4000);
+  await dash.load(true);
+  if (docs.length === 1 && docs[0].mimeType !== FOLDER) openFileById(docs[0].id, { name: docs[0].name });
 }
 
 /* ---------------- הערות לדוגמה (נשמרות בתיאור הקובץ/התיקייה בדרייב) ---------------- */
@@ -1166,6 +1191,18 @@ async function localizeDesignsFolder(files) {
   }
 }
 
+// קיצורי דרך מוצגים כמו הקובץ עצמו; מחיקה/העברה פועלות על הקיצור ולא על המקור
+async function resolveShortcuts(files) {
+  const out = [];
+  for (const f of files) {
+    if (f.mimeType !== SHORTCUT) { out.push(f); continue; }
+    const tid = f.shortcutDetails && f.shortcutDetails.targetId;
+    if (!tid) continue;
+    try { const tg = await drive.get(tid); if (tg && tg.id && !tg.trashed) out.push({ ...tg, _shortcut: f.id, _scParent: (f.parents || [])[0] }); } catch { /* אין גישה למקור */ }
+  }
+  return out;
+}
+
 /* ---------------- דשבורד ---------------- */
 const dash = {
   items: [],
@@ -1185,7 +1222,7 @@ const dash = {
     const cached = await idb.get('lists', key);
     if (cached && !force) { this.items = cached; this.render(); }
     try {
-      let files = await drive.list(cur.id);
+      let files = await resolveShortcuts(await drive.list(cur.id));
       await localizeDesignsFolder(files);
       if (await migrateLinks(files)) files = await drive.list(cur.id);
       if (!nav.path.length) {
