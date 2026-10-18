@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 44;
+const APP_V = 45;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -246,6 +246,11 @@ const drive = {
     return (await gfetch(`${DRIVE}/files/${id}?fields=${FIELDS}&supportsAllDrives=true`,
       { method: 'PATCH', headers: jsonHeaders, body: JSON.stringify(meta) })).json();
   },
+  // העברה לתיקייה אחרת
+  async move(id, from, to) {
+    return (await gfetch(`${DRIVE}/files/${id}?addParents=${to}&removeParents=${from}&fields=${FIELDS}&supportsAllDrives=true`,
+      { method: 'PATCH', headers: jsonHeaders, body: '{}' })).json();
+  },
   async upload(blob, meta) {
     const b = 'kp' + Math.random().toString(36).slice(2);
     const body = new Blob([
@@ -381,6 +386,65 @@ async function rescanCover(f) {
   });
   toast(id ? t('imageFound') : t('imageNotFound'));
   dash.load(true);
+}
+
+// שינוי שם – גם בדרייב. הסיומת (‎.pdf, ‎.docx…) נשמרת כדי שהקובץ ימשיך להיפתח
+async function renameItem(f) {
+  const isFolder = f.mimeType === FOLDER;
+  const m = !isFolder && !String(f.mimeType).startsWith('application/vnd.google-apps') && f.name.match(/(\.[a-z0-9]{2,5})$/i);
+  const ext = m ? m[1] : '';
+  const base = ext ? f.name.slice(0, -ext.length) : f.name;
+  const v = prompt(t('renamePrompt'), base);
+  if (v == null) return;
+  const name = v.trim().replace(/[\\/]/g, ' ');
+  if (!name || name === base) return;
+  const updated = await busy(t('saving'), () => drive.patch(f.id, { name: name + ext }));
+  f.name = updated.name;
+  store.set('recent', store.get('recent', []).map((r) => (r.id === f.id ? { ...r, name } : r)));
+  if (isFolder) store.set('path', nav.path.map((x) => (x.id === f.id ? { ...x, name: updated.name } : x)));
+  toast(t('renamed'));
+  dash.load(true);
+}
+
+// העברה לתיקייה אחרת – בוחרים תיקייה מתוך התיקייה הראשית ותתי-התיקיות שלה
+async function moveItem(f) {
+  const root = nav.root();
+  const from = (f.parents && f.parents[0]) || nav.current().id;
+  const trail = [{ id: root.id, name: root.name }];
+  const list = el('div', { class: 'move-list' });
+  const crumbs = el('div', { class: 'move-crumbs' });
+  const here = el('button', { class: 'btn primary', onclick: async () => {
+    const to = trail[trail.length - 1];
+    if (to.id === from) { closeModal(); return; }
+    closeModal();
+    try {
+      await busy(t('moving'), async () => {
+        await drive.move(f.id, from, to.id);
+        const c = coverOf(f);
+        if (c) drive.move(c, from, to.id).catch(() => {}); // תמונת השער עוברת יחד איתה
+      });
+      toast(t('movedTo', { name: to.name }), 4000);
+      dash.load(true);
+    } catch (e) { err(e); }
+  } });
+  const render = async () => {
+    const cur = trail[trail.length - 1];
+    here.textContent = t('moveHere', { name: cur.name });
+    crumbs.innerHTML = '';
+    trail.forEach((x, i) => {
+      if (i) crumbs.append(el('span', { class: 'sep' }, '›'));
+      crumbs.append(el('button', { class: 'btn link', onclick: () => { trail.length = i + 1; render(); } }, i ? x.name : '🏠 ' + x.name));
+    });
+    list.innerHTML = '';
+    list.append(el('p', { class: 'muted small-note' }, t('loading')));
+    let folders = [];
+    try { folders = (await drive.list(cur.id, true)).filter((x) => x.id !== f.id); } catch (e) { err(e); }
+    list.innerHTML = '';
+    if (!folders.length) list.append(el('p', { class: 'muted small-note' }, t('noSubfolders')));
+    for (const x of folders) list.append(el('button', { class: 'move-folder', onclick: () => { trail.push({ id: x.id, name: x.name }); render(); } }, '📁 ' + x.name));
+  };
+  openModal(t('moveTitle', { name: f.name }), el('div', {}, crumbs, list), [here]);
+  render();
 }
 
 // מחיקת דוגמה (גם תמונה שהועלתה כדוגמה) – מעבר לאשפה של הדרייב, אפשר לשחזר משם
@@ -1196,6 +1260,8 @@ const dash = {
       if (isFolder) items.push({ label: t('rescanFolder'), fn: () => rescanFolder(f).catch(err) });
       items.push({ label: t('notesMenu'), fn: () => openNotes(f) });
       if (f.appProperties && f.appProperties.kpDesign) items.push({ label: t('editInStudio'), fn: () => loadStudio().then(() => Studio.edit(f)).catch(err) });
+      items.push({ label: t('renameItem'), fn: () => renameItem(f).catch(err) });
+      if (!isFolder) items.push({ label: t('moveItem'), fn: () => moveItem(f).catch(err) });
       if (!isFolder) items.push({ label: t('deleteFile'), fn: () => deletePattern(f).catch(err) });
       items.push({ label: t('openInDrive'), fn: () => window.open(`https://drive.google.com/${isFolder ? 'drive/folders/' : 'file/d/'}${f.id}`, '_blank') });
       openMenu(anchor, items);
