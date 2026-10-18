@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 41;
+const APP_V = 42;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -102,8 +102,38 @@ function waitForGis(timeout = 10000) {
   });
 }
 
+// שרת ההתחברות ב-Cloudflare (אם הוגדר ב-config.js) – שומר על החיבור לגוגל לאורך שבועות
+const authServer = () => ((window.KNIT_CONFIG && window.KNIT_CONFIG.authServer) || '').replace(/\/+$/, '');
 const auth = {
   token: store.get('token', null),
+  rt: store.get('rt', null),
+  refreshing: null,
+  canSilent() { return !!(authServer() && this.rt); },
+  // חידוש שקט דרך השרת – בלי חלונות ובלי נגיעה
+  refresh() {
+    if (this.refreshing) return this.refreshing;
+    this.refreshing = (async () => {
+      const r = await fetch(authServer() + '/refresh', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ rt: this.rt }) });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.at) {
+        if (r.status === 401) { this.rt = null; store.set('rt', null); }
+        throw new AuthError(j.error || 'refresh');
+      }
+      this._done({ access_token: j.at, expires_in: j.exp });
+      return this.token.v;
+    })().finally(() => { this.refreshing = null; });
+    return this.refreshing;
+  },
+  // התחברות מלאה: עם שרת – מעבר לדף של גוגל וחזרה; בלי שרת – חלון גוגל
+  login(prompt = '') {
+    if (authServer()) {
+      const acc = store.get('account', null);
+      const hint = acc && acc.emailAddress && prompt !== 'select_account' ? '&hint=' + encodeURIComponent(acc.emailAddress) : '';
+      location.href = authServer() + '/login?ret=' + encodeURIComponent(location.origin + location.pathname) + hint;
+      return new Promise(() => {});
+    }
+    return this.request(prompt);
+  },
   client: null,
   pending: null,
   async init() {
@@ -143,9 +173,13 @@ const auth = {
   },
   async get() {
     if (this.valid()) return this.token.v;
+    if (this.canSilent()) return this.refresh();
+    if (authServer()) throw new AuthError('login');
     try { return await this.request(''); } catch (e) { throw new AuthError(e.message); }
   },
   signOut() {
+    if (this.canSilent()) fetch(authServer() + '/revoke', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ rt: this.rt }) }).catch(() => {});
+    this.rt = null; store.set('rt', null);
     try { if (this.token && window.google) google.accounts.oauth2.revoke(this.token.v, () => {}); } catch { /* ignore */ }
     this.token = null;
     store.set('token', null);
@@ -156,7 +190,7 @@ const auth = {
 // ההרשאה של גוגל תקפה לשעה. דפדפנים מאפשרים לחדש אותה רק בעקבות נגיעה של המשתמשת,
 // ולכן בנגיעה הראשונה אחרי שפג תוקפה (או כמה דקות לפני) מחדשים אותה ברקע – בלי לחזור למסך ההתחברות.
 function renewOnGesture() {
-  if (!store.get('signedIn', false) || auth.pending || !auth.client) return;
+  if (auth.canSilent() || !store.get('signedIn', false) || auth.pending || !auth.client) return;
   if (auth.token && auth.token.exp > Date.now() + 5 * 60000) return;
   auth.request('').then(() => {
     $('#authNote').classList.add('hidden');
@@ -1202,7 +1236,7 @@ function setSync(text) { $('#syncBadge').textContent = text; }
 const pushRemote = debounce(async () => {
   if (V.local || !V.file || !navigator.onLine) { if (!V.local) setSync(t('notSynced')); return; }
   // שמירה ברקע לא פותחת חלון התחברות – נשמר במכשיר ויישלח לדרייב אחרי החידוש הבא
-  if (!auth.valid()) { setSync(t('notSynced')); return; }
+  if (!auth.valid() && !auth.canSilent()) { setSync(t('notSynced')); return; }
   const file = V.file, st = V.st;
   try {
     setSync(t('saving'));
@@ -1896,7 +1930,10 @@ updViewBtn();
 $('#backBtn').onclick = () => { nav.to(nav.path.length - 1); dash.load(); setTimeout(consumeBackEntry, 0); };
 $('#searchInput').oninput = () => dash.render();
 $('#reauthBtn').onclick = async () => {
-  try { await auth.request(''); $('#authNote').classList.add('hidden'); dash.load(true); } catch (e) { err(e); }
+  try {
+    if (auth.canSilent()) { try { await auth.refresh(); } catch { await auth.login(''); } } else await auth.login('');
+    $('#authNote').classList.add('hidden'); dash.load(true);
+  } catch (e) { err(e); }
 };
 $('#saveClientIdBtn').onclick = () => {
   const v = $('#clientIdInput').value.trim();
@@ -1913,7 +1950,7 @@ $('#createRootBtn').onclick = () => createRootFolder().catch(err);
 document.querySelectorAll('.upload-btn').forEach((b) => { b.onclick = openAddSheet; });
 $('#loginBtn').onclick = async () => {
   try {
-    await auth.request('select_account');
+    await auth.login('select_account');
     store.set('account', null);
     start();
   } catch (e) {
@@ -1924,11 +1961,11 @@ window.addEventListener('online', () => { $('#offlineNote').classList.add('hidde
 
 /* ---------------- הפעלה ---------------- */
 // מסך פתיחה עם הלוגו – לפחות חצי שנייה, לכל היותר עד שהדוגמאות נטענו
-const splashStart = Date.now();
+// אין מסך פתיחה נוסף בתוך האפליקציה – רק מסך הפתיחה של המערכת
 function hideSplash() {
   const sp = $('#splash');
   if (!sp || sp.classList.contains('gone')) return;
-  setTimeout(() => { sp.classList.add('gone'); setTimeout(() => sp.remove(), 400); }, Math.max(0, 600 - (Date.now() - splashStart)));
+  sp.remove();
 }
 setTimeout(hideSplash, 2500);
 
@@ -1958,6 +1995,18 @@ if (window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc = 'vendor/pdf.worker
 if ('serviceWorker' in navigator && location.protocol !== 'file:') {
   navigator.serviceWorker.register('sw.js').catch(() => {});
 }
+// חזרה משרת ההתחברות: ההרשאה ומפתח הרענון מגיעים ב-"#"
+(function takeAuthHash() {
+  const m = location.hash.match(/^#mp_auth=([\w-]+)/);
+  if (!m) return;
+  try {
+    const p = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(m[1].replace(/-/g, '+').replace(/_/g, '/')), (c) => c.charCodeAt(0))));
+    if (p.error) { setTimeout(() => toast(t('loginFailed', { msg: p.error }), 5000), 800); return; }
+    if (p.rt) { auth.rt = p.rt; store.set('rt', p.rt); }
+    store.set('account', null);
+    auth._done({ access_token: p.at, expires_in: p.exp });
+  } catch (e) { console.warn('auth hash', e); }
+})();
 if (location.hash) history.replaceState(null, '', location.pathname);
 let pendingShare = takeShared();
 applyI18n();

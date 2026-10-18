@@ -600,3 +600,16 @@ html, body { overflow-x: clip; }
 /* מונה השורות עם כיתוב ברור */
 .counter-label { font-size: 13px; font-weight: 700; color: var(--fuchsia); padding: 0 6px; white-space: nowrap; }
 .ruler-panel .row-field .tool { min-width: 38px; }
+
+/* כפתור ההוספה ליד "דוגמאות קיימות" */
+#dashView > .mode-tabs { align-items: stretch; }
+#dashView > .mode-tabs .add-tab {
+  flex: none; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 0;
+  min-width: 58px; padding: 4px 8px; border-radius: 14px; cursor: pointer;
+  background: var(--fuchsia); color: #fff; border: 3px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.35); text-shadow: 0 1px 1px rgba(0,0,0,.25);
+}
+#dashView > .mode-tabs .add-tab .add-plus { font-size: 24px; line-height: 1; font-weight: 800; }
+#dashView > .mode-tabs .add-tab small { font-size: 11px; font-weight: 700; line-height: 1.1; }
+#dashView > .mode-tabs .add-tab:hover { filter: brightness(1.1); }
+#dashView > .mode-tabs .mode-tab { flex: 1 1 0; min-width: 0; padding-left: 6px; padding-right: 6px; }
+#dashView > .topbar .brand, [dir=rtl] #dashView > .topbar .brand { padding: 4px 16px; }
