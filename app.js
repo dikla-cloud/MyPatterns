@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 58;
+const APP_V = 59;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -388,7 +388,8 @@ async function setCoverFromDrive(target) {
   const q = await askSearch(t('coverFromDrive'), t('coverSearchHint'));
   if (q == null) return;
   const docs = await showPicker({
-    title: t('coverFromDrive'),
+    title: t('coverPickMany'),
+    multi: true,
     // כל הדרייב: עם חיפוש – כל התמונות שמתאימות לחיפוש; בלי – עיון בתיקיות מ"האחסון שלי"
     view: (P) => {
       const v = new P.DocsView(P.ViewId.DOCS)
@@ -398,16 +399,41 @@ async function setCoverFromDrive(target) {
     },
   });
   if (!docs || !docs.length) return;
-  const d = docs[0];
-  await busy(t('uploadingImage'), async () => {
-    const blob = await drive.media(d.id);
-    const file = new File([blob], d.name || 'image.jpg', { type: d.mimeType || blob.type || 'image/jpeg' });
-    let small = null;
-    try { small = await resizeImage(file); } catch { /* פורמט שהדפדפן לא מכיר */ }
-    return saveCover(target, small || file, { kpAuto: 'manual' });
+  // בחלון של גוגל בטלפון לפעמים רואים רק שמות – לכן מורידים את התמונות שסומנו ומציגים אותן בגדול לבחירה
+  const items = await busy(t('loading'), async () => {
+    const out = [];
+    for (const d of docs.slice(0, 12)) {
+      try {
+        const blob = await drive.media(d.id);
+        const file = new File([blob], d.name || 'image.jpg', { type: d.mimeType || blob.type || 'image/jpeg' });
+        let small = null;
+        try { small = await resizeImage(file); } catch { /* פורמט שהדפדפן לא מכיר */ }
+        out.push({ name: d.name, blob: small || file });
+      } catch (e) { console.warn('drive image', e); }
+    }
+    return out;
   });
-  toast(t('imageSaved'));
-  dash.load(true);
+  if (!items.length) { toast(t('imageNotFound')); return; }
+  const use = async (b) => {
+    await busy(t('uploadingImage'), () => saveCover(target, b, { kpAuto: 'manual' }));
+    toast(t('imageSaved'));
+    dash.load(true);
+  };
+  if (items.length === 1) {
+    // תמונה אחת – מציגים אותה לאישור
+    const u = URL.createObjectURL(items[0].blob);
+    openModal(items[0].name, el('div', { class: 'cand-one' }, el('img', { src: u, alt: '' })), [
+      el('button', { class: 'btn primary', onclick: () => { closeModal(); use(items[0].blob).catch(err); } }, t('useThisImage')),
+      el('button', { class: 'btn', onclick: () => { closeModal(); setCoverFromDrive(target).catch(err); } }, t('pickAnother')),
+    ]);
+    return;
+  }
+  const grid = el('div', { class: 'cand-grid' });
+  for (const it of items) {
+    const u = URL.createObjectURL(it.blob);
+    grid.append(el('button', { class: 'cand', title: it.name, onclick: () => { closeModal(); use(it.blob).catch(err); } }, el('img', { src: u, alt: it.name })));
+  }
+  openModal(t('coverChooseShown'), el('div', {}, el('p', { class: 'muted small-note' }, t('coverChooseHint')), grid));
 }
 
 // מעלה תמונה לדרייב ומקשר אותה לקובץ/תיקייה
