@@ -25,11 +25,22 @@
     .home-btn { display: inline-block; background: var(--fuchsia); color: #fff; border: 3px solid #fff; border-radius: 999px; padding: 8px 20px; font-weight: 800; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,.3); }
     .home-row { text-align: center; margin: 14px 0 6px; }
     footer { text-align: center; padding: 8px 16px 30px; }
+    .m-home { display: none; }
+    /* נייד: שורה אחת נמוכה וקבועה – בית + שפות */
+    @media (max-width: 700px) {
+      header { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 6px 10px; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
+      header .pill, .home-row, footer { display: none; }
+      .m-home { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 34px; background: var(--fuchsia); border: 2px solid #fff; border-radius: 999px; text-decoration: none; font-size: 18px; box-shadow: 0 1px 5px rgba(0,0,0,.3); }
+      nav.lang { margin: 0; display: flex; gap: 6px; }
+      nav.lang a { margin: 0; padding: 4px 12px; line-height: 1.4; }
+      section { scroll-margin-top: 56px; }
+    }
   </style>
 </head>
 <body>
 <header>
   <a class="pill" href="./"><img src="icons/icon.svg?v=2" alt="">MyPatterns</a>
+  <a class="m-home" href="./" aria-label="Home">🏠</a>
   <nav class="lang"><a href="#he">עברית</a><a href="#en">English</a></nav>
   <div class="home-row"><a class="home-btn" href="./">🏠 חזרה לדף הבית · Home</a></div>
 </header>
