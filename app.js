@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 65;
+const APP_V = 67;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -1624,6 +1624,8 @@ async function openFile(f, localBlob) {
   $('#accurateBtn').classList.toggle('hidden', !(V.kind === 'docx' && !V.local));
   $('#accurateBtn').textContent = t('accurate');
   $('#notesBtn').classList.toggle('hidden', !!localBlob);
+  // דוגמה שנוצרה ביצירת דוגמה – עיפרון לעריכה ישירות מהצפייה
+  $('#editDesignBtn').classList.toggle('hidden', !(f.appProperties && f.appProperties.kpDesign));
   $('#notesBtn').classList.toggle('has-notes', !!notesOf(f));
   V.linkUrl = V.kind === 'link' ? linkUrl(f) : '';
   setSync(V.local ? t('localFile') : '');
@@ -2252,6 +2254,7 @@ async function newFolder() {
 /* ---------------- אירועי דשבורד ---------------- */
 $('#refreshBtn').onclick = () => dash.load(true);
 $('#settingsBtn').onclick = openSettings;
+$('#editDesignBtn').onclick = () => { const f = V.file; if (f) loadStudio().then(() => Studio.edit(f)).catch(err); };
 // במסך רחב: שדה החיפוש מתחיל מתחת ל"הוספה" ונגמר מתחת ל"יצירת דוגמה"
 function syncSearchWidth() {
   const inp = $('#searchInput'), add = $('#addBtn'), st = $('#tabStudio');

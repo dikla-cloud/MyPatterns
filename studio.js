@@ -22,8 +22,8 @@
     stHome: ['דף הבית', 'Home', 'Главная', 'الرئيسية', 'Startseite', 'Inicio', 'Home', 'Accueil'],
     stPeek: ['למסך הקודם (העיצוב נשאר פתוח)', 'Previous screen (the design stays open)', 'Предыдущий экран (дизайн остаётся открытым)', 'الشاشة السابقة (يبقى التصميم مفتوحًا)', 'Vorheriger Bildschirm (Design bleibt offen)', 'Pantalla anterior (el diseño sigue abierto)', 'Schermata precedente (il progetto resta aperto)', 'Écran précédent (le projet reste ouvert)'],
     stResume: ['✏️ חזרה לעיצוב: {name}', '✏️ Back to design: {name}', '✏️ Назад к дизайну: {name}', '✏️ العودة إلى التصميم: {name}', '✏️ Zurück zum Design: {name}', '✏️ Volver al diseño: {name}', '✏️ Torna al progetto: {name}', '✏️ Retour au projet : {name}'],
-    tabGeneral: ['📋 כללי', '📋 General', '📋 Общее', '📋 عام', '📋 Allgemein', '📋 General', '📋 Generale', '📋 Général'],
-    tabWritten: ['📝 הוראות כתובות', '📝 Written instructions', '📝 Текст', '📝 تعليمات مكتوبة', '📝 Anleitungstext', '📝 Instrucciones', '📝 Istruzioni', '📝 Explications'],
+    tabGeneral: ['כללי', 'General', 'Общее', 'عام', 'Allgemein', 'General', 'Generale', 'Général'],
+    tabWritten: ['הוראות כתובות', 'Written instructions', 'Текст', 'تعليمات مكتوبة', 'Anleitungstext', 'Instrucciones', 'Istruzioni', 'Explications'],
     wVideos: ['סרטוני הדרכה כלליים', 'General tutorial videos', 'Общие видеоуроки', 'فيديوهات تعليمية عامة', 'Allgemeine Videoanleitungen', 'Vídeos tutoriales generales', 'Video tutorial generali', 'Vidéos tutoriels générales'],
     wInstrLinks: ['קישורים לסרטונים להוראות', 'Video links for the instructions', 'Ссылки на видео к описанию', 'روابط فيديو للتعليمات', 'Video-Links zur Anleitung', 'Enlaces a vídeos de las instrucciones', 'Link ai video delle istruzioni', 'Liens vidéo pour les explications'],
     abbrShort: ['קיצור', 'Abbr.', 'Сокр.', 'اختصار', 'Abk.', 'Abrev.', 'Abbr.', 'Abrév.'],
@@ -35,8 +35,34 @@
     edgeBad: ['זו עמודת שוליים – היא נשארת עם עיגול ריק', 'This is an edge column – it stays as an empty circle', 'Это кромка – она остаётся пустым кружком', 'هذا عمود حافة – يبقى دائرة فارغة', 'Das ist eine Randspalte – sie bleibt ein leerer Kreis', 'Es una columna de orillo: queda como círculo vacío', 'È una colonna di bordo: resta un cerchio vuoto', 'C\'est une colonne de bord – elle reste un cercle vide'],
     tapHint: ['לחיצה על משבצת צובעת אותה; לחיצה נוספת מחזירה אותה לבן. אפשר גם לגרור.', 'Tap a cell to colour it; tap again to make it white. You can also drag.', 'Нажмите на клетку – она закрасится; ещё раз – станет белой. Можно вести пальцем.', 'اضغط على خانة لتلوينها؛ اضغط مرة أخرى لتعود بيضاء. يمكن السحب أيضًا.', 'Kästchen antippen färbt es; nochmal antippen macht es weiß. Ziehen geht auch.', 'Toca una celda para colorearla; otra vez para dejarla blanca. También puedes arrastrar.', 'Tocca una casella per colorarla; di nuovo per renderla bianca. Puoi anche trascinare.', 'Touchez une case pour la colorier ; encore une fois pour la remettre en blanc. Vous pouvez aussi glisser.'],
     chartTapHint: ['לחיצה על משבצת מסמנת אותה בסמל/בצבע שבחרת; לחיצה נוספת באותו סמל/צבע מוחקת.', 'Tap a cell to mark it with the chosen symbol/colour; tap again with the same one to clear it.', 'Нажмите на клетку – поставится выбранный символ/цвет; повторное нажатие стирает.', 'اضغط على خانة لوضع الرمز/اللون المختار؛ الضغط مرة أخرى يمسحه.', 'Kästchen antippen setzt Symbol/Farbe; nochmal antippen löscht.', 'Toca una celda para poner el símbolo/color elegido; otra vez lo borra.', 'Tocca una casella per il simbolo/colore scelto; di nuovo per cancellarlo.', 'Touchez une case pour y mettre le symbole/la couleur ; encore une fois pour l\'effacer.'],
-    dInline: ['נכתב פעם אחת ועובר אוטומטית לכל הדוגמאות הבאות. אפשר לעדכן כאן בכל רגע – השינוי נשמר לכולן.', 'Written once and carried over to every new pattern. You can update it here at any time – the change applies to all.', 'Заполняется один раз и переносится во все новые схемы. Можно изменить здесь в любой момент.', 'يُكتب مرة واحدة ويُنقل تلقائيًا إلى كل النماذج التالية. يمكن التحديث هنا في أي وقت.', 'Einmal eintragen – gilt automatisch für alle weiteren Anleitungen. Jederzeit hier änderbar.', 'Se escribe una vez y pasa a todos los patrones siguientes. Puedes cambiarlo aquí cuando quieras.', 'Si scrive una volta e vale per tutti gli schemi successivi. Puoi aggiornarlo qui in qualsiasi momento.', 'Saisi une fois et repris dans tous les modèles suivants. Modifiable ici à tout moment.'],
+    dInline: ['פעם אחת – עובר לכל הדוגמאות; אפשר לעדכן כאן.', 'Once – used in every pattern; edit here anytime.', 'Один раз – для всех схем; можно менять здесь.', 'مرة واحدة – لكل النماذج؛ يمكن التعديل هنا.', 'Einmal – gilt für alle; hier änderbar.', 'Una vez: vale para todos; editable aquí.', 'Una volta: vale per tutti; modificabile qui.', 'Une fois – pour tous les modèles ; modifiable ici.'],
     dAutoSaved: ['✓ נשמר לכל הדוגמאות', '✓ Saved for all patterns', '✓ Сохранено для всех схем', '✓ حُفظ لكل النماذج', '✓ Für alle Anleitungen gespeichert', '✓ Guardado para todos los patrones', '✓ Salvato per tutti gli schemi', '✓ Enregistré pour tous les modèles'],
+    stDesign: ['דוגמה', 'Pattern', 'Схема', 'نموذج', 'Anleitung', 'Patrón', 'Schema', 'Modèle'],
+    newPattern: ['＋ דוגמה חדשה', '＋ New pattern', '＋ Новая схема', '＋ نموذج جديد', '＋ Neue Anleitung', '＋ Patrón nuevo', '＋ Nuovo schema', '＋ Nouveau modèle'],
+    newPatternHint: ['פרטים, תרשים (משבצות צבע, סמלים או מוזאיק), הוראות כתובות ותכנון צבעים – הכול במקום אחד', 'Details, chart (colour grid, symbols or mosaic), written instructions and colour planning – all in one place', 'Детали, схема (цветная, символы или мозаика), описание и подбор цветов – всё в одном месте', 'التفاصيل والمخطط (مربعات ألوان أو رموز أو موزاييك) والتعليمات وتخطيط الألوان – في مكان واحد', 'Details, Diagramm (Farbraster, Symbole oder Mosaik), Anleitungstext und Farbplanung – alles an einem Ort', 'Detalles, gráfico (colores, símbolos o mosaico), instrucciones y colores, todo en un lugar', 'Dettagli, schema (colori, simboli o mosaico), istruzioni e colori: tutto in un posto', 'Détails, grille (couleurs, symboles ou mosaïque), explications et couleurs – tout au même endroit'],
+    tabPlan: ['תכנון צבעים', 'Colour planning', 'Подбор цветов', 'تخطيط الألوان', 'Farbplanung', 'Colores', 'Colori', 'Couleurs'],
+    chKind: ['סוג התרשים', 'Chart type', 'Тип схемы', 'نوع المخطط', 'Diagrammart', 'Tipo de gráfico', 'Tipo di schema', 'Type de grille'],
+    chNone: ['ללא תרשים', 'No chart', 'Без схемы', 'بدون مخطط', 'Kein Diagramm', 'Sin gráfico', 'Nessuno schema', 'Sans grille'],
+    chColorsChart: ['משבצות צבע', 'Colour grid', 'Цветные клетки', 'مربعات ألوان', 'Farbraster', 'Cuadros de color', 'Quadretti colorati', 'Cases de couleur'],
+    chSymbols: ['סמלים', 'Symbols', 'Символы', 'رموز', 'Symbole', 'Símbolos', 'Simboli', 'Symboles'],
+    chMosaic: ['מוזאיק', 'Mosaic', 'Мозаика', 'موزاييك', 'Mosaik', 'Mosaico', 'Mosaico', 'Mosaïque'],
+    chSwitch: ['להחליף סוג תרשים? התרשים הנוכחי יישמר בצד ויחזור אם תבחרי בו שוב.', 'Switch chart type? The current chart is kept aside and comes back if you choose it again.', 'Сменить тип схемы? Текущая схема сохранится и вернётся при повторном выборе.', 'تغيير نوع المخطط؟ يُحفظ الحالي ويعود إذا اخترته مجددًا.', 'Diagrammart wechseln? Das aktuelle bleibt erhalten und kommt zurück, wenn du es wieder wählst.', '¿Cambiar el tipo? El gráfico actual se guarda y vuelve si lo eliges otra vez.', 'Cambiare tipo? Lo schema attuale resta da parte e torna se lo riscegli.', 'Changer de type ? La grille actuelle est gardée et revient si vous la choisissez à nouveau.'],
+    planUse: ['להוסיף את תכנון הצבעים לדוגמה (לקובץ ה-PDF)', 'Add the colour plan to the pattern (to the PDF)', 'Добавить подбор цветов в схему (в PDF)', 'إضافة تخطيط الألوان إلى النموذج (إلى PDF)', 'Farbplanung zur Anleitung hinzufügen (ins PDF)', 'Añadir el plan de colores al patrón (al PDF)', 'Aggiungi il piano colori allo schema (al PDF)', 'Ajouter le plan de couleurs au modèle (au PDF)'],
+    saveFinal: ['שמירה סופית', 'Final save', 'Сохранить', 'حفظ نهائي', 'Endgültig speichern', 'Guardar final', 'Salva definitivo', 'Enregistrer'],
+    saveFinalHint: ['יוצר תמונה ו-PDF בתיקייה', 'Creates the image and PDF in the folder', 'Создаёт картинку и PDF в папке', 'ينشئ صورة وPDF في المجلد', 'Erstellt Bild und PDF im Ordner', 'Crea la imagen y el PDF en la carpeta', 'Crea immagine e PDF nella cartella', 'Crée l\'image et le PDF dans le dossier'],
+    saveDraft: ['שמירת טיוטה', 'Save draft', 'Черновик', 'حفظ مسودة', 'Entwurf speichern', 'Guardar borrador', 'Salva bozza', 'Brouillon'],
+    saveDraftHint: ['להמשך עבודה, בלי PDF', 'To continue later, no PDF', 'Продолжить позже, без PDF', 'للمتابعة لاحقًا، بدون PDF', 'Später weiter, ohne PDF', 'Para seguir luego, sin PDF', 'Per continuare, senza PDF', 'Pour continuer, sans PDF'],
+    draftSaved: ['הטיוטה נשמרה ✓', 'Draft saved ✓', 'Черновик сохранён ✓', 'تم حفظ المسودة ✓', 'Entwurf gespeichert ✓', 'Borrador guardado ✓', 'Bozza salvata ✓', 'Brouillon enregistré ✓'],
+    draftBadge: ['טיוטה', 'Draft', 'Черновик', 'مسودة', 'Entwurf', 'Borrador', 'Bozza', 'Brouillon'],
+    unitsLbl: ['מידות ב-', 'Units:', 'Единицы:', 'الوحدات:', 'Einheiten:', 'Unidades:', 'Unità:', 'Unités :'],
+    termsLbl: ['מונחי סריגה', 'Pattern terms', 'Термины', 'مصطلحات', 'Begriffe', 'Términos', 'Termini', 'Termes'],
+    termsUS: ['US (אמריקאיים)', 'US', 'US (американские)', 'US (أمريكية)', 'US (amerikanisch)', 'US (americanos)', 'US (americani)', 'US (américains)'],
+    termsUK: ['UK (בריטיים)', 'UK', 'UK (британские)', 'UK (بريطانية)', 'UK (britisch)', 'UK (británicos)', 'UK (inglesi)', 'UK (britanniques)'],
+    ndUnitLbl: ['מספור מסרגות', 'Needle sizes', 'Размеры', 'مقاسات الإبر', 'Nadelgrößen', 'Tallas de agujas', 'Misure ferri', 'Tailles'],
+    ndMm: ['מ"מ', 'mm', 'мм', 'مم', 'mm', 'mm', 'mm', 'mm'],
+    ndUs: ['ארה"ב', 'US', 'США', 'أمريكي', 'US', 'EE. UU.', 'USA', 'US'],
+    inShort: ["אינץ'", 'inch', 'дюймы', 'إنش', 'Zoll', 'pulgadas', 'pollici', 'pouces'],
+    cmShort: ['ס"מ', 'cm', 'см', 'سم', 'cm', 'cm', 'cm', 'cm'],
     stLeave: ['לצאת בלי לשמור את השינויים?', 'Leave without saving the changes?', 'Выйти без сохранения изменений?', 'الخروج دون حفظ التغييرات؟', 'Ohne Speichern verlassen?', '¿Salir sin guardar los cambios?', 'Uscire senza salvare le modifiche?', 'Quitter sans enregistrer les modifications ?'],
     stNoFolder: ['קודם בוחרים תיקיית דוגמאות', 'Choose a patterns folder first', 'Сначала выберите папку', 'اختر مجلد النماذج أولًا', 'Wähle zuerst einen Ordner', 'Primero elige una carpeta', 'Prima scegli una cartella', 'Choisissez d\'abord un dossier'],
     stEditLoad: ['טוען את העיצוב…', 'Loading the design…', 'Загрузка…', 'جارٍ تحميل التصميم…', 'Design wird geladen…', 'Cargando el diseño…', 'Caricamento del progetto…', 'Chargement du projet…'],
@@ -134,7 +160,7 @@
     stChooseFolder: ['באיזו תיקייה לשמור?', 'Which folder to save in?', 'В какую папку сохранить?', 'في أي مجلد تريد الحفظ؟', 'In welchem Ordner speichern?', '¿En qué carpeta guardar?', 'In quale cartella salvare?', 'Dans quel dossier enregistrer ?'],
     stSaveHere: ['✓ שמירה בתיקייה "{name}"', '✓ Save in "{name}"', '✓ Сохранить в «{name}»', '✓ الحفظ في «{name}»', '✓ In „{name}“ speichern', '✓ Guardar en «{name}»', '✓ Salva in «{name}»', '✓ Enregistrer dans « {name} »'],
     stNoSub: ['אין כאן תת-תיקיות', 'No subfolders here', 'Нет вложенных папок', 'لا توجد مجلدات فرعية', 'Keine Unterordner', 'No hay subcarpetas', 'Nessuna sottocartella', 'Aucun sous-dossier'],
-    tabChart: ['🎨 תרשים', '🎨 Chart', '🎨 Схема', '🎨 المخطط', '🎨 Diagramm', '🎨 Gráfico', '🎨 Schema', '🎨 Grille'],
+    tabChart: ['תרשים', 'Chart', 'Схема', 'المخطط', 'Diagramm', 'Gráfico', 'Schema', 'Grille'],
     tabInfo: ['📋 פרטים והוראות', '📋 Details & instructions', '📋 Детали и описание', '📋 التفاصيل والتعليمات', '📋 Details & Anleitung', '📋 Detalles e instrucciones', '📋 Dettagli e istruzioni', '📋 Détails et instructions'],
     wImages: ['תמונות נוספות', 'More photos', 'Ещё фото', 'صور إضافية', 'Weitere Fotos', 'Más fotos', 'Altre foto', 'Autres photos'],
     wAddImages: ['＋ הוספת תמונות', '＋ Add photos', '＋ Добавить фото', '＋ إضافة صور', '＋ Fotos hinzufügen', '＋ Añadir fotos', '＋ Aggiungi foto', '＋ Ajouter des photos'],
@@ -297,7 +323,7 @@
     designsFolderCache = { id: f.id, name: f.name };
     return designsFolderCache;
   }
-  const DESIGN_TYPES = { mosaic: ['🟪', 'stMosaic'], chart: ['🎨', 'stChart'], written: ['📝', 'stWritten'], colors: ['🌈', 'cpTitle'] };
+  const DESIGN_TYPES = { design: ['✏️', 'stDesign'], mosaic: ['🟪', 'stMosaic'], chart: ['🎨', 'stChart'], written: ['📝', 'stWritten'], colors: ['🌈', 'cpTitle'] };
   async function listDesigns() {
     const all = await driveQuery("trashed=false and appProperties has { key='kpRole' and value='design' }");
     return all.filter((f) => f.appProperties && DESIGN_TYPES[f.appProperties.kpType]);
@@ -339,7 +365,7 @@
   }
 
   // מסך עריכה במסך מלא: כותרת, שם הדוגמה, תיקיית שמירה ושמירה
-  function editorShell(titleText, initialName, existing, onSave) {
+  function editorShell(titleText, initialName, existing, onSave, onDraft) {
     const wrap = el('section', { class: 'studio-editor' });
     let dirty = false;
     const ed = { wrap, folder: null, setDirty: () => { dirty = true; } };
@@ -370,7 +396,18 @@
         status.textContent = t('savedAt', { time: `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}` });
         toast(t('stSaved', { name: ed.folder.name }), 3000);
       } catch (e) { err(e); }
-    } }, t('stSave'));
+    } }, onDraft ? [el('span', {}, '💾 ' + t('saveFinal')), el('small', {}, t('saveFinalHint'))] : t('stSave'));
+    if (onDraft) saveBtn.classList.add('two-line');
+    const draftBtn = onDraft ? el('button', { class: 'btn studio-draft two-line', onclick: async () => {
+      try {
+        if (!ed.folder.id) ed.folder = await designsFolder();
+        await onDraft(nameIn.value.trim() || t('stUntitled'));
+        dirty = false; ed.didSave = true;
+        const now = new Date();
+        status.textContent = t('savedAt', { time: `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}` });
+        toast(t('draftSaved'), 2500);
+      } catch (e) { err(e); }
+    } }, el('span', {}, '📝 ' + t('saveDraft')), el('small', {}, t('saveDraftHint'))) : null;
     // יציאה זמנית מהעיצוב (בלי לסגור אותו): לדף הבית או למסך הקודם – ואז חוזרים בכפתור הצף
     let pill = null;
     const minimize = () => {
@@ -395,7 +432,7 @@
     });
     const peekBtn = navBtn('↩', t('stPrev'), 'studio-prev', minimize);
     peekBtn.title = t('stPeek');
-    const head = el('header', { class: 'topbar studio-top' }, back, homeBtn, peekBtn, el('div', { class: 'studio-kind' }, titleText), nameIn, folderBtn, status, saveBtn);
+    const head = el('header', { class: 'topbar studio-top' }, back, homeBtn, peekBtn, el('div', { class: 'studio-kind' }, titleText), nameIn, folderBtn, status, draftBtn, saveBtn);
     const body = el('div', { class: 'studio-body' });
     wrap.append(head, body);
     document.body.append(wrap);
@@ -427,7 +464,7 @@
   }
 
   // שמירה בדרייב: קובץ נתונים (לעריכה חוזרת) + קבצי התוצאה שמוצגים ברשימת הדוגמאות
-  async function saveDesign({ type, name, data, outputs, existing, folderId }) {
+  async function saveDesign({ type, name, data, outputs, existing, folderId, draft }) {
     existing = existing || {};
     const jsonBlob = new Blob([JSON.stringify(data)], { type: 'application/json' });
     let jsonId = existing.jsonId;
@@ -459,7 +496,7 @@
       }
       ids[out.key] = done;
     }
-    await drive.patch(jsonId, { appProperties: { kpMain: ids.main || null, kpPdf: ids.pdf || null, kpDoc: ids.doc || null } });
+    await drive.patch(jsonId, { appProperties: { kpMain: ids.main || null, kpPdf: ids.pdf || null, kpDoc: ids.doc || null, kpDraft: draft ? '1' : null } });
     return { jsonId, ids };
   }
 
@@ -853,10 +890,10 @@
 </body></html>`;
   }
 
-  async function mosaicEditor(data, existing, link) {
+  async function mosaicEditor(data, existing, link, host) {
     const { d: defaults0 } = await busy(t('loading'), loadDefaults);
     const seedInfo = link && link.seed ? link.seed.info : null;
-    const info = data && data.info ? { ...emptyInfo('crochet'), ...data.info } : { ...emptyInfo('crochet'), ...(seedInfo || {}), designer: defaults0.designer || '' };
+    const info = host ? host.info : (data && data.info ? { ...emptyInfo('crochet'), ...data.info } : { ...emptyInfo('crochet'), ...(seedInfo || {}), designer: defaults0.designer || '' });
     info.craft = 'crochet';
     const m = data ? {
       W: data.W, H: data.H, start: data.start || 0, edges: !!data.edges, colors: data.colors, userColors: true,
@@ -878,7 +915,7 @@
     let res = mosaicSolve(m);
     let cs = 16, brush = 1, showErr = true;
     const pdf = { on: !existing || !!(existing.ids && existing.ids.pdf), opt: { ...PDF_OPT0(), ...((data && data.pdfOpt) || {}) } };
-    const ed = editorShell('🟪 ' + t('stMosaic'), (data && data.title) || (link && link.seed && link.seed.title) || '', existing, save);
+    const ed = host ? host.ed : editorShell('🟪 ' + t('stMosaic'), (data && data.title) || (link && link.seed && link.seed.title) || '', existing, save);
 
     const canvas = el('canvas', { class: 'studio-canvas' });
     const stats = el('div', { class: 'studio-stats' });
@@ -1010,9 +1047,12 @@
       el('label', { class: 'chk' }, usePlan, t('cpUsePlan')), planHolder);
     buildPlan();
     const chartPane = el('div', {});
-    const parts = infoForm(info, ed, { fixedCraft: true });
-    chartPane.append(parts.chart);
-    editorTabs(ed, [[t('tabGeneral'), parts.general], [t('tabChart'), chartPane], [t('tabWritten'), parts.written]], 1);
+    if (host) host.pane.append(chartPane);
+    else {
+      const parts = infoForm(info, ed, { fixedCraft: true });
+      chartPane.append(parts.chart);
+      editorTabs(ed, [[t('tabGeneral'), parts.general], [t('tabChart'), chartPane], [t('tabWritten'), parts.written]], 1);
+    }
     chartPane.append(
       el('div', { class: 'studio-panel' },
         el('div', { class: 'studio-row' }, fromImage, blank),
@@ -1024,13 +1064,23 @@
         el('p', { class: 'muted small-note' }, t('tapHint')),
         el('div', { class: 'studio-row' }, el('label', { class: 'chk' }, edges, t('mEdges')), el('label', { class: 'chk' }, errChk, t('mShowErr'))),
         el('details', { class: 'studio-help' }, el('summary', {}, 'ℹ️ ' + t('stMosaic')), el('p', {}, t('mRules'))),
-        repBox, planWrap, workNotesBox(m, 'workNotes', ed), pdfPanel(ed, pdf, mosaicHtml, true)),
+        repBox, planWrap, workNotesBox(m, 'workNotes', ed), host ? null : pdfPanel(ed, pdf, mosaicHtml, true)),
       stats,
       el('div', { class: 'studio-row canvas-tools' }, pt.btn, undoBtn, el('label', { class: 'zoom-lbl' }, '🔍', zoom)),
       el('p', { class: 'muted small-note canvas-hint' }, t('paintHint')),
       wrapEl);
     updBrush(); redraw();
-    requestAnimationFrame(() => { cs = fitCellSize(wrapEl, m.W, 6, 34); zoom.value = String(cs); redraw(); });
+    const refit = () => { cs = fitCellSize(wrapEl, m.W, 6, 34); zoom.value = String(cs); redraw(); };
+    requestAnimationFrame(refit);
+    if (host) {
+      return {
+        kind: 'mosaic', label: t('stMosaic'), refit,
+        data: () => ({ W: m.W, H: m.H, start: m.start, edges: m.edges, colors: m.colors, T: toB64(m.T), plan: m.plan, rep: m.rep, workNotes: m.workNotes }),
+        png: (name) => exportMosaicPng(m, res, name),
+        rows: () => [t('mAbbrLine'), t('mMethod'), ...(m.edges ? [t('edgeLegend')] : []), ...repeatText(m.rep, m.W, m.H), ...mosaicInstructions(m, res)],
+        workNotes: () => m.workNotes,
+      };
+    }
 
     async function mosaicHtml(name, png) {
       png = png || await exportMosaicPng(m, res, name);
@@ -1204,20 +1254,21 @@
     return legend.length ? [legend.join(' · '), ...lines] : lines;
   }
 
-  async function chartEditor(data, existing, link) {
+  async function chartEditor(data, existing, link, host) {
     const { d: defaults0 } = await busy(t('loading'), loadDefaults);
-    const seedInfo = link && link.seed ? link.seed.info : null;
+    const seedInfo = link && link.seed ? link.seed.info : (host ? host.info : null);
     const craft0 = (seedInfo && seedInfo.craft) || 'knit';
     // תרשים חדש: 20 עיניים + עין שוליים מכל צד
     const ch = data ? { W: data.W, H: data.H, craft: data.craft || 'knit', S: data.S, Cc: data.Cc, palette: data.palette || [], colorNames: data.colorNames || {}, work: data.work || 'flat', edges: !!data.edges }
       : { W: 22, H: 16, craft: craft0, S: new Array(22 * 16).fill(''), Cc: new Array(22 * 16).fill(''), palette: [], colorNames: {}, work: 'flat', edges: true };
-    const info = data && data.info ? { ...emptyInfo(ch.craft), ...data.info } : { ...emptyInfo(ch.craft), ...(seedInfo || {}), designer: defaults0.designer || '' };
+    const info = host ? host.info : (data && data.info ? { ...emptyInfo(ch.craft), ...data.info } : { ...emptyInfo(ch.craft), ...(seedInfo || {}), designer: defaults0.designer || '' });
+    const colorsOnly = !!(host && host.mode === 'colors');
     ch.rep = data && data.rep ? data.rep : emptyRep();
     ch.workNotes = (data && data.workNotes) || '';
     let cs = 24, tool = { kind: 'color', c: '#0f5e63' };
     const pdf = { on: !existing || !!(existing.ids && existing.ids.pdf), opt: { ...PDF_OPT0(), ...((data && data.pdfOpt) || {}) } };
     const undo = [];
-    const ed = editorShell('🎨 ' + t('stChart'), (data && data.title) || (link && link.seed && link.seed.title) || '', existing, save);
+    const ed = host ? host.ed : editorShell('🎨 ' + t('stChart'), (data && data.title) || (link && link.seed && link.seed.title) || '', existing, save);
     const canvas = el('canvas', { class: 'studio-canvas' });
     let o = null;
     const redraw = () => { o = renderChart(canvas, ch, cs); };
@@ -1332,18 +1383,31 @@
         el('div', { class: 'studio-row' }, el('label', {}, t('stWidth'), widthIn), el('label', {}, t('stHeight'), heightIn), applySize),
         el('label', { class: 'chk' }, edgesChk, t('mEdges')),
         el('div', { class: 'studio-sub' }, t('stColors')), colBox, nameIn, el('p', { class: 'muted small-note' }, t('colorCodeHint')),
-        el('div', { class: 'studio-sub' }, t('stSymbols')), palBox,
-        el('details', { class: 'studio-help' }, el('summary', {}, t('symLegend')), legendBox),
+        colorsOnly ? null : el('div', { class: 'studio-sub' }, t('stSymbols')), colorsOnly ? null : palBox,
+        colorsOnly ? null : el('details', { class: 'studio-help' }, el('summary', {}, t('symLegend')), legendBox),
         el('p', { class: 'muted small-note' }, t('chartTapHint')),
-        repBox, workNotesBox(ch, 'workNotes', ed), pdfPanel(ed, pdf, chartHtml, true)),
+        repBox, workNotesBox(ch, 'workNotes', ed), host ? null : pdfPanel(ed, pdf, chartHtml, true)),
       el('div', { class: 'studio-row canvas-tools' }, pt.btn, undoBtn, symName, el('label', { class: 'zoom-lbl' }, '🔍', zoom)),
       el('p', { class: 'muted small-note canvas-hint' }, t('paintHint')),
       wrapEl);
-    const parts = infoForm(info, ed, { onCraft: (c) => setCraft(c) });
-    chartPane.append(parts.chart);
-    editorTabs(ed, [[t('tabGeneral'), parts.general], [t('tabChart'), chartPane], [t('tabWritten'), parts.written]], 1);
+    if (host) host.pane.append(chartPane);
+    else {
+      const parts = infoForm(info, ed, { onCraft: (c) => setCraft(c) });
+      chartPane.append(parts.chart);
+      editorTabs(ed, [[t('tabGeneral'), parts.general], [t('tabChart'), chartPane], [t('tabWritten'), parts.written]], 1);
+    }
     buildPalette(); redraw();
-    requestAnimationFrame(() => { cs = fitCellSize(wrapEl, ch.W, 10, 44); zoom.value = String(cs); redraw(); });
+    const refit = () => { cs = fitCellSize(wrapEl, ch.W, 10, 44); zoom.value = String(cs); redraw(); };
+    requestAnimationFrame(refit);
+    if (host) {
+      return {
+        kind: colorsOnly ? 'colors' : 'symbols', label: t(colorsOnly ? 'chColorsChart' : 'stChart'), refit, setCraft,
+        data: () => ({ W: ch.W, H: ch.H, craft: ch.craft, S: ch.S, Cc: ch.Cc, palette: ch.palette, colorNames: ch.colorNames, work: ch.work, edges: ch.edges, rep: ch.rep, workNotes: ch.workNotes }),
+        png: (name) => exportChartPng(ch, name),
+        rows: () => [...(ch.edges ? [t('edgeLegend')] : []), ...repeatText(ch.rep, ch.W, ch.H), ...chartInstructions(ch)],
+        workNotes: () => ch.workNotes,
+      };
+    }
 
     async function chartHtml(name, png) {
       png = png || await exportChartPng(ch, name);
@@ -1543,7 +1607,7 @@
     return used;
   }
 
-  async function colorEditor(data, existing) {
+  async function colorEditor(data, existing, host) {
     const { d: defaults0 } = await busy(t('loading'), loadDefaults);
     const plan = data ? { ...data.plan } : {
       mode: 'granny', N: 6, W: 40, H: 30, work: 'flat',
@@ -1557,7 +1621,7 @@
       plan.seq.length = n;
     };
     fitSeq();
-    const ed = editorShell('🌈 ' + t('cpTitle'), (data && data.title) || '', existing, save);
+    const ed = host ? host.ed : editorShell('🌈 ' + t('cpTitle'), (data && data.title) || '', existing, save);
     const canvas = el('canvas', { class: 'studio-canvas' });
     const palBox = el('div', { class: 'pal' });
     const cvWrap = el('div', { class: 'studio-canvas-wrap' }, canvas);
@@ -1571,7 +1635,7 @@
       paletteBars(palBox, paletteOf(used));
     };
     const label = (r) => (plan.mode === 'granny' ? t('cpRound', { n: r + 1 }) : t('cpRowN', { n: r + 1 }));
-    const pe = planEditor(plan, label, () => { ed.setDirty(); redraw(); });
+    const pe = planEditor(plan, label, () => { ed.setDirty(); redraw(); if (host && host.onChange) host.onChange(); });
     const mode = el('select', {}, el('option', { value: 'granny' }, t('cpGranny')), el('option', { value: 'stripes' }, t('cpStripes')));
     mode.value = plan.mode;
     const nIn = el('input', { type: 'number', min: '1', max: '30', value: String(plan.N), class: 'num' });
@@ -1592,7 +1656,7 @@
     numIn(wIn, (v) => { plan.W = Math.max(4, Math.min(200, v)); });
     numIn(hIn, (v) => { plan.H = Math.max(2, Math.min(200, v)); });
     work.onchange = () => { plan.work = work.value; ed.setDirty(); redraw(); };
-    ed.body.append(
+    (host ? host.pane : ed.body).append(
       el('div', { class: 'studio-panel' },
         el('div', { class: 'studio-row' }, el('label', {}, t('cpMode'), mode), el('span', { class: 'pro-badge' }, t('cpPro'))),
         grannyRow, stripeRow),
@@ -1604,8 +1668,9 @@
     addEventListener('resize', onRz);
     sync();
     requestAnimationFrame(redraw);
+    if (host) return { data: () => plan, png: (name) => planPng(name), refit: redraw };
 
-    async function save(name) {
+    async function planPng(name) {
       // תמונה: התצוגה + הפלטה + מקרא החוטים
       const out = document.createElement('canvas');
       const pad = 24, legendH = 40 + plan.yarns.length * 28;
@@ -1630,7 +1695,10 @@
         y += 28;
       });
       redraw();
-      const png = await canvasBlob(out);
+      return canvasBlob(out);
+    }
+    async function save(name) {
+      const png = await planPng(name);
       const data2 = { type: 'colors', v: 1, title: name, plan, ...(data && data.info ? { info: data.info } : {}) };
       const r = await busy(t('stSaving'), async () => {
         const outputs = [{ key: 'main', blob: png, name: name + '.png' }];
@@ -1734,7 +1802,13 @@
   };
   const emptyInfo = (craft) => ({ craft: craft || 'knit', level: '', description: '', sizes: '', yarn: '', needles: [], g: { sts: '', rows: '', unit: 'cm' }, notions: '', abbr: '', notes: '', sections: [{ title: '', text: '' }], cover: '', images: [], links: [], wlinks: [], chartFiles: [], linked: [] });
   const ND_TYPES = { pair: 'ndPair', circ: 'ndCirc', dpn: 'ndDpn', hook: 'ndHook' };
-  const needlesText = (w) => (w.needles || []).filter((n) => n.size || n.type).map((n) => `${t(ND_TYPES[n.type] || 'ndPair')}${n.size ? ` ${n.size} mm` : ''}`).join(' · ');
+  // מספור מסרגות אמריקאי: מסרגות סריגה במספרים, מסרגות קרושה באותיות
+  const KNIT_US = [[2, '0'], [2.25, '1'], [2.75, '2'], [3.25, '3'], [3.5, '4'], [3.75, '5'], [4, '6'], [4.5, '7'], [5, '8'], [5.5, '9'], [6, '10'], [6.5, '10½'], [8, '11'], [9, '13'], [10, '15'], [12.75, '17'], [15, '19'], [19, '35'], [25, '50']];
+  const HOOK_US = [[2.25, 'B-1'], [2.75, 'C-2'], [3.25, 'D-3'], [3.5, 'E-4'], [3.75, 'F-5'], [4, 'G-6'], [4.5, '7'], [5, 'H-8'], [5.5, 'I-9'], [6, 'J-10'], [6.5, 'K-10½'], [8, 'L-11'], [9, 'M/N-13'], [10, 'N/P-15'], [11.5, 'P-16'], [15, 'P/Q'], [16, 'Q'], [19, 'S']];
+  const usTable = (type) => (type === 'hook' ? HOOK_US : KNIT_US);
+  const usOf = (type, mm) => { const r = usTable(type).find(([v]) => Math.abs(v - Number(mm)) < 0.01); return r ? r[1] : ''; };
+  const convNums = (text, f) => String(text || '').replace(/\d+(?:[.,]\d+)?/g, (n) => { const v = Number(n.replace(',', '.')) * f; return String(Math.round(v * 2) / 2).replace(/\.0$/, ''); });
+  const needlesText = (w) => (w.needles || []).filter((n) => n.size || n.type).map((n) => { const us = n.size ? usOf(n.type, n.size) : ''; return `${t(ND_TYPES[n.type] || 'ndPair')}${n.size ? ` ${n.size} mm` : ''}${us ? ` (US ${us})` : ''}`; }).join(' · ');
   const gaugeText = (w) => (w.g && (w.g.sts || w.g.rows) ? t('gLine', { s: w.g.sts || '–', r: w.g.rows || '–' }) : '');
 
   function infoForm(w, ed, opts = {}) {
@@ -1783,8 +1857,21 @@
       w.needles.forEach((n, i) => {
         const type = el('select', {}, ...Object.entries(ND_TYPES).map(([k, v]) => el('option', { value: k }, t(v))));
         type.value = n.type; type.onchange = () => { n.type = type.value; ed.setDirty(); };
-        const size = el('input', { type: 'number', step: '0.25', min: '0.5', max: '30', class: 'num', placeholder: 'mm', value: n.size || '' });
-        size.oninput = () => { n.size = size.value; ed.setDirty(); };
+        type.addEventListener('change', renderNeedles);
+        let size;
+        if (w.ndUnit === 'us') {
+          // מספור אמריקאי: בוחרים מהרשימה, נשמר במ"מ
+          size = el('select', { class: 'num' }, el('option', { value: '' }, '—'), ...usTable(n.type).map(([mm, us]) => el('option', { value: String(mm) }, `US ${us} (${mm} mm)`)));
+          size.value = usOf(n.type, n.size) ? String(Number(n.size)) : '';
+          size.onchange = () => { n.size = size.value; ed.setDirty(); };
+        } else {
+          size = el('input', { type: 'number', step: '0.25', min: '0.5', max: '30', class: 'num', placeholder: 'mm', value: n.size || '' });
+          const usHint = el('small', { class: 'muted us-hint' });
+          const upd = () => { const u = n.size ? usOf(n.type, n.size) : ''; usHint.textContent = u ? `US ${u}` : ''; };
+          size.oninput = () => { n.size = size.value; ed.setDirty(); upd(); };
+          upd();
+          size = el('span', { class: 'size-wrap' }, size, usHint);
+        }
         ndBox.append(el('div', { class: 'studio-row' }, type, el('label', {}, t('ndSize'), size),
           w.needles.length > 1 ? el('button', { class: 'btn small danger', onclick: () => { w.needles.splice(i, 1); ed.setDirty(); renderNeedles(); } }, '✕') : null));
       });
@@ -1795,8 +1882,28 @@
     const gS = el('input', { type: 'number', min: '1', class: 'num', value: w.g.sts || '' });
     const gR = el('input', { type: 'number', min: '1', class: 'num', value: w.g.rows || '' });
     gS.oninput = () => { w.g.sts = gS.value; ed.setDirty(); }; gR.oninput = () => { w.g.rows = gR.value; ed.setDirty(); };
-    const gUnit = el('button', { class: 'btn small', onclick: () => { w.g.unit = w.g.unit === 'in' ? 'cm' : 'in'; updG(); ed.setDirty(); } });
-    const updG = () => { gTitle.textContent = t(w.g.unit === 'in' ? 'gTitleIn' : 'gTitleCm'); gUnit.textContent = t(w.g.unit === 'in' ? 'gToCm' : 'gToIn'); };
+    const gUnit = null;
+    const segPick = (opts, get, set) => {
+      const box = el('div', { class: 'seg small-seg', role: 'group' });
+      const btns = opts.map(([v, label]) => el('button', { class: 'seg-btn', onclick: () => { if (get() === v) return; set(v); ed.setDirty(); paint(); } }, label));
+      const paint = () => btns.forEach((b, i) => b.classList.toggle('on', opts[i][0] === get()));
+      box.append(...btns); paint();
+      return box;
+    };
+    // ס"מ / אינץ' – משנה את כותרת הדוגמית וממיר את המספרים במידות המוצר המוגמר
+    let sizesInput = null, sizesLabel = null;
+    const unitSeg = segPick([['cm', t('cmShort')], ['in', t('inShort')]], () => w.g.unit || 'cm', (v) => {
+      const f = v === 'in' ? 1 / 2.54 : 2.54;
+      w.sizes = convNums(w.sizes, f); if (sizesInput) sizesInput.value = w.sizes;
+      w.g.unit = v; updG();
+    });
+    const updG = () => {
+      gTitle.textContent = t(w.g.unit === 'in' ? 'gTitleIn' : 'gTitleCm');
+      if (sizesLabel) sizesLabel.textContent = `${t('wFinished')} (${t(w.g.unit === 'in' ? 'inShort' : 'cmShort')})`;
+    };
+    const ndSeg = segPick([['mm', t('ndMm')], ['us', t('ndUs')]], () => w.ndUnit || 'mm', (v) => { w.ndUnit = v; renderNeedles(); });
+    const termsSel = el('select', {}, el('option', { value: '' }, '—'), el('option', { value: 'US' }, t('termsUS')), el('option', { value: 'UK' }, t('termsUK')));
+    termsSel.value = w.terms || ''; termsSel.onchange = () => { w.terms = termsSel.value; ed.setDirty(); };
     updG();
     // קובץ תרשים קיים (PDF או תמונה) לצירוף
     const cfBox = el('div', { class: 'files-list' });
@@ -1897,10 +2004,12 @@
       fixedDetails(w),
       el('div', { class: 'studio-row' }, el('label', {}, t('stCraft'), craft), el('label', {}, t('wLevel'), level)),
       field('description', 'wDescription', true),
-      el('div', { class: 'studio-sub' }, t('wNeedles')), ndBox, addNeedle,
+      el('div', { class: 'studio-row' }, el('span', {}, t('unitsLbl')), unitSeg, el('label', {}, t('termsLbl'), termsSel)),
+      el('div', { class: 'studio-sub' }, t('wNeedles')), el('div', { class: 'studio-row' }, el('span', { class: 'muted' }, t('ndUnitLbl')), ndSeg), ndBox, addNeedle,
       field('yarn', 'wYarn', true),
-      el('div', { class: 'studio-sub' }, gTitle), el('div', { class: 'studio-row' }, gS, el('span', {}, t('gSts')), '×', gR, el('span', {}, t('gRows')), gUnit),
-      field('sizes', 'wFinished'), field('notions', 'wNotions'),
+      el('div', { class: 'studio-sub' }, gTitle), el('div', { class: 'studio-row' }, gS, el('span', {}, t('gSts')), '×', gR, el('span', {}, t('gRows'))),
+      (() => { const f = field('sizes', 'wFinished'); sizesInput = f.querySelector('input'); sizesLabel = f.querySelector('span'); updG(); return f; })(),
+      field('notions', 'wNotions'),
       el('div', { class: 'studio-sub' }, t('wAbbr')), abbrBox, el('div', { class: 'studio-row' }, abbrAdd, abbrBtn),
       el('div', { class: 'studio-sub' }, t('wVideos')), linksBox, addLink,
       field('notes', 'wGeneralNotes', true));
@@ -1982,7 +2091,7 @@ ${designer ? `<p>${esc(t('wDesigner'))}: ${esc(designer)}</p>` : ''}
 ${w.description ? `<p>${br(w.description)}</p>` : ''}
 ${w.cover ? `<p><img src="${w.cover}" style="max-width:440px"></p>` : ''}
 <p><b>${esc(kind)}</b> · ${esc(w.craft === 'crochet' ? t('stCrochet') : t('stKnit'))}${w.level ? ` · <b>${esc(t('wLevel'))}:</b> ${esc(t(levels[w.level]))}` : ''}</p>
-${row('wNeedles', needlesText(w) || w.tools)}${row('wYarn', w.yarn)}${row('wGauge', gaugeText(w) || w.gauge)}${row('wFinished', w.sizes)}${row('wMeasure', w.measure)}${row('wNotions', w.notions)}
+${w.terms ? `<p><b>${esc(t('termsLbl'))}:</b> ${esc(w.terms)}</p>` : ''}${row('wNeedles', needlesText(w) || w.tools)}${row('wYarn', w.yarn)}${row('wGauge', gaugeText(w) || w.gauge)}${row('wFinished', w.sizes)}${row('wMeasure', w.measure)}${row('wNotions', w.notions)}
 ${w.abbr ? `<h2>${esc(t('wAbbr'))}</h2><p>${br(w.abbr)}</p>` : ''}
 ${w.notes ? `<h2>${esc(t('wGeneralNotes'))}</h2><p>${br(w.notes)}</p>` : ''}
 ${workNotes ? `<h2>${esc(t('workNotes').replace(/^\S+\s/, ''))}</h2><p>${br(workNotes)}</p>` : ''}
@@ -2035,6 +2144,95 @@ ${opt.fixed ? `<hr><p style="font-size:9pt;color:#555">${br(copyrightText(defaul
     }
   }
 
+  /* =========================================================
+     עורך דוגמה אחד: כללי / תרשים / הוראות כתובות / תכנון צבעים
+     ========================================================= */
+  async function designEditor(data, existing) {
+    const { d: defaults0 } = await busy(t('loading'), loadDefaults);
+    data = data || {};
+    const w = { ...emptyInfo((data.info && data.info.craft) || 'knit'), ...(data.info || {}) };
+    if (!w.designer) w.designer = defaults0.designer || '';
+    const pdf = { on: !existing || !!(existing.ids && existing.ids.pdf), opt: { ...PDF_OPT0(), ...(data.pdfOpt || {}) } };
+    const ed = editorShell('✏️ ' + t('stDesign'), data.title || '', existing, (n) => save(n, false), (n) => save(n, true));
+    let mod = null, kind = data.chartKind || 'none';
+    const store = { [kind]: data.chart || null }; // תרשים של כל סוג נשמר בצד כשמחליפים
+    const parts = infoForm(w, ed, { onCraft: (c) => { if (mod && mod.setCraft) mod.setCraft(c); } });
+
+    // לשונית תרשים: בחירת סוג + אזור התרשים + קבצי תרשים
+    const chartHost = el('div', {});
+    const kinds = [['none', 'chNone'], ['colors', 'chColorsChart'], ['symbols', 'chSymbols'], ['mosaic', 'chMosaic']];
+    const kindBar = el('div', { class: 'seg kind-seg', role: 'group' });
+    const kindBtns = kinds.map(([k, label]) => el('button', { class: 'seg-btn', onclick: () => pickKind(k) }, t(label)));
+    kindBar.append(...kindBtns);
+    const updKind = () => kindBtns.forEach((b, i) => b.classList.toggle('on', kinds[i][0] === kind));
+    async function mount() {
+      chartHost.innerHTML = '';
+      mod = null;
+      const host = { ed, info: w, pane: chartHost };
+      if (kind === 'mosaic') mod = await mosaicEditor(store.mosaic, null, null, host);
+      else if (kind === 'symbols') mod = await chartEditor(store.symbols, null, null, { ...host, mode: 'symbols' });
+      else if (kind === 'colors') mod = await chartEditor(store.colors, null, null, { ...host, mode: 'colors' });
+      updKind();
+    }
+    function pickKind(k) {
+      if (k === kind) return;
+      if (mod && !confirm(t('chSwitch'))) return;
+      if (mod) store[kind] = mod.data();
+      kind = k; ed.setDirty(); mount().catch(err);
+    }
+    const chartPane = el('div', {}, el('div', { class: 'studio-panel' }, el('div', { class: 'studio-sub' }, t('chKind')), kindBar), chartHost, parts.chart);
+
+    // לשונית תכנון צבעים
+    const planHost = el('div', {});
+    const planUse = el('input', { type: 'checkbox' }); planUse.checked = !!data.plan;
+    planUse.onchange = () => ed.setDirty();
+    const planPane = el('div', {}, el('div', { class: 'studio-panel' }, el('label', { class: 'chk' }, planUse, t('planUse'))), planHost);
+    const planMod = await colorEditor(data.plan ? { plan: data.plan } : null, null, { ed, pane: planHost, onChange: () => { planUse.checked = true; } });
+
+    parts.written.append(el('div', { class: 'studio-panel' }, pdfPanel(ed, pdf, (n) => buildHtml(n), true)));
+    editorTabs(ed, [[t('tabGeneral'), parts.general], [t('tabChart'), chartPane], [t('tabWritten'), parts.written], [t('tabPlan'), planPane]], 0);
+    // מעבר ללשונית מתאים מחדש את גודל התרשים
+    ed.body.querySelectorAll('.studio-tabs .mode-tab').forEach((b) => b.addEventListener('click', () => requestAnimationFrame(() => { if (mod && mod.refit) mod.refit(); if (planMod && planMod.refit) planMod.refit(); })));
+    await mount();
+
+    async function buildHtml(name, chartPng, planPngBlob) {
+      const defaults = (await loadDefaults()).d;
+      chartPng = chartPng || (mod ? await mod.png(name) : null);
+      planPngBlob = planPngBlob || (planUse.checked ? await planMod.png(name) : null);
+      return patternHtml({
+        title: name, w, chartUrl: chartPng ? await blobDataUrl(chartPng) : null,
+        rows: mod ? mod.rows() : [], defaults, kind: mod ? mod.label : t('stWritten'),
+        workNotes: mod ? mod.workNotes() : '', extraCharts: planPngBlob ? [await blobDataUrl(planPngBlob)] : [], opt: pdf.opt,
+      });
+    }
+    async function save(name, draft) {
+      w.title = name; w.pdfOpt = pdf.opt;
+      if (mod) store[kind] = mod.data();
+      const data2 = { type: 'design', v: 1, title: name, info: w, chartKind: kind, chart: kind === 'none' ? null : store[kind], plan: planUse.checked ? planMod.data() : null, pdfOpt: pdf.opt };
+      const r = await busy(t('stSaving'), async () => {
+        const outputs = [];
+        if (!draft) {
+          const chartPng = mod ? await mod.png(name) : null;
+          const planPngBlob = planUse.checked ? await planMod.png(name) : null;
+          const html = await buildHtml(name, chartPng, planPngBlob);
+          if (chartPng || planPngBlob) outputs.push({ key: 'main', blob: chartPng || planPngBlob, name: name + '.png' });
+          else outputs.push({ key: 'main', blob: new Blob([html], { type: 'text/html' }), name, doc: true });
+          if (pdf.on) { $('#busyText').textContent = t('pdfMaking'); outputs.push({ key: 'pdf', blob: await htmlToPdf(html, ed.folder.id), name: name + '.pdf' }); }
+        }
+        return saveDesign({ type: 'design', name, data: data2, outputs, existing, folderId: ed.folder.id, draft });
+      });
+      existing = { jsonId: r.jsonId, ids: r.ids, folderId: ed.folder.id, folderName: ed.folder.name };
+    }
+  }
+  // עיצובים מהגרסה הקודמת (סוג אחד בכל קובץ) נפתחים בעורך המאוחד
+  function toDesign(d) {
+    if (!d || d.type === 'design') return d;
+    if (d.type === 'mosaic') return { title: d.title, info: d.info, chartKind: 'mosaic', chart: d, pdfOpt: d.pdfOpt };
+    if (d.type === 'chart') return { title: d.title, info: d.info, chartKind: d.S && d.S.some(Boolean) ? 'symbols' : 'colors', chart: d, pdfOpt: d.pdfOpt };
+    if (d.type === 'colors') return { title: d.title, info: d.info, plan: d.plan };
+    return { title: d.title, info: d, pdfOpt: d.pdfOpt }; // הוראות כתובות
+  }
+
   /* ---------------- דף הבית של "יצירת דוגמה" ---------------- */
   function home(container) {
     container.innerHTML = '';
@@ -2046,10 +2244,7 @@ ${opt.fixed ? `<hr><p style="font-size:9pt;color:#555">${br(copyrightText(defaul
       el('h2', { class: 'section-title' }, t('myDesigns')), where, mine,
       el('h2', { class: 'section-title' }, '＋ ' + t('newDesign')),
       el('div', { class: 'studio-cards' },
-        card('📝', t('stWritten'), t('hintWrittenOnly'), () => writtenEditor(null, null).catch(err)),
-        card('🎨', t('stChart'), t('hintChartOnly'), () => chartEditor(null, null).catch(err)),
-        card('🟪', t('stMosaic'), t('stMosaicHint'), () => mosaicEditor(null, null).catch(err)),
-        card('🌈', t('cpTitle') + ' · ' + t('cpPro'), t('cpHint'), () => colorEditor(null, null).catch(err))));
+        card('✏️', t('newPattern'), t('newPatternHint'), () => designEditor(null, null).catch(err))));
     designsFolder().then((f) => { where.textContent = t('myDesignsWhere', { name: f.name }); }).catch(() => {});
     listDesigns().then((list) => {
       mine.innerHTML = '';
@@ -2061,7 +2256,7 @@ ${opt.fixed ? `<hr><p style="font-size:9pt;color:#555">${br(copyrightText(defaul
         const name = f.name.replace(/\.mypattern\.json$/, '');
         const d = f.modifiedTime ? new Date(f.modifiedTime) : null;
         mine.append(el('div', { class: 'design-row' }, th,
-          el('div', { class: 'design-meta' }, el('b', {}, name), el('small', {}, `${t(typeKey)}${d ? ' · ' + d.toLocaleDateString() : ''}`)),
+          el('div', { class: 'design-meta' }, el('b', {}, name, ap.kpDraft === '1' ? el('span', { class: 'draft-badge' }, t('draftBadge')) : null), el('small', {}, `${t(typeKey)}${d ? ' · ' + d.toLocaleDateString() : ''}`)),
           el('button', { class: 'btn small primary', onclick: () => editJson(f).catch(err) }, t('continueEdit')),
           ap.kpMain ? el('button', { class: 'btn small', onclick: () => openFileById(ap.kpPdf || ap.kpMain, { name }) }, t('openView')) : null));
       }
@@ -2075,10 +2270,7 @@ ${opt.fixed ? `<hr><p style="font-size:9pt;color:#555">${br(copyrightText(defaul
     const ids = {};
     if (ap.kpMain) ids.main = ap.kpMain; if (ap.kpPdf) ids.pdf = ap.kpPdf; if (ap.kpDoc) ids.doc = ap.kpDoc;
     const existing = { jsonId: jsonFile.id, ids, folderId: jsonFile.parents && jsonFile.parents[0] };
-    if (data.type === 'mosaic') await mosaicEditor(data, existing);
-    else if (data.type === 'chart') await chartEditor(data, existing);
-    else if (data.type === 'colors') await colorEditor(data, existing);
-    else await writtenEditor(data, existing);
+    await designEditor(toDesign(data), existing);
   }
   // עריכה מתוך כרטיס של קובץ תוצאה (PNG / PDF / מסמך)
   async function edit(f) {

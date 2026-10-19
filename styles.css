@@ -699,3 +699,18 @@ html, body { overflow-x: clip; }
 .abbr-row input.abba, .abbr-row .abbr-a { flex: 0 0 30%; }
 /* מחשב: שורת החיפוש בחצי מסך */
 
+
+/* עורך: לשוניות נמוכות בלי סמלים, נשארות למעלה בגלילה */
+.studio-editor .studio-tabs { position: sticky; top: 0; z-index: 4; background: var(--bg); padding: 6px 12px; gap: 6px; box-shadow: 0 2px 6px rgba(0,0,0,.08); }
+.studio-editor .studio-tabs .mode-tab { padding: 6px 4px; min-height: 34px; font-size: 14px; border-radius: 10px; }
+/* שמירה סופית / טיוטה – עם הסבר קטן */
+.studio-top .two-line { display: inline-flex; flex-direction: column; align-items: center; line-height: 1.15; padding: 4px 12px; }
+.studio-top .two-line small { font-size: 10px; font-weight: 600; opacity: .8; }
+.studio-top .studio-draft { background: var(--surface); }
+.draft-badge { display: inline-block; margin-inline-start: 6px; font-size: 11px; font-weight: 700; color: #fff; background: #8a6f7b; border-radius: 6px; padding: 1px 6px; vertical-align: middle; }
+.kind-seg { flex-wrap: wrap; }
+.small-seg .seg-btn { padding: 4px 10px; font-size: 13px; }
+.size-wrap { display: inline-flex; align-items: center; gap: 6px; }
+.us-hint { font-weight: 700; }
+.fixed-details .small-note { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.kind-seg { width: fit-content; max-width: 100%; }
