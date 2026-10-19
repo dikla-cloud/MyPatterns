@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 68;
+const APP_V = 69;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -2192,7 +2192,7 @@ function openSettings() {
       el('button', { class: 'btn', onclick: () => pickRootFolder().catch(err) }, t('change'))),
     row(t('clearCache'), t('clearCacheHint'),
       el('button', { class: 'btn', onclick: async () => { indexedDB.deleteDatabase('mypatterns'); toast(t('cacheCleared')); setTimeout(hardRefresh, 600); } }, t('clear'))),
-    row(t('privacyLink'), t('privacyHint'), el('a', { class: 'btn', href: 'privacy.html', target: '_blank', rel: 'noopener' }, t('open'))),
+    row(t('privacyLink'), t('privacyHint'), el('a', { class: 'btn', href: 'privacy.html' }, t('open'))),
     // מזהי Google Cloud של האפליקציה – מוצגים רק כשלא הוגדרו מראש בקובץ config.js
     window.KNIT_CONFIG && window.KNIT_CONFIG.clientId ? null : row(t('googleIds'), clientId() && apiKey() ? t('configured') : t('notConfigured'),
       el('button', { class: 'btn', onclick: () => { store.set('clientId', ''); store.set('apiKey', ''); auth.signOut(); location.reload(); } }, t('change'))),
@@ -2272,7 +2272,7 @@ function openAbout() {
     el('p', { class: 'muted' }, t('version') + ' ' + APP_V),
     el('p', {}, t('aboutText')),
     el('p', {}, el('b', {}, t('contact') + ': '), el('a', { href: 'mailto:MyPatterns007@gmail.com' }, 'MyPatterns007@gmail.com')),
-    el('p', {}, el('a', { href: 'privacy.html', target: '_blank', rel: 'noopener' }, t('privacyLink'))));
+    el('p', {}, el('a', { href: 'privacy.html' }, t('privacyLink'))));
   openModal(t('about').replace(/^\S+\s/, ''), body);
 }
 $('#menuBtn').onclick = (e) => {
@@ -2284,7 +2284,7 @@ $('#menuBtn').onclick = (e) => {
   if (!$('#installBtn').classList.contains('hidden')) items.push({ label: t('install'), fn: () => $('#installBtn').click() });
   items.push({ label: '⟳ ' + t('refresh'), fn: () => $('#refreshBtn').click() },
     { label: t('about'), fn: openAbout },
-    { label: t('privacyLink'), fn: () => window.open('privacy.html', '_blank', 'noopener') });
+    { label: t('privacyLink'), fn: () => { location.href = 'privacy.html'; } });
   openMenu(anchor, items);
 };
 // הלוגו והשם: חזרה לדף הבית (התיקייה הראשית)
