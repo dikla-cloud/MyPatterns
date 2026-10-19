@@ -714,3 +714,32 @@ html, body { overflow-x: clip; }
 .us-hint { font-weight: 700; }
 .fixed-details .small-note { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .kind-seg { width: fit-content; max-width: 100%; }
+/* טיוטה + שמירה סופית תמיד אחד ליד השני */
+.save-pair { display: flex; gap: 6px; align-items: stretch; }
+@media (max-width: 700px) {
+  .studio-top .save-pair { flex: 1 1 100%; }
+  .studio-top .save-pair .btn { flex: 1 1 0; min-width: 0; padding: 4px 6px; }
+  .studio-top .save-pair .two-line small { white-space: normal; }
+}
+/* צבעים וסמלים ליד התרשים */
+.paint-bar { margin: 4px 16px 0; display: flex; flex-direction: column; gap: 6px; }
+.color-lbl { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; }
+.color-lbl input[type=color] { width: 34px; height: 30px; padding: 0; border: 1px solid var(--border); border-radius: 8px; background: none; }
+/* מקרא התרשים */
+.legend-help { margin: 0 16px; }
+.chart-legend { display: flex; flex-direction: column; gap: 8px; padding: 6px 0; }
+.chart-legend-item { display: flex; align-items: center; gap: 8px; font-size: .9rem; flex-wrap: wrap; }
+.chart-legend-item canvas { border: 1px solid #bbb; border-radius: 3px; flex: none; }
+.chart-legend-item span { flex: 1 1 200px; }
+/* סדר התוכן ב-PDF */
+.pdf-order { display: flex; flex-direction: column; gap: 4px; }
+.pdf-order-row { display: flex; align-items: center; gap: 4px; }
+.pdf-order-row .chk { flex: 1; }
+.pdf-order-row .icon-btn { min-width: 34px; padding: 2px 6px; }
+.pdf-order-row .icon-btn:disabled { opacity: .3; }
+.paint-bar .sym-palette { gap: 4px; }
+.paint-bar .sym-btn { width: 34px; height: 34px; min-width: 0; padding: 0; }
+.paint-bar .sym-btn canvas { width: 26px; height: 26px; }
+.paint-bar .sym-btn.wide { width: auto; padding: 0 8px; }
+.paint-bar input[type=color] { width: 34px; height: 34px; }
+.paint-bar .color-name { max-width: 220px; }

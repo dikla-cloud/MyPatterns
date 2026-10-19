@@ -42,11 +42,27 @@
     newPatternHint: ['פרטים, תרשים (משבצות צבע, סמלים או מוזאיק), הוראות כתובות ותכנון צבעים – הכול במקום אחד', 'Details, chart (colour grid, symbols or mosaic), written instructions and colour planning – all in one place', 'Детали, схема (цветная, символы или мозаика), описание и подбор цветов – всё в одном месте', 'التفاصيل والمخطط (مربعات ألوان أو رموز أو موزاييك) والتعليمات وتخطيط الألوان – في مكان واحد', 'Details, Diagramm (Farbraster, Symbole oder Mosaik), Anleitungstext und Farbplanung – alles an einem Ort', 'Detalles, gráfico (colores, símbolos o mosaico), instrucciones y colores, todo en un lugar', 'Dettagli, schema (colori, simboli o mosaico), istruzioni e colori: tutto in un posto', 'Détails, grille (couleurs, symboles ou mosaïque), explications et couleurs – tout au même endroit'],
     tabPlan: ['תכנון צבעים', 'Colour planning', 'Подбор цветов', 'تخطيط الألوان', 'Farbplanung', 'Colores', 'Colori', 'Couleurs'],
     chKind: ['סוג התרשים', 'Chart type', 'Тип схемы', 'نوع المخطط', 'Diagrammart', 'Tipo de gráfico', 'Tipo di schema', 'Type de grille'],
-    chNone: ['ללא תרשים', 'No chart', 'Без схемы', 'بدون مخطط', 'Kein Diagramm', 'Sin gráfico', 'Nessuno schema', 'Sans grille'],
     chColorsChart: ['משבצות צבע', 'Colour grid', 'Цветные клетки', 'مربعات ألوان', 'Farbraster', 'Cuadros de color', 'Quadretti colorati', 'Cases de couleur'],
     chSymbols: ['סמלים', 'Symbols', 'Символы', 'رموز', 'Symbole', 'Símbolos', 'Simboli', 'Symboles'],
     chMosaic: ['מוזאיק', 'Mosaic', 'Мозаика', 'موزاييك', 'Mosaik', 'Mosaico', 'Mosaico', 'Mosaïque'],
-    chSwitch: ['להחליף סוג תרשים? התרשים הנוכחי יישמר בצד ויחזור אם תבחרי בו שוב.', 'Switch chart type? The current chart is kept aside and comes back if you choose it again.', 'Сменить тип схемы? Текущая схема сохранится и вернётся при повторном выборе.', 'تغيير نوع المخطط؟ يُحفظ الحالي ويعود إذا اخترته مجددًا.', 'Diagrammart wechseln? Das aktuelle bleibt erhalten und kommt zurück, wenn du es wieder wählst.', '¿Cambiar el tipo? El gráfico actual se guarda y vuelve si lo eliges otra vez.', 'Cambiare tipo? Lo schema attuale resta da parte e torna se lo riscegli.', 'Changer de type ? La grille actuelle est gardée et revient si vous la choisissez à nouveau.'],
+    chKept: ['התרשים הקודם נשמר – הוא יחזור כשתבחרי שוב ב„{k}”', 'Your previous chart is kept – it comes back when you choose “{k}” again', 'Прежняя схема сохранена – она вернётся при выборе «{k}»', 'تم حفظ المخطط السابق – يعود عند اختيار «{k}» مجددًا', 'Das vorige Diagramm ist gespeichert – es kommt zurück, wenn du „{k}“ wieder wählst', 'El gráfico anterior se guardó – vuelve al elegir «{k}» otra vez', 'Lo schema precedente è salvato – torna se scegli di nuovo «{k}»', 'La grille précédente est gardée – elle revient si vous choisissez « {k} »'],
+    fitScreen: ['⤢ כל התרשים במסך', '⤢ Fit to screen', '⤢ Вся схема на экране', '⤢ ملاءمة الشاشة', '⤢ Ganz anzeigen', '⤢ Ajustar a pantalla', '⤢ Adatta allo schermo', '⤢ Tout afficher'],
+    lgTitle: ['מקרא', 'Key', 'Обозначения', 'مفتاح', 'Legende', 'Leyenda', 'Legenda', 'Légende'],
+    lgDot: ['נקודה אדומה – משבצת שלא תצא כמו שציירת, כי כללי המוזאיק לא מאפשרים אותה. „תיקון לפי הכללים” משנה אותה למה שבאמת ייצא.', 'Red dot – a cell that will not come out as drawn, because the mosaic rules do not allow it. “Fix by the rules” changes it to what will really come out.', 'Красная точка – клетка, которая не получится так, как нарисована: правила мозаики не позволяют.', 'نقطة حمراء – خلية لن تظهر كما رسمتها لأن قواعد الموزاييك لا تسمح بها.', 'Roter Punkt – ein Kästchen, das nicht wie gezeichnet herauskommt, weil die Mosaikregeln es nicht erlauben.', 'Punto rojo – una celda que no saldrá como la dibujaste, porque las reglas del mosaico no lo permiten.', 'Punto rosso – una casella che non verrà come disegnata, perché le regole del mosaico non lo consentono.', 'Point rouge – une case qui ne sortira pas comme dessinée, car les règles de la mosaïque ne le permettent pas.'],
+    lgX: ['X – עמודה (dc) שנסרגת לפנים לתוך השורה שמתחת ומכסה אותה, כך שרואים כאן את הצבע של שתי שורות למטה.', 'X – a double crochet (dc) worked down into the row below, covering it, so the colour from two rows down shows here.', 'X – столбик с накидом (dc) в ряд ниже, закрывающий его.', 'X – غرزة طويلة (dc) تُشتغل في الصف السفلي وتغطيه.', 'X – ein Stäbchen (dc), das in die Reihe darunter gearbeitet wird und sie verdeckt.', 'X – un punto alto (dc) trabajado en la vuelta de abajo, que la cubre.', 'X – una maglia alta (dc) lavorata nel giro sottostante, che lo copre.', 'X – une bride (dc) travaillée dans le rang du dessous, qui le recouvre.'],
+    lgFrame: ['מסגרת אדומה – האלמנט החוזר: החלק בתרשים שחוזר על עצמו לרוחב או לגובה.', 'Red frame – the repeat: the part of the chart that repeats across or up.', 'Красная рамка – раппорт: часть схемы, которая повторяется.', 'إطار أحمر – العنصر المتكرر في المخطط.', 'Roter Rahmen – der Rapport: der Teil, der sich wiederholt.', 'Marco rojo – la repetición: la parte del gráfico que se repite.', 'Cornice rossa – la ripetizione: la parte dello schema che si ripete.', 'Cadre rouge – le motif répété de la grille.'],
+    lgEdge: ['עיגול ריק – עין שוליים (לא נכללת בציור ובמספור העמודות במוזאיק)', 'Empty circle – edge stitch', 'Пустой кружок – кромочная петля', 'دائرة فارغة – غرزة حافة', 'Leerer Kreis – Randmasche', 'Círculo vacío – punto de orillo', 'Cerchio vuoto – maglia di vivagno', 'Cercle vide – maille lisière'],
+    lgMakeRep: ['🔁 יצירת אלמנט חוזר', '🔁 Make a repeat', '🔁 Задать раппорт', '🔁 إنشاء عنصر متكرر', '🔁 Rapport festlegen', '🔁 Crear repetición', '🔁 Crea ripetizione', '🔁 Créer un motif'],
+    repHow: ['איך יוצרים: לוחצים „זיהוי אוטומטי” – והאפליקציה מחפשת את החלק שחוזר. או ידנית: מסמנים „מסגרת אופקית”, כותבים מאיזו עמודה מתחילים וכמה עמודות בחלק החוזר (ובאותו אופן לשורות). המסגרת האדומה מופיעה מיד בתרשים.', 'How: tap “Detect automatically” and the app finds the repeating part. Or by hand: tick “Horizontal frame”, enter the first column and how many columns repeat (rows the same way). The red frame shows on the chart at once.', 'Нажмите «Найти автоматически» или отметьте рамку и укажите начало и размер раппорта.', 'اضغطي «اكتشاف تلقائي» أو حددي الإطار وأدخلي البداية والحجم.', 'Tippe „Automatisch erkennen“ oder hake den Rahmen an und gib Anfang und Größe ein.', 'Pulsa «Detectar» o marca el marco e indica inicio y tamaño.', 'Tocca «Rileva» oppure spunta la cornice e indica inizio e misura.', 'Touchez « Détecter » ou cochez le cadre et indiquez le début et la taille.'],
+    paintColor: ['צבע הציור', 'Paint colour', 'Цвет рисования', 'لون الرسم', 'Malfarbe', 'Color de pintura', 'Colore di pittura', 'Couleur de peinture'],
+    bgColor: ['רקע', 'Background', 'Фон', 'الخلفية', 'Hintergrund', 'Fondo', 'Sfondo', 'Fond'],
+    recolor: ['שינוי הצבע הזה בכל התרשים', 'Change this colour in the whole chart', 'Заменить этот цвет во всей схеме', 'تغيير هذا اللون في كل المخطط', 'Diese Farbe überall ändern', 'Cambiar este color en todo el gráfico', 'Cambia questo colore in tutto lo schema', 'Changer cette couleur partout'],
+    pdfInfo: ['פרטי הדוגמה (תיאור, חומרים, קיצורים)', 'Pattern details (description, materials, abbreviations)', 'Описание и материалы', 'تفاصيل النموذج', 'Details (Beschreibung, Material, Abkürzungen)', 'Detalles (descripción, materiales)', 'Dettagli (descrizione, materiali)', 'Détails (description, matériel)'],
+    pdfChart: ['תרשים', 'Chart', 'Схема', 'المخطط', 'Diagramm', 'Gráfico', 'Schema', 'Grille'],
+    pdfWritten: ['הוראות כתובות והערות עבודה', 'Written instructions & working notes', 'Описание и заметки', 'التعليمات المكتوبة والملاحظات', 'Anleitung & Arbeitsnotizen', 'Instrucciones escritas y notas', 'Istruzioni scritte e note', 'Explications écrites et notes'],
+    pdfPhotos: ['תמונות', 'Photos', 'Фото', 'الصور', 'Fotos', 'Fotos', 'Foto', 'Photos'],
+    pdfLinks: ['קישורים וסרטונים', 'Links & videos', 'Ссылки и видео', 'الروابط والفيديو', 'Links & Videos', 'Enlaces y vídeos', 'Link e video', 'Liens et vidéos'],
+    pdfOrderHint: ['מסמנים ✓ מה ייכנס ל-PDF, ומשנים את הסדר בחיצים ▲▼.', 'Tick ✓ what goes into the PDF and change the order with ▲▼.', 'Отметьте разделы PDF и меняйте порядок ▲▼.', 'حددي ✓ ما يدخل في PDF وغيّري الترتيب ▲▼.', 'Hake ✓ an, was ins PDF kommt, und ändere die Reihenfolge mit ▲▼.', 'Marca ✓ lo que va al PDF y cambia el orden con ▲▼.', 'Spunta ✓ cosa va nel PDF e cambia l’ordine con ▲▼.', 'Cochez ✓ ce qui va dans le PDF et changez l’ordre avec ▲▼.'],
     planUse: ['להוסיף את תכנון הצבעים לדוגמה (לקובץ ה-PDF)', 'Add the colour plan to the pattern (to the PDF)', 'Добавить подбор цветов в схему (в PDF)', 'إضافة تخطيط الألوان إلى النموذج (إلى PDF)', 'Farbplanung zur Anleitung hinzufügen (ins PDF)', 'Añadir el plan de colores al patrón (al PDF)', 'Aggiungi il piano colori allo schema (al PDF)', 'Ajouter le plan de couleurs au modèle (au PDF)'],
     saveFinal: ['שמירה סופית', 'Final save', 'Сохранить', 'حفظ نهائي', 'Endgültig speichern', 'Guardar final', 'Salva definitivo', 'Enregistrer'],
     saveFinalHint: ['יוצר תמונה ו-PDF בתיקייה', 'Creates the image and PDF in the folder', 'Создаёт картинку и PDF в папке', 'ينشئ صورة وPDF في المجلد', 'Erstellt Bild und PDF im Ordner', 'Crea la imagen y el PDF en la carpeta', 'Crea immagine e PDF nella cartella', 'Crée l\'image et le PDF dans le dossier'],
@@ -194,8 +210,8 @@
     cpTitle: ['תכנון צבעים', 'Colour planner', 'Подбор цветов', 'تخطيط الألوان', 'Farbplaner', 'Planificador de colores', 'Pianificatore colori', 'Planificateur de couleurs'],
     cpHint: ['ריבוע סבתא ופסים – כולל חוטים מחליפי צבעים ופלטה צפויה', 'Granny squares and stripes – including self-striping yarns and the expected palette', 'Бабушкин квадрат и полосы – с секционной пряжей и ожидаемой палитрой', 'مربع الجدة والخطوط – مع خيوط متغيرة الألوان واللوحة المتوقعة', 'Granny Squares und Streifen – mit Farbverlaufsgarn und erwarteter Palette', 'Granny squares y rayas – con hilos multicolor y la paleta prevista', 'Granny square e righe – con filati multicolore e la palette prevista', 'Granny squares et rayures – avec fils multicolores et palette prévue'],
     cpMode: ['סוג', 'Type', 'Тип', 'النوع', 'Art', 'Tipo', 'Tipo', 'Type'],
-    cpGranny: ['ריבוע סבתא', 'Granny square', 'Бабушкин квадрат', 'مربع الجدة', 'Granny Square', 'Granny square', 'Granny square', 'Granny square'],
-    cpStripes: ['פסים בשורות', 'Stripes in rows', 'Полосы по рядам', 'خطوط بالصفوف', 'Streifen in Reihen', 'Rayas por vueltas', 'Righe per ferri', 'Rayures par rangs'],
+    cpGranny: ['מעגלים', 'Rounds', 'Круги', 'دوائر', 'Runden', 'Vueltas', 'Giri', 'Tours'],
+    cpStripes: ['שורות', 'Rows', 'Ряды', 'صفوف', 'Reihen', 'Filas', 'Righe', 'Rangs'],
     cpRounds: ['סיבובים', 'Rounds', 'Круги', 'الدورات', 'Runden', 'Vueltas', 'Giri', 'Tours'],
     cpYarns: ['חוטים', 'Yarns', 'Пряжа', 'الخيوط', 'Garne', 'Hilos', 'Filati', 'Fils'],
     cpAddYarn: ['＋ חוט', '＋ Yarn', '＋ Пряжа', '＋ خيط', '＋ Garn', '＋ Hilo', '＋ Filato', '＋ Fil'],
@@ -217,7 +233,6 @@
     cpRound: ['סיבוב {n}', 'Round {n}', 'Круг {n}', 'الدورة {n}', 'Runde {n}', 'Vuelta {n}', 'Giro {n}', 'Tour {n}'],
     cpRowN: ['שורה {n}', 'Row {n}', 'Ряд {n}', 'الصف {n}', 'Reihe {n}', 'Vuelta {n}', 'Ferro {n}', 'Rang {n}'],
     cpYarnName: ['שם החוט', 'Yarn name', 'Название пряжи', 'اسم الخيط', 'Garnname', 'Nombre del hilo', 'Nome del filato', 'Nom du fil'],
-    cpPro: ['PRO', 'PRO', 'PRO', 'PRO', 'PRO', 'PRO', 'PRO', 'PRO'],
     cpMosaicColors: ['🎨 צבע לכל שורה (תכנון צבעים)', '🎨 Colour per row (colour planner)', '🎨 Цвет каждого ряда', '🎨 لون لكل صف', '🎨 Farbe pro Reihe', '🎨 Color por vuelta', '🎨 Colore per giro', '🎨 Couleur par rang'],
     cpUsePlan: ['צבע נפרד לכל שורה, כולל חוטים מחליפי צבעים', 'A separate yarn for each row, including self-striping yarns', 'Своя пряжа для каждого ряда, включая секционную', 'خيط مختلف لكل صف، بما فيه الخيوط متغيرة الألوان', 'Eigenes Garn je Reihe, auch Farbverlaufsgarn', 'Un hilo para cada vuelta, incluidos multicolor', 'Un filato per ogni giro, anche multicolore', 'Un fil par rang, y compris multicolores'],
     cpPooling: ['בחוטים מחליפי צבעים התוצאה תלויה בכיוון הסריגה ובמספר העיניים בשורה – התצוגה מדמה את מה שצפוי לצאת.', 'With self-striping yarns the result depends on the working direction and stitches per row – the preview simulates the expected outcome.', 'У секционной пряжи результат зависит от направления и числа петель в ряду – превью показывает ожидаемое.', 'مع الخيوط متغيرة الألوان تعتمد النتيجة على اتجاه العمل وعدد الغرز – المعاينة تحاكي النتيجة المتوقعة.', 'Bei Farbverlaufsgarn hängt das Ergebnis von Strickrichtung und Maschenzahl ab – die Vorschau simuliert es.', 'Con hilos multicolor el resultado depende de la dirección y de los puntos por vuelta: la vista previa lo simula.', 'Con i filati multicolore il risultato dipende da direzione e numero di maglie: l\'anteprima lo simula.', 'Avec un fil multicolore, le résultat dépend du sens et du nombre de mailles : l\'aperçu le simule.'],
@@ -432,7 +447,7 @@
     });
     const peekBtn = navBtn('↩', t('stPrev'), 'studio-prev', minimize);
     peekBtn.title = t('stPeek');
-    const head = el('header', { class: 'topbar studio-top' }, back, homeBtn, peekBtn, el('div', { class: 'studio-kind' }, titleText), nameIn, folderBtn, status, draftBtn, saveBtn);
+    const head = el('header', { class: 'topbar studio-top' }, back, homeBtn, peekBtn, el('div', { class: 'studio-kind' }, titleText), nameIn, folderBtn, status, el('div', { class: 'save-pair' }, draftBtn, saveBtn));
     const body = el('div', { class: 'studio-body' });
     wrap.append(head, body);
     document.body.append(wrap);
@@ -516,9 +531,11 @@
       const y = y0 + (H - 1 - r) * cs;
       for (let c = 0; c < W; c++) o.cell(r, c, x0 + c * cs, y);
     }
-    // קווי רשת
+    // קווי רשת (במוזאיק עם שוליים – המספור מתחיל אחרי עין השוליים הימנית)
+    const off = o.colOff || 0;
+    if (cs < 4) ctx.globalAlpha = .5;
     for (let c = 0; c <= W; c++) {
-      const n = W - c; // מספר עין מימין
+      const n = W - c - off; // מספר עין מימין
       ctx.strokeStyle = n % 10 === 0 ? 'rgba(0,0,0,.55)' : 'rgba(0,0,0,.18)';
       ctx.lineWidth = n % 10 === 0 ? 1.4 : 1;
       ctx.beginPath(); ctx.moveTo(x0 + c * cs + .5, y0); ctx.lineTo(x0 + c * cs + .5, y0 + H * cs); ctx.stroke();
@@ -529,19 +546,21 @@
       const y = y0 + (H - r) * cs + .5;
       ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x0 + W * cs, y); ctx.stroke();
     }
+    ctx.globalAlpha = 1;
     // מספרי שורות מימין, מספרי עיניים למטה
     const fs = Math.max(9, Math.min(13, cs * .7));
     ctx.font = `600 ${fs}px system-ui, sans-serif`;
     ctx.fillStyle = '#333';
-    const every = cs >= 13 ? 1 : cs >= 8 ? 5 : 10;
+    const every = cs >= 13 ? 1 : cs >= 8 ? 5 : cs >= 4 ? 10 : 20;
     for (let r = 0; r < H; r++) {
       if ((r + 1) % every && r !== 0) continue;
       const y = y0 + (H - 1 - r) * cs + cs / 2;
       ctx.fillText(String(r + 1), x0 + W * cs + (o.rowSwatch ? 30 : 16), y);
     }
     for (let c = 0; c < W; c++) {
-      const n = W - c;
-      if (n % (cs >= 13 ? 5 : 10) && n !== 1) continue;
+      const n = W - c - off;
+      if (n < 1 || n > W - 2 * off) continue;
+      if (n % (cs >= 13 ? 5 : cs >= 4 ? 10 : 20) && n !== 1) continue;
       ctx.fillText(String(n), x0 + c * cs + cs / 2, y0 + H * cs + 11);
     }
     ctx.restore();
@@ -552,7 +571,7 @@
     const { W, H, cs, x0, y0 } = o;
     ctx.save(); ctx.strokeStyle = '#e53935'; ctx.lineWidth = 3;
     if (rep.h && rep.h.on && rep.h.size > 0) {
-      const a = rep.h.start, b = Math.min(W, a + rep.h.size - 1);
+      const a = rep.h.start + (o.colOff || 0), b = Math.min(W, a + rep.h.size - 1);
       ctx.strokeRect(x0 + (W - b) * cs + 1.5, y0 + 1.5, (b - a + 1) * cs - 3, H * cs - 3);
     }
     if (rep.v && rep.v.on && rep.v.size > 0) {
@@ -604,7 +623,7 @@
     } }, t('repDetect'));
     refresh();
     return el('details', { class: 'studio-help', open: rep.h.on || rep.v.on ? '' : null },
-      el('summary', {}, t('repTitle')), el('div', { class: 'studio-row' }, detectBtn), h.row, v.row, info);
+      el('summary', {}, t('repTitle')), el('p', { class: 'muted small-note' }, t('repHow')), el('div', { class: 'studio-row' }, detectBtn), h.row, v.row, info);
   }
   const emptyRep = () => ({ h: { on: false, start: 1, size: 4 }, v: { on: false, start: 1, size: 4 } });
   function workNotesBox(holder, key, ed) {
@@ -613,6 +632,47 @@
     return el('details', { class: 'studio-help', open: holder[key] ? '' : null }, el('summary', {}, t('workNotes')), ta);
   }
   const fitCellSize = (wrap, W, min, max) => Math.max(min, Math.min(max, Math.floor(((wrap.clientWidth || 600) - 60) / W)));
+  // כל התרשים במסך בלי גלילה – לפי הרוחב וגם לפי הגובה
+  const fitAllSize = (wrap, W, H, max) => {
+    const h = Math.max(160, Math.min(window.innerHeight * .7, window.innerHeight - wrap.getBoundingClientRect().top - 16) - 40);
+    return Math.max(2, Math.min(max, Math.floor(Math.min(((wrap.clientWidth || 600) - 60) / W, h / H))));
+  };
+  // הגדלה / הקטנה בשתי אצבעות כשהתרשים במצב גלילה (לא מקלקל את הציור)
+  function pinchZoom(wrap, isPaint, getCs, setCs, min, max) {
+    let d0 = 0, cs0 = 0, raf = 0;
+    const dist = (e) => Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+    wrap.addEventListener('touchstart', (e) => { if (e.touches.length === 2 && !isPaint()) { d0 = dist(e); cs0 = getCs(); } }, { passive: true });
+    wrap.addEventListener('touchmove', (e) => {
+      if (e.touches.length !== 2 || !d0 || isPaint()) return;
+      e.preventDefault();
+      const r = wrap.getBoundingClientRect();
+      const mx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - r.left, my = (e.touches[0].clientY + e.touches[1].clientY) / 2 - r.top;
+      const next = Math.max(min, Math.min(max, Math.round(cs0 * dist(e) / d0)));
+      if (next === getCs() || raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const k = next / getCs(), sx = wrap.scrollLeft + mx, sy = wrap.scrollTop + my;
+        setCs(next);
+        wrap.scrollLeft = sx * k - mx; wrap.scrollTop = sy * k - my; // הנקודה שבין האצבעות נשארת במקום
+      });
+    }, { passive: false });
+    const end = (e) => { if (e.touches.length < 2) d0 = 0; };
+    wrap.addEventListener('touchend', end); wrap.addEventListener('touchcancel', end);
+  }
+  // מקרא קטן מתחת לכלים: מה רואים בתרשים
+  function chartLegend(items) {
+    const box = el('div', { class: 'chart-legend' });
+    for (const [draw, text, extra] of items) {
+      const cv = el('canvas', { width: '44', height: '44', style: 'width:22px;height:22px' });
+      const c2 = cv.getContext('2d'); c2.scale(2, 2); c2.fillStyle = '#fff'; c2.fillRect(0, 0, 22, 22); draw(c2);
+      box.append(el('div', { class: 'chart-legend-item' }, cv, el('span', {}, text), extra || null));
+    }
+    return el('details', { class: 'studio-help legend-help' }, el('summary', {}, 'ℹ️ ' + t('lgTitle')), box);
+  }
+  const lgFrameDraw = (c) => { c.strokeStyle = '#e53935'; c.lineWidth = 2.5; c.strokeRect(3, 3, 16, 16); };
+  const lgEdgeDraw = (c) => { c.fillStyle = '#f3f0ea'; c.fillRect(0, 0, 22, 22); edgeCircle(c, 1, 1, 20, '#555'); };
+  // כפתור שפותח את פאנל האלמנט החוזר וגולל אליו
+  const openRepBtn = (repBox) => el('button', { class: 'btn small', onclick: () => { repBox.open = true; repBox.scrollIntoView({ behavior: 'smooth', block: 'center' }); } }, t('lgMakeRep'));
 
   function cellFromEvent(canvas, e, o) {
     const r = canvas.getBoundingClientRect();
@@ -638,11 +698,40 @@
     ctx.strokeStyle = col; ctx.lineWidth = Math.max(1, cs * .08);
     ctx.beginPath(); ctx.arc(x + cs / 2, y + cs / 2, cs * .3, 0, 7); ctx.stroke();
   }
-  // הגדרות PDF: מה לצרף + הורדה מיידית
-  const PDF_OPT0 = () => ({ rows: true, fixed: true, imgs: true });
+  // הגדרות PDF: מה לצרף ובאיזה סדר (+ הורדה מיידית בעורכים הישנים)
+  const PDF_KEYS = ['info', 'chart', 'rows', 'written', 'imgs', 'links', 'fixed'];
+  const PDF_LABEL = { info: 'pdfInfo', chart: 'pdfChart', rows: 'pdfRows', written: 'pdfWritten', imgs: 'pdfPhotos', links: 'pdfLinks', fixed: 'pdfFixed' };
+  const PDF_OPT0 = () => ({ info: true, chart: true, rows: true, written: true, imgs: true, links: true, fixed: true, order: PDF_KEYS.slice() });
+  // הגדרות שנשמרו לפני שהיה סדר: משלימים מפתחות חסרים
+  function pdfOptNorm(opt) {
+    const raw = opt || {};
+    opt = { ...PDF_OPT0(), ...raw };
+    if (raw.links === undefined && raw.imgs !== undefined) opt.links = raw.imgs; // פעם תמונות וקישורים היו סימון אחד
+    const order = (opt.order || []).filter((k) => PDF_KEYS.includes(k));
+    for (const k of PDF_KEYS) if (!order.includes(k)) order.push(k);
+    opt.order = order;
+    return opt;
+  }
   function pdfPanel(ed, state, makeHtml, withRows) {
+    state.opt = pdfOptNorm(state.opt);
     const chk = (label, get, set) => { const c = el('input', { type: 'checkbox' }); c.checked = get(); c.onchange = () => { set(c.checked); ed.setDirty(); }; return el('label', { class: 'chk' }, c, label); };
-    const dl = el('button', { class: 'btn small primary', onclick: async () => {
+    const list = el('div', { class: 'pdf-order' });
+    const build = () => {
+      list.innerHTML = '';
+      const keys = state.opt.order.filter((k) => withRows || k !== 'rows');
+      keys.forEach((k, i) => {
+        const move = (d) => {
+          const o = state.opt.order, a = o.indexOf(k), b = o.indexOf(keys[i + d]);
+          [o[a], o[b]] = [o[b], o[a]]; ed.setDirty(); build();
+        };
+        list.append(el('div', { class: 'pdf-order-row' },
+          chk(t(PDF_LABEL[k]), () => state.opt[k] !== false, (v) => { state.opt[k] = v; }),
+          el('button', { class: 'btn small icon-btn', title: '▲', disabled: i === 0 ? '' : null, onclick: () => move(-1) }, '▲'),
+          el('button', { class: 'btn small icon-btn', title: '▼', disabled: i === keys.length - 1 ? '' : null, onclick: () => move(1) }, '▼')));
+      });
+    };
+    build();
+    const dl = makeHtml ? el('button', { class: 'btn small primary', onclick: async () => {
       try {
         const name = ed.nameIn.value.trim() || t('stUntitled');
         const blob = await busy(t('pdfMaking'), async () => {
@@ -652,13 +741,11 @@
         const a = el('a', { href: URL.createObjectURL(blob), download: name + '.pdf' });
         document.body.append(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000);
       } catch (e) { err(e); }
-    } }, t('pdfDownload'));
+    } }, t('pdfDownload')) : null;
     return el('details', { class: 'studio-help', open: '' }, el('summary', {}, t('pdfOpts')),
       chk(t('exportPdf'), () => state.on, (v) => { state.on = v; }),
-      withRows ? chk(t('pdfRows'), () => state.opt.rows, (v) => { state.opt.rows = v; }) : null,
-      chk(t('pdfFixed'), () => state.opt.fixed, (v) => { state.opt.fixed = v; }),
-      chk(t('pdfImgs'), () => state.opt.imgs, (v) => { state.opt.imgs = v; }),
-      el('div', { class: 'studio-row' }, dl));
+      el('p', { class: 'muted small-note' }, t('pdfOrderHint')), list,
+      dl ? el('div', { class: 'studio-row' }, dl) : null);
   }
   // X אדום על משבצת שאי אפשר לצבוע
   function flashBad(canvas, o, p) {
@@ -802,7 +889,7 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, width, height);
     const C = (r) => (m.start + r) % 2;
-    const o = { W, H, cs, x0, y0, dpr, rowSwatch: true };
+    const o = { W, H, cs, x0, y0, dpr, rowSwatch: true, colOff: m.edges ? 1 : 0 };
     drawGrid(ctx, { ...o, cell: (r, c, x, y) => {
       const i = r * W + c;
       const sr = r + 1 < H && res.X[(r + 1) * W + c] ? r + 1 : r; // השורה שהעין שלה נראית כאן
@@ -967,7 +1054,7 @@
       pushUndo();
       rebuild();
       // התרשים מתאים את עצמו לרוחב המסך
-      cs = fitCellSize(wrapEl, m.W, 6, 34); zoom.value = String(cs); redraw();
+      cs = fitCellSize(wrapEl, m.W, 4, 34); zoom.value = String(cs); redraw();
     } }, t('mFromImage'));
     const blank = el('button', { class: 'btn', onclick: () => {
       m.src = null; m.img = null; imgRow.classList.add('hidden');
@@ -1003,8 +1090,9 @@
     };
     const errChk = el('input', { type: 'checkbox' }); errChk.checked = showErr;
     errChk.onchange = () => { showErr = errChk.checked; redraw(); };
-    const zoom = el('input', { type: 'range', min: '6', max: '34', value: String(cs) });
+    const zoom = el('input', { type: 'range', min: '2', max: '34', value: String(cs) });
     zoom.oninput = () => { cs = Number(zoom.value); redraw(); };
+    const fitBtn = el('button', { class: 'btn small', onclick: () => { cs = fitAllSize(wrapEl, m.W, m.H, 34); zoom.value = String(cs); redraw(); } }, t('fitScreen'));
     const sizeLbl = el('span', { class: 'muted' });
 
     const pt = paintToggle(canvas);
@@ -1026,11 +1114,19 @@
       let q = findPeriod((i, j) => m.T[(i + 2) * m.W + j + e], rows, inner);
       if (q % 2) q *= 2; // במוזאיק הצבעים מתחלפים כל שורה – החזרה האנכית זוגית
       if (q > rows / 2) q = 0;
-      return { p, hStart: 1 + e, q, vStart: 3 };
+      return { p, hStart: 1, q, vStart: 3 };
     }, () => { ed.setDirty(); redraw(); });
     const wrapEl = el('div', { class: 'studio-canvas-wrap' }, canvas);
+    pinchZoom(wrapEl, pt.isOn, () => cs, (v) => { cs = v; zoom.value = String(cs); redraw(); }, 2, 34);
+    const xDraw = (c) => { c.fillStyle = m.colors[1]; c.fillRect(0, 0, 22, 22); c.strokeStyle = ink(m.colors[1]); c.lineWidth = 2.4; c.lineCap = 'round'; c.beginPath(); c.moveTo(6, 6); c.lineTo(16, 16); c.moveTo(16, 6); c.lineTo(6, 16); c.stroke(); };
+    const legend = chartLegend([
+      [(c) => { c.fillStyle = m.colors[0]; c.fillRect(0, 0, 22, 22); c.fillStyle = '#e53935'; c.beginPath(); c.arc(16, 6, 4, 0, 7); c.fill(); }, t('lgDot')],
+      [xDraw, t('lgX')],
+      [lgFrameDraw, t('lgFrame'), openRepBtn(repBox)],
+      [lgEdgeDraw, t('lgEdge')],
+    ]);
 
-    // תכנון צבעים לפי שורות (PRO)
+    // תכנון צבעים לפי שורות
     const usePlan = el('input', { type: 'checkbox' }); usePlan.checked = !!m.plan;
     const planHolder = el('div', {});
     const buildPlan = () => {
@@ -1043,7 +1139,7 @@
       planFit(); buildPlan(); ed.setDirty(); redraw();
     };
     const planWrap = el('details', { class: 'studio-help', open: m.plan ? '' : null },
-      el('summary', {}, t('cpMosaicColors'), ' ', el('span', { class: 'pro-badge' }, t('cpPro'))),
+      el('summary', {}, t('cpMosaicColors')),
       el('label', { class: 'chk' }, usePlan, t('cpUsePlan')), planHolder);
     buildPlan();
     const chartPane = el('div', {});
@@ -1059,18 +1155,19 @@
         el('p', { class: 'muted small-note' }, t('mPhotoTip')),
         el('div', { class: 'studio-row' }, el('label', {}, t('stWidth'), widthIn), el('label', {}, t('stHeight'), heightIn), applySize, sizeLbl),
         imgRow,
-        el('div', { class: 'studio-row' }, el('label', {}, t('mColorA'), colorA), el('label', {}, t('mColorB'), colorB),
-          ),
         el('p', { class: 'muted small-note' }, t('tapHint')),
         el('div', { class: 'studio-row' }, el('label', { class: 'chk' }, edges, t('mEdges')), el('label', { class: 'chk' }, errChk, t('mShowErr'))),
         el('details', { class: 'studio-help' }, el('summary', {}, 'ℹ️ ' + t('stMosaic')), el('p', {}, t('mRules'))),
         repBox, planWrap, workNotesBox(m, 'workNotes', ed), host ? null : pdfPanel(ed, pdf, mosaicHtml, true)),
       stats,
-      el('div', { class: 'studio-row canvas-tools' }, pt.btn, undoBtn, el('label', { class: 'zoom-lbl' }, '🔍', zoom)),
+      el('div', { class: 'studio-row canvas-tools' }, pt.btn, undoBtn,
+        el('label', { class: 'color-lbl' }, colorA, t('bgColor')), el('label', { class: 'color-lbl' }, colorB, t('paintColor')),
+        el('label', { class: 'zoom-lbl' }, '🔍', zoom), fitBtn),
       el('p', { class: 'muted small-note canvas-hint' }, t('paintHint')),
+      legend,
       wrapEl);
     updBrush(); redraw();
-    const refit = () => { cs = fitCellSize(wrapEl, m.W, 6, 34); zoom.value = String(cs); redraw(); };
+    const refit = () => { cs = fitCellSize(wrapEl, m.W, 4, 34); zoom.value = String(cs); redraw(); };
     requestAnimationFrame(refit);
     if (host) {
       return {
@@ -1079,6 +1176,7 @@
         png: (name) => exportMosaicPng(m, res, name),
         rows: () => [t('mAbbrLine'), t('mMethod'), ...(m.edges ? [t('edgeLegend')] : []), ...repeatText(m.rep, m.W, m.H), ...mosaicInstructions(m, res)],
         workNotes: () => m.workNotes,
+        isEmpty: () => m.T.every((v, i) => v === (m.start + Math.floor(i / m.W)) % 2),
       };
     }
 
@@ -1320,6 +1418,17 @@
     };
     const legendBox = el('div', { class: 'sym-legend' });
     const symName = el('div', { class: 'sym-name' });
+    // שינוי צבע קיים בכל התרשים בבת אחת
+    const recolorIn = el('input', { type: 'color' });
+    const recolorLbl = el('label', { class: 'color-lbl' }, recolorIn, t('recolor'));
+    recolorIn.oninput = () => {
+      const from = tool.c, to = recolorIn.value;
+      if (tool.kind !== 'color' || from === to) return;
+      for (let i = 0; i < ch.Cc.length; i++) if (ch.Cc[i] === from) ch.Cc[i] = to;
+      ch.palette = ch.palette.map((c) => (c === from ? to : c)); if (!ch.palette.includes(to)) ch.palette.unshift(to);
+      if (ch.colorNames[from] != null) { ch.colorNames[to] = ch.colorNames[from]; delete ch.colorNames[from]; }
+      tool = { kind: 'color', c: to }; ed.setDirty(); redraw(); buildPalette();
+    };
     const setTool = (t2) => { tool = t2; buildPalette(); };
     function buildPalette() {
       colBox.innerHTML = '';
@@ -1335,6 +1444,8 @@
       palBox.append(el('button', { class: 'sym-btn wide' + (tool.kind === 'erase' ? ' on' : ''), onclick: () => setTool({ kind: 'erase' }) }, t('stEraser')));
       symName.textContent = tool.kind === 'sym' ? t(SYM_NAME[tool.id]) : tool.kind === 'erase' ? t('stEraser') : '';
       nameIn.classList.toggle('hidden', !(tool.kind === 'color' && tool.c !== '#ffffff'));
+      recolorLbl.classList.toggle('hidden', !(tool.kind === 'color' && tool.c !== '#ffffff' && ch.Cc.includes(tool.c)));
+      if (tool.kind === 'color') recolorIn.value = tool.c;
       if (tool.kind === 'color') nameIn.value = ch.colorNames[tool.c] || '';
       // מקרא הסמלים – כל הסמלים של סוג המלאכה עם השם שלהם
       legendBox.innerHTML = '';
@@ -1348,8 +1459,9 @@
     }
     customColor.oninput = () => { if (!ch.palette.includes(customColor.value)) ch.palette.unshift(customColor.value); setTool({ kind: 'color', c: customColor.value }); };
     const undoBtn = el('button', { class: 'btn small', onclick: () => { const u = undo.pop(); if (u) { ch.S = u.S; ch.Cc = u.Cc; redraw(); } } }, t('stUndo'));
-    const zoom = el('input', { type: 'range', min: '10', max: '44', value: String(cs) });
+    const zoom = el('input', { type: 'range', min: '2', max: '44', value: String(cs) });
     zoom.oninput = () => { cs = Number(zoom.value); redraw(); };
+    const fitBtn = el('button', { class: 'btn small', onclick: () => { cs = fitAllSize(wrapEl, ch.W, ch.H, 44); zoom.value = String(cs); redraw(); } }, t('fitScreen'));
 
     const pt = paintToggle(canvas);
     let clearing = false;
@@ -1366,7 +1478,7 @@
       else if (tool.kind === 'color') ch.Cc[i] = clearing || tool.c === '#ffffff' ? '' : tool.c;
       else { ch.S[i] = ''; ch.Cc[i] = ''; }
       ed.setDirty(); redraw();
-    }, null, pt.isOn);
+    }, () => { if (tool.kind === 'color') buildPalette(); }, pt.isOn);
     const key = (r, c) => (ch.S[r * ch.W + c] || '') + '|' + (ch.Cc[r * ch.W + c] || '');
     const repBox = repeatPanel(ch.rep, () => ({ W: ch.W, H: ch.H }), () => {
       const e = ch.edges ? 1 : 0, inner = ch.W - 2 * e;
@@ -1376,19 +1488,23 @@
       };
     }, () => { ed.setDirty(); redraw(); });
     const wrapEl = el('div', { class: 'studio-canvas-wrap' }, canvas);
+    pinchZoom(wrapEl, pt.isOn, () => cs, (v) => { cs = v; zoom.value = String(cs); redraw(); }, 2, 44);
+    const legend = chartLegend([[lgFrameDraw, t('lgFrame'), openRepBtn(repBox)], [lgEdgeDraw, t('lgEdge')]]);
 
     const chartPane = el('div', {},
       el('div', { class: 'studio-panel' },
         el('div', { class: 'studio-row' }, el('label', {}, t('stCraft'), craftSel), el('label', {}, workSel)),
         el('div', { class: 'studio-row' }, el('label', {}, t('stWidth'), widthIn), el('label', {}, t('stHeight'), heightIn), applySize),
         el('label', { class: 'chk' }, edgesChk, t('mEdges')),
-        el('div', { class: 'studio-sub' }, t('stColors')), colBox, nameIn, el('p', { class: 'muted small-note' }, t('colorCodeHint')),
-        colorsOnly ? null : el('div', { class: 'studio-sub' }, t('stSymbols')), colorsOnly ? null : palBox,
+        el('p', { class: 'muted small-note' }, t('colorCodeHint')),
         colorsOnly ? null : el('details', { class: 'studio-help' }, el('summary', {}, t('symLegend')), legendBox),
         el('p', { class: 'muted small-note' }, t('chartTapHint')),
         repBox, workNotesBox(ch, 'workNotes', ed), host ? null : pdfPanel(ed, pdf, chartHtml, true)),
-      el('div', { class: 'studio-row canvas-tools' }, pt.btn, undoBtn, symName, el('label', { class: 'zoom-lbl' }, '🔍', zoom)),
+      el('div', { class: 'studio-row canvas-tools' }, pt.btn, undoBtn, symName, el('label', { class: 'zoom-lbl' }, '🔍', zoom), fitBtn),
+      // הצבעים והסמלים צמודים לתרשים – מחליפים צבע תוך כדי ציור
+      el('div', { class: 'paint-bar' }, colBox, el('div', { class: 'studio-row' }, nameIn, recolorLbl), colorsOnly ? null : palBox),
       el('p', { class: 'muted small-note canvas-hint' }, t('paintHint')),
+      legend,
       wrapEl);
     if (host) host.pane.append(chartPane);
     else {
@@ -1397,7 +1513,7 @@
       editorTabs(ed, [[t('tabGeneral'), parts.general], [t('tabChart'), chartPane], [t('tabWritten'), parts.written]], 1);
     }
     buildPalette(); redraw();
-    const refit = () => { cs = fitCellSize(wrapEl, ch.W, 10, 44); zoom.value = String(cs); redraw(); };
+    const refit = () => { cs = fitCellSize(wrapEl, ch.W, 4, 44); zoom.value = String(cs); redraw(); };
     requestAnimationFrame(refit);
     if (host) {
       return {
@@ -1406,6 +1522,7 @@
         png: (name) => exportChartPng(ch, name),
         rows: () => [...(ch.edges ? [t('edgeLegend')] : []), ...repeatText(ch.rep, ch.W, ch.H), ...chartInstructions(ch)],
         workNotes: () => ch.workNotes,
+        isEmpty: () => !ch.S.some(Boolean) && !ch.Cc.some(Boolean),
       };
     }
 
@@ -1658,7 +1775,7 @@
     work.onchange = () => { plan.work = work.value; ed.setDirty(); redraw(); };
     (host ? host.pane : ed.body).append(
       el('div', { class: 'studio-panel' },
-        el('div', { class: 'studio-row' }, el('label', {}, t('cpMode'), mode), el('span', { class: 'pro-badge' }, t('cpPro'))),
+        el('div', { class: 'studio-row' }, el('label', {}, t('cpMode'), mode)),
         grannyRow, stripeRow),
       el('div', { class: 'studio-panel' }, el('div', { class: 'studio-sub' }, t('cpPalette')), palBox),
       cvWrap,
@@ -2070,8 +2187,7 @@
 
   // מסמך הדוגמה המלא (HTML ← Google Docs ← PDF)
   function patternHtml({ title, w, chartUrl, rowsTitle, rows, defaults, kind, workNotes, extraCharts, opt }) {
-    opt = opt || { rows: true, fixed: true, imgs: true };
-    if (!opt.fixed) defaults = { designer: defaults && defaults.designer, copyright: ' ', general: '', files: [] };
+    opt = pdfOptNorm(opt);
     const dir = isRtl() ? 'rtl' : 'ltr';
     const br = (v) => esc(v).replace(/\n/g, '<br>');
     const row = (k, v) => (v ? `<p><b>${esc(t(k))}:</b> ${br(v)}</p>` : '');
@@ -2085,24 +2201,28 @@
     const imgs = (w.images || []).map((src) => `<p><img src="${src}" style="max-width:480px"></p>`).join('');
     const attach = ((defaults && defaults.files) || []).map((f) => f.pages.map((pg) => `<p><img src="${pg}" style="max-width:100%"></p>`).join('')).join('');
     const levels = { 1: 'lvl1', 2: 'lvl2', 3: 'lvl3', 4: 'lvl4' };
-    return `<!doctype html><html><head><meta charset="utf-8"></head><body dir="${dir}" style="font-family:Arial,sans-serif">
-<h1>${esc(title)}</h1>
-${designer ? `<p>${esc(t('wDesigner'))}: ${esc(designer)}</p>` : ''}
-${w.description ? `<p>${br(w.description)}</p>` : ''}
+    const on = (k) => opt[k] !== false;
+    const parts = {
+      info: `${w.description ? `<p>${br(w.description)}</p>` : ''}
 ${w.cover ? `<p><img src="${w.cover}" style="max-width:440px"></p>` : ''}
 <p><b>${esc(kind)}</b> · ${esc(w.craft === 'crochet' ? t('stCrochet') : t('stKnit'))}${w.level ? ` · <b>${esc(t('wLevel'))}:</b> ${esc(t(levels[w.level]))}` : ''}</p>
 ${w.terms ? `<p><b>${esc(t('termsLbl'))}:</b> ${esc(w.terms)}</p>` : ''}${row('wNeedles', needlesText(w) || w.tools)}${row('wYarn', w.yarn)}${row('wGauge', gaugeText(w) || w.gauge)}${row('wFinished', w.sizes)}${row('wMeasure', w.measure)}${row('wNotions', w.notions)}
 ${w.abbr ? `<h2>${esc(t('wAbbr'))}</h2><p>${br(w.abbr)}</p>` : ''}
-${w.notes ? `<h2>${esc(t('wGeneralNotes'))}</h2><p>${br(w.notes)}</p>` : ''}
-${workNotes ? `<h2>${esc(t('workNotes').replace(/^\S+\s/, ''))}</h2><p>${br(workNotes)}</p>` : ''}
-${chartUrl || (extraCharts && extraCharts.length) || (w.chartFiles && w.chartFiles.length) ? `<h2>${esc(t('hChart'))}</h2>` : ''}${chartUrl ? `<p><img src="${chartUrl}" style="max-width:100%"></p>` : ''}${(extraCharts || []).map((u) => `<p><img src="${u}" style="max-width:100%"></p>`).join('')}${(w.chartFiles || []).map((f) => f.pages.map((pg) => `<p><img src="${pg}" style="max-width:100%"></p>`).join('')).join('')}
-${opt.rows && rows && rows.length ? `<h2>${esc(rowsTitle || t('hRows'))}</h2>${rows.map((l) => `<p style="margin:2px 0">${esc(l)}</p>`).join('')}` : ''}
-${sections ? `<h2>${esc(t('wInstructions'))}</h2>${sections}` : ''}
-${opt.imgs && imgs ? `<h2>${esc(t('hImages'))}</h2>${imgs}` : ''}
-${opt.imgs && links ? `<h2>${esc(t('hLinks'))}</h2>${links}` : ''}
-${defaults && defaults.general ? `<h2>${esc(t('hGeneral'))}</h2><p>${br(defaults.general)}</p>` : ''}
+${w.notes ? `<h2>${esc(t('wGeneralNotes'))}</h2><p>${br(w.notes)}</p>` : ''}`,
+      chart: `${chartUrl || (extraCharts && extraCharts.length) || (w.chartFiles && w.chartFiles.length) ? `<h2>${esc(t('hChart'))}</h2>` : ''}${chartUrl ? `<p><img src="${chartUrl}" style="max-width:100%"></p>` : ''}${(extraCharts || []).map((u) => `<p><img src="${u}" style="max-width:100%"></p>`).join('')}${(w.chartFiles || []).map((f) => f.pages.map((pg) => `<p><img src="${pg}" style="max-width:100%"></p>`).join('')).join('')}`,
+      rows: rows && rows.length ? `<h2>${esc(rowsTitle || t('hRows'))}</h2>${rows.map((l) => `<p style="margin:2px 0">${esc(l)}</p>`).join('')}` : '',
+      written: `${sections ? `<h2>${esc(t('wInstructions'))}</h2>${sections}` : ''}
+${workNotes ? `<h2>${esc(t('workNotes').replace(/^\S+\s/, ''))}</h2><p>${br(workNotes)}</p>` : ''}`,
+      imgs: imgs ? `<h2>${esc(t('hImages'))}</h2>${imgs}` : '',
+      links: links ? `<h2>${esc(t('hLinks'))}</h2>${links}` : '',
+      fixed: `${defaults && defaults.general ? `<h2>${esc(t('hGeneral'))}</h2><p>${br(defaults.general)}</p>` : ''}
 ${attach ? `<h2>${esc(t('hAttach'))}</h2>${attach}` : ''}
-${opt.fixed ? `<hr><p style="font-size:9pt;color:#555">${br(copyrightText(defaults || {}, designer))}</p>` : ''}
+<hr><p style="font-size:9pt;color:#555">${br(copyrightText(defaults || {}, designer))}</p>`,
+    };
+    return `<!doctype html><html><head><meta charset="utf-8"></head><body dir="${dir}" style="font-family:Arial,sans-serif">
+<h1>${esc(title)}</h1>
+${designer ? `<p>${esc(t('wDesigner'))}: ${esc(designer)}</p>` : ''}
+${opt.order.filter(on).map((k) => parts[k]).join('\n')}
 </body></html>`;
   }
 
@@ -2154,31 +2274,38 @@ ${opt.fixed ? `<hr><p style="font-size:9pt;color:#555">${br(copyrightText(defaul
     if (!w.designer) w.designer = defaults0.designer || '';
     const pdf = { on: !existing || !!(existing.ids && existing.ids.pdf), opt: { ...PDF_OPT0(), ...(data.pdfOpt || {}) } };
     const ed = editorShell('✏️ ' + t('stDesign'), data.title || '', existing, (n) => save(n, false), (n) => save(n, true));
-    let mod = null, kind = data.chartKind || 'none';
-    const store = { [kind]: data.chart || null }; // תרשים של כל סוג נשמר בצד כשמחליפים
+    let mod = null, kind = data.chartKind && data.chartKind !== 'none' ? data.chartKind : 'colors', touched = false;
+    // תרשים של כל סוג נשמר בצד כשמחליפים (וגם בקובץ הנתונים)
+    const store = data.charts ? { ...data.charts } : { [kind]: data.chart || null };
+    const hasChart = () => !!(mod && !mod.isEmpty());
     const parts = infoForm(w, ed, { onCraft: (c) => { if (mod && mod.setCraft) mod.setCraft(c); } });
 
     // לשונית תרשים: בחירת סוג + אזור התרשים + קבצי תרשים
     const chartHost = el('div', {});
-    const kinds = [['none', 'chNone'], ['colors', 'chColorsChart'], ['symbols', 'chSymbols'], ['mosaic', 'chMosaic']];
+    const kinds = [['colors', 'chColorsChart'], ['symbols', 'chSymbols'], ['mosaic', 'chMosaic']];
     const kindBar = el('div', { class: 'seg kind-seg', role: 'group' });
     const kindBtns = kinds.map(([k, label]) => el('button', { class: 'seg-btn', onclick: () => pickKind(k) }, t(label)));
     kindBar.append(...kindBtns);
     const updKind = () => kindBtns.forEach((b, i) => b.classList.toggle('on', kinds[i][0] === kind));
     async function mount() {
       chartHost.innerHTML = '';
-      mod = null;
-      const host = { ed, info: w, pane: chartHost };
+      mod = null; touched = false;
+      // העורך של התרשים מסמן כאן אם נעשה בו משהו
+      const hed = Object.create(ed); hed.setDirty = () => { touched = true; ed.setDirty(); };
+      const host = { ed: hed, info: w, pane: chartHost };
       if (kind === 'mosaic') mod = await mosaicEditor(store.mosaic, null, null, host);
       else if (kind === 'symbols') mod = await chartEditor(store.symbols, null, null, { ...host, mode: 'symbols' });
       else if (kind === 'colors') mod = await chartEditor(store.colors, null, null, { ...host, mode: 'colors' });
       updKind();
     }
+    // מעבר בין סוגים: אם לא נעשה כלום – בלי הודעה; אם נעשה – שומרים בצד ורק אז מודיעים
     function pickKind(k) {
       if (k === kind) return;
-      if (mod && !confirm(t('chSwitch'))) return;
-      if (mod) store[kind] = mod.data();
-      kind = k; ed.setDirty(); mount().catch(err);
+      const did = !!mod && (touched || !mod.isEmpty());
+      if (mod && did) store[kind] = mod.data();
+      const prev = kinds.find(([x]) => x === kind);
+      kind = k;
+      mount().then(() => { if (did) toast(t('chKept', { k: t(prev[1]) }), 4500); }).catch(err);
     }
     const chartPane = el('div', {}, el('div', { class: 'studio-panel' }, el('div', { class: 'studio-sub' }, t('chKind')), kindBar), chartHost, parts.chart);
 
@@ -2189,7 +2316,7 @@ ${opt.fixed ? `<hr><p style="font-size:9pt;color:#555">${br(copyrightText(defaul
     const planPane = el('div', {}, el('div', { class: 'studio-panel' }, el('label', { class: 'chk' }, planUse, t('planUse'))), planHost);
     const planMod = await colorEditor(data.plan ? { plan: data.plan } : null, null, { ed, pane: planHost, onChange: () => { planUse.checked = true; } });
 
-    parts.written.append(el('div', { class: 'studio-panel' }, pdfPanel(ed, pdf, (n) => buildHtml(n), true)));
+    parts.written.append(el('div', { class: 'studio-panel' }, pdfPanel(ed, pdf, null, true)));
     editorTabs(ed, [[t('tabGeneral'), parts.general], [t('tabChart'), chartPane], [t('tabWritten'), parts.written], [t('tabPlan'), planPane]], 0);
     // מעבר ללשונית מתאים מחדש את גודל התרשים
     ed.body.querySelectorAll('.studio-tabs .mode-tab').forEach((b) => b.addEventListener('click', () => requestAnimationFrame(() => { if (mod && mod.refit) mod.refit(); if (planMod && planMod.refit) planMod.refit(); })));
@@ -2197,22 +2324,24 @@ ${opt.fixed ? `<hr><p style="font-size:9pt;color:#555">${br(copyrightText(defaul
 
     async function buildHtml(name, chartPng, planPngBlob) {
       const defaults = (await loadDefaults()).d;
-      chartPng = chartPng || (mod ? await mod.png(name) : null);
+      const withChart = hasChart();
+      chartPng = chartPng || (withChart ? await mod.png(name) : null);
       planPngBlob = planPngBlob || (planUse.checked ? await planMod.png(name) : null);
       return patternHtml({
         title: name, w, chartUrl: chartPng ? await blobDataUrl(chartPng) : null,
-        rows: mod ? mod.rows() : [], defaults, kind: mod ? mod.label : t('stWritten'),
+        rows: withChart ? mod.rows() : [], defaults, kind: withChart ? mod.label : t('stWritten'),
         workNotes: mod ? mod.workNotes() : '', extraCharts: planPngBlob ? [await blobDataUrl(planPngBlob)] : [], opt: pdf.opt,
       });
     }
     async function save(name, draft) {
       w.title = name; w.pdfOpt = pdf.opt;
       if (mod) store[kind] = mod.data();
-      const data2 = { type: 'design', v: 1, title: name, info: w, chartKind: kind, chart: kind === 'none' ? null : store[kind], plan: planUse.checked ? planMod.data() : null, pdfOpt: pdf.opt };
+      const charts = Object.fromEntries(Object.entries(store).filter(([, v]) => v));
+      const data2 = { type: 'design', v: 1, title: name, info: w, chartKind: kind, chart: hasChart() ? store[kind] : null, charts, plan: planUse.checked ? planMod.data() : null, pdfOpt: pdf.opt };
       const r = await busy(t('stSaving'), async () => {
         const outputs = [];
         if (!draft) {
-          const chartPng = mod ? await mod.png(name) : null;
+          const chartPng = hasChart() ? await mod.png(name) : null;
           const planPngBlob = planUse.checked ? await planMod.png(name) : null;
           const html = await buildHtml(name, chartPng, planPngBlob);
           if (chartPng || planPngBlob) outputs.push({ key: 'main', blob: chartPng || planPngBlob, name: name + '.png' });
