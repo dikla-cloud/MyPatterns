@@ -743,3 +743,5 @@ html, body { overflow-x: clip; }
 .paint-bar .sym-btn.wide { width: auto; padding: 0 8px; }
 .paint-bar input[type=color] { width: 34px; height: 34px; }
 .paint-bar .color-name { max-width: 220px; }
+/* כפתור סנכרון */
+.sync-btn.spinning svg { animation: spin 0.9s linear infinite; }

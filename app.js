@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 70;
+const APP_V = 71;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -1561,6 +1561,7 @@ const pushRemote = debounce(async () => {
 function saveState() {
   if (!V.file || !V.ready) return;
   const s = V.st;
+  V.pending = false;
   s.t = Date.now();
   const sw = scroller.scrollWidth - scroller.clientWidth, sh = scroller.scrollHeight - scroller.clientHeight;
   s.sx = sw > 0 ? scroller.scrollLeft / sw : 0;
@@ -1568,7 +1569,8 @@ function saveState() {
   store.set('st.' + V.file.id, s);
   pushRemote();
 }
-const saveStateSoon = debounce(saveState, 600);
+const saveStateLater = debounce(() => { if (V.pending) saveState(); }, 600);
+function saveStateSoon() { V.pending = true; saveStateLater(); }
 
 async function openFileById(id, hint) {
   if (String(id).startsWith('local:')) { toast(t('localReopen')); return; }
@@ -2416,6 +2418,53 @@ const prefs = {
     } catch (e) { console.warn('prefs pull', e); }
   },
 };
+const viewerOpen = () => !$('#viewerView').classList.contains('hidden') && V.file && !V.local && V.ready;
+// מצב הדוגמה הפתוחה מהדרייב – אם מכשיר אחר שמר אחרי המכשיר הזה
+async function pullViewer() {
+  const file = V.file, f = await drive.get(file.id);
+  const r = parseRemoteState(f.appProperties);
+  if (V.file !== file || !r || r.t <= V.st.t) return false;
+  const zoomed = r.z !== V.st.z;
+  V.st = Object.assign(defaultState(), r);
+  file.appProperties = f.appProperties;
+  store.set('st.' + file.id, V.st);
+  if (zoomed) layout();
+  restoreScroll(); applyRulers(); applyLock(); updateCounter();
+  return true;
+}
+// כפתור 🔄: שולח מיד את השינויים של המכשיר הזה ומושך את כל מה שהשתנה במכשירים האחרים
+async function syncAll(btn) {
+  if (!navigator.onLine) { toast(t('offline'), 3000); return; }
+  if (btn.classList.contains('spinning')) return;
+  btn.classList.add('spinning');
+  try {
+    if (!auth.valid()) await auth.get(); // לחיצה = אפשר לחדש התחברות
+    // הדוגמה הפתוחה: מה שחדש יותר מנצח – אם המכשיר הזה שינה אחרון שולחים, אחרת מושכים
+    if (viewerOpen()) {
+      if (V.pending) saveState(); // שינוי שעוד לא נשמר
+      const file = V.file, remote = parseRemoteState((await drive.get(file.id)).appProperties);
+      if (V.file === file && (!remote || V.st.t > remote.t)) {
+        const updated = await drive.patch(file.id, { appProperties: remoteProps(V.st) });
+        file.appProperties = updated.appProperties; setSync(t('savedToDrive'));
+      }
+    }
+    const r = nav.root();
+    if (r) {
+      const f = await drive.get(r.id);
+      const ap = f.appProperties || {}, ts = Number((ap.kpS || '').split(',')[6]) || 0;
+      if (ts > store.get('prefsT', 0)) prefs.apply(ap); // הגדרות חדשות יותר ממכשיר אחר
+      else if (store.get('prefsT', 0) > ts) await drive.patch(r.id, { appProperties: { kpS: prefs.pack(), kpRoot: '1' } });
+    }
+    lastSync = Date.now();
+    if (viewerOpen()) await pullViewer();
+    if (!$('#dashView').classList.contains('hidden')) await dash.load(true);
+    await syncRecent();
+    toast(t('syncDone'), 2500);
+  } catch (e) { err(e); } finally { btn.classList.remove('spinning'); }
+}
+$('#syncBtn').onclick = (e) => syncAll(e.currentTarget);
+$('#viewerSyncBtn').onclick = (e) => syncAll(e.currentTarget);
+
 // חזרה לאפליקציה (או כל דקה כשהיא פתוחה): מושכים את מה שהשתנה במכשירים האחרים
 let lastSync = Date.now();
 async function syncNow(full) {
@@ -2423,20 +2472,8 @@ async function syncNow(full) {
   if (Date.now() - lastSync < 15000) return;
   lastSync = Date.now();
   prefs.pull();
-  if (!$('#viewerView').classList.contains('hidden') && V.file && !V.local && V.ready) {
-    try {
-      const file = V.file, f = await drive.get(file.id);
-      const r = parseRemoteState(f.appProperties);
-      if (V.file !== file || !r || r.t <= V.st.t) return;
-      const zoomed = r.z !== V.st.z;
-      V.st = Object.assign(defaultState(), r);
-      file.appProperties = f.appProperties;
-      store.set('st.' + file.id, V.st);
-      if (zoomed) layout();
-      restoreScroll(); applyRulers(); applyLock(); updateCounter();
-      toast(t('syncedOther'), 2500);
-    } catch (e) { console.warn('sync viewer', e); }
-  } else if (full && !$('#dashView').classList.contains('hidden') && !document.querySelector('.studio-editor:not(.minimized)')) {
+  if (viewerOpen()) pullViewer().then((ch) => { if (ch) toast(t('syncedOther'), 2500); }).catch((e) => console.warn('sync viewer', e));
+  else if (full && !$('#dashView').classList.contains('hidden') && !document.querySelector('.studio-editor:not(.minimized)')) {
     dash.load(true);
   }
 }
