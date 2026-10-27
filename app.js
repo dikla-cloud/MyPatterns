@@ -1,6 +1,6 @@
 /* MyPatterns – אפליקציית מעקב אחרי דוגמאות סריגה המסונכרנת לגוגל דרייב */
 'use strict';
-const APP_V = 69;
+const APP_V = 70;
 
 // גישה מצומצמת: רק לקבצים שהאפליקציה יצרה או שנבחרו בבורר הקבצים של גוגל
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -1197,6 +1197,10 @@ async function createRootFolder() {
 }
 
 function setRoot(r) {
+  // התיקייה הראשית מסומנת בדרייב, כדי שמכשיר חדש ימצא אותה לבד
+  const old = store.get('root', null);
+  if (old && old.id !== r.id) drive.patch(old.id, { appProperties: { kpRoot: null } }).catch(() => {});
+  drive.patch(r.id, { appProperties: { kpRoot: '1' } }).catch(() => {});
   store.set('root', r);
   nav.reset();
   show('#dashView');
@@ -2014,7 +2018,7 @@ function syncPanel() {
   $('#opacity').value = style.opacity; $('#opacityOut').textContent = Math.round(style.opacity * 100) + '%';
   $('#dimToggle').checked = !!style.dim;
 }
-const saveStyle = () => store.set('style', style);
+const saveStyle = () => { store.set('style', style); prefs.changed(); };
 $('#hThick').oninput = (e) => { V.st.h.th = Number(e.target.value); V.st.h.on = 1; applyRulers(); saveStateSoon(); };
 $('#vThick').oninput = (e) => { V.st.v.th = Number(e.target.value); V.st.v.on = 1; applyRulers(); saveStateSoon(); };
 $('#hColor').oninput = (e) => { style.hColor = e.target.value; applyRulers(); saveStyle(); };
@@ -2181,7 +2185,7 @@ $('#tabStudio').onclick = () => setTab('studio');
 function openSettings() {
   const root = nav.root();
   const sel = langSelect();
-  sel.onchange = () => { setLang(sel.value); closeModal(); refreshLanguage(); openSettings(); };
+  sel.onchange = () => { setLang(sel.value); prefs.changed(); closeModal(); refreshLanguage(); openSettings(); };
   const row = (title, hint, btn) => el('div', { class: 'row' }, el('div', {}, el('b', {}, title), hint != null ? el('small', {}, hint) : null), btn);
   const body = el('div', { class: 'settings-list' },
     row('👤 ' + t('account') + ' · Google Drive', accountText(), el('button', { class: 'btn danger', onclick: () => { auth.signOut(); store.set('account', null); closeModal(); start(); } }, t('signOut'))),
@@ -2292,7 +2296,7 @@ $('#brandBtn').onclick = () => { setTab('patterns'); if (nav.path.length) { nav.
 // בחירת שפה מהפס העליון
 $('#langBtn').onclick = (e) => openMenu(e.currentTarget, Object.entries(LANGS).map(([code, info]) => ({
   label: (code === LANG ? '✓ ' : '') + info.name,
-  fn: () => { setLang(code); refreshLanguage(); if (!$('#studioPane').classList.contains('hidden') && window.Studio) Studio.home($('#studioPane')); },
+  fn: () => { setLang(code); prefs.changed(); refreshLanguage(); if (!$('#studioPane').classList.contains('hidden') && window.Studio) Studio.home($('#studioPane')); },
 })));
 $('#addBtn').onclick = openAddSheet;
 $('#newFolderBtn').onclick = () => newFolder();
@@ -2302,7 +2306,7 @@ const VIEW_ICONS = {
   grid: '<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>',
 };
 function updViewBtn() { const list = store.get('viewMode', 'grid') === 'list'; $('#viewBtn').innerHTML = list ? VIEW_ICONS.grid : VIEW_ICONS.list; $('#viewBtn').title = list ? t('viewGrid') : t('viewList'); }
-$('#viewBtn').onclick = () => { store.set('viewMode', store.get('viewMode', 'grid') === 'list' ? 'grid' : 'list'); updViewBtn(); dash.render(); };
+$('#viewBtn').onclick = () => { store.set('viewMode', store.get('viewMode', 'grid') === 'list' ? 'grid' : 'list'); prefs.changed(); updViewBtn(); dash.render(); };
 updViewBtn();
 $('#backBtn').onclick = () => { nav.to(nav.path.length - 1); dash.load(); setTimeout(consumeBackEntry, 0); };
 $('#searchInput').oninput = () => dash.render();
@@ -2355,11 +2359,90 @@ async function start() {
   if (!auth.valid() && !store.get('signedIn', false)) { show('#loginView'); hideSplash(); return; }
   show('#dashView');
   auth.init().catch(() => {});
+  if (!nav.root()) await discoverRoot();
   dash.load().finally(hideSplash);
+  prefs.pull();
   requestAnimationFrame(syncSearchWidth);
   if (auth.valid() && !store.get('account', null)) refreshAccount();
   if (pendingShare && nav.current()) { openAddLink(pendingShare); pendingShare = null; }
 }
+
+/* ---------------- סנכרון בין המכשירים ---------------- */
+// מכשיר חדש: מוצאים את התיקייה הראשית שנבחרה במכשיר אחר (מסומנת kpRoot)
+async function discoverRoot() {
+  if (nav.root() || (!auth.valid() && !auth.canSilent())) return;
+  try {
+    const list = await drive.query(`mimeType='${FOLDER}' and appProperties has { key='kpRoot' and value='1' }`);
+    if (!list.length) return;
+    list.sort((a, b) => String(b.modifiedTime || '').localeCompare(String(a.modifiedTime || '')));
+    store.set('root', { id: list[0].id, name: list[0].name });
+    nav.reset();
+    toast(t('rootFound', { name: list[0].name }), 4000);
+  } catch (e) { console.warn('discoverRoot', e); }
+}
+// הגדרות משותפות (צבעי הסרגלים, שקיפות, תצוגה, שפה) – נשמרות על התיקייה הראשית
+const prefs = {
+  pack() {
+    return [style.hColor.replace('#', ''), style.vColor.replace('#', ''), style.opacity, style.dim ? 1 : 0,
+      store.get('viewMode', 'grid') === 'list' ? 'l' : 'g', LANG, store.get('prefsT', 0)].join(',');
+  },
+  changed() { store.set('prefsT', Date.now()); this.push(); },
+  push: debounce(async () => {
+    const r = nav.root();
+    if (!r || !navigator.onLine || (!auth.valid() && !auth.canSilent())) return;
+    try { await drive.patch(r.id, { appProperties: { kpS: prefs.pack(), kpRoot: '1' } }); } catch (e) { console.warn('prefs push', e); }
+  }, 1500),
+  apply(ap) {
+    const v = ap && ap.kpS; if (!v) return;
+    const [h, vc, op, dim, view, lang, ts] = v.split(',');
+    if (!(Number(ts) > store.get('prefsT', 0))) return;
+    if (/^[0-9a-f]{6}$/i.test(h)) style.hColor = '#' + h;
+    if (/^[0-9a-f]{6}$/i.test(vc)) style.vColor = '#' + vc;
+    if (!isNaN(Number(op))) style.opacity = Number(op);
+    style.dim = dim === '1';
+    store.set('style', style); store.set('prefsT', Number(ts));
+    const mode = view === 'l' ? 'list' : 'grid';
+    if (mode !== store.get('viewMode', 'grid')) { store.set('viewMode', mode); updViewBtn(); dash.render(); }
+    if (lang && lang !== LANG && LANGS[lang]) { setLang(lang); refreshLanguage(); }
+    if (V.file) applyRulers();
+  },
+  async pull() {
+    const r = nav.root();
+    if (!r || !navigator.onLine || !auth.valid()) return;
+    try {
+      const f = await drive.get(r.id);
+      if (!f.appProperties || f.appProperties.kpRoot !== '1') drive.patch(r.id, { appProperties: { kpRoot: '1' } }).catch(() => {});
+      this.apply(f.appProperties);
+    } catch (e) { console.warn('prefs pull', e); }
+  },
+};
+// חזרה לאפליקציה (או כל דקה כשהיא פתוחה): מושכים את מה שהשתנה במכשירים האחרים
+let lastSync = Date.now();
+async function syncNow(full) {
+  if (!navigator.onLine || !auth.valid() || document.hidden) return;
+  if (Date.now() - lastSync < 15000) return;
+  lastSync = Date.now();
+  prefs.pull();
+  if (!$('#viewerView').classList.contains('hidden') && V.file && !V.local && V.ready) {
+    try {
+      const file = V.file, f = await drive.get(file.id);
+      const r = parseRemoteState(f.appProperties);
+      if (V.file !== file || !r || r.t <= V.st.t) return;
+      const zoomed = r.z !== V.st.z;
+      V.st = Object.assign(defaultState(), r);
+      file.appProperties = f.appProperties;
+      store.set('st.' + file.id, V.st);
+      if (zoomed) layout();
+      restoreScroll(); applyRulers(); applyLock(); updateCounter();
+      toast(t('syncedOther'), 2500);
+    } catch (e) { console.warn('sync viewer', e); }
+  } else if (full && !$('#dashView').classList.contains('hidden') && !document.querySelector('.studio-editor:not(.minimized)')) {
+    dash.load(true);
+  }
+}
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') syncNow(true); });
+window.addEventListener('focus', () => syncNow(true));
+setInterval(() => syncNow(false), 60000);
 
 // קישור ששותף לאפליקציה מתפריט "שיתוף" של הטלפון
 function takeShared() {
@@ -2412,7 +2495,7 @@ let pendingShare = takeShared();
 applyI18n();
 document.querySelectorAll('.lang-slot').forEach((slot) => {
   const sel = langSelect();
-  sel.onchange = () => setLang(sel.value);
+  sel.onchange = () => { setLang(sel.value); prefs.changed(); };
   slot.append(sel);
 });
 start();
